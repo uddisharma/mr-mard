@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Separator } from "@/components/ui/separator";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { encryptPhoneNumber } from "@/lib/encryption";
 import { registerWithOTP } from "@/actions/register-phone";
 import { toast } from "sonner";
@@ -22,6 +22,7 @@ type PhoneFormInputs = z.infer<typeof phoneSchema>;
 
 export default function SignUpPage() {
   const router = useRouter();
+  const params = useSearchParams();
   const {
     register,
     handleSubmit,
@@ -38,7 +39,9 @@ export default function SignUpPage() {
       }
       toast.success(response.message);
       const encryptedPhone = encryptPhoneNumber(data.phoneNumber);
-      router.push(`/otp?token=${encryptedPhone}`);
+      router.push(
+        `/otp?token=${encryptedPhone} ${params?.get("redirect") && `&redirect=${params.get("redirect")}`}`,
+      );
     } catch (error: any) {
       toast.error(error.message || "An error occurred.");
     }

@@ -23,7 +23,7 @@ const testimonials: Testimonial[] = [
     content:
       "Using Mard’s treatment for 5 months can feel the change in my hair, definitely",
     date: "Mr. Mard user, 18/10/2024",
-    avatar: "/user.png",
+    avatar: "/users/8.png",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const testimonials: Testimonial[] = [
     content:
       "I got Mard's treatment kit after consulting its doctor , the kit was personalized as per my hair issues and after using it I sawx noticeable hair growth. ",
     date: "Mr. Mard user, 01/12/2024",
-    avatar: "/user.png",
+    avatar: "/users/9.png",
   },
 ];
 

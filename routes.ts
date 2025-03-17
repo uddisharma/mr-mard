@@ -12,7 +12,6 @@ export const publicRoutes = [
   "/technology",
   "/about-us",
   "/blogs",
-  "/blog/[id]",
   "/contact-us",
   "/privacy-policy",
   "/how-it-works",
@@ -36,13 +35,29 @@ export const authRoutes = [
 
 /**
  * The prefix for API authentication routes
- * Routes that start with this prefix are used for API authentication puposes
+ * Routes that start with this prefix are used for API authentication purposes
  * @type {string}
  */
 export const apiAuthPrefix = "/api/auth";
 
 /**
- * The default redirect path after loggin in
+ * The default redirect path after logging in
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/profile";
+
+/**
+ * Function to check if a route is public
+ * @param {string} route - The route to check
+ * @returns {boolean} - True if the route is public, false otherwise
+ */
+export const isPublicRoute = (route: string): boolean => {
+  if (publicRoutes.includes(route)) {
+    return true;
+  }
+  // Check for dynamic routes
+  if (route.startsWith("/blog/")) {
+    return true;
+  }
+  return false;
+};

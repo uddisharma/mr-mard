@@ -109,6 +109,8 @@ const data = [
   },
 ];
 
+const images = ["/users/4.png", "/users/5.png", "/users/6.png", "/users/7.png"];
+
 const Cta = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 md:mb-12">
@@ -137,17 +139,17 @@ const Cta = () => {
             <p className="text-lg text-black mt-2">Happy Customers</p>
           </div>
           <div className="flex -space-x-2 my-5">
-            {[1, 2, 3, 4].map((i) => (
+            {images?.map((i) => (
               <div
                 key={i}
                 className="relative w-14 h-14 rounded-full border-2 border-white overflow-hidden"
               >
                 <Image
-                  src={`/user.png`}
+                  src={i}
                   alt={`Customer ${i}`}
                   width={320}
                   height={320}
-                  className="object-cover"
+                  className="object-cover h-full w-full"
                 />
               </div>
             ))}
@@ -162,17 +164,17 @@ const Cta = () => {
               Happy Customers
             </span>
             <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((i) => (
+              {images?.map((i) => (
                 <div
                   key={i}
                   className="relative w-14 h-14 rounded-full border-2 border-white overflow-hidden"
                 >
                   <Image
-                    src={`/user.png`}
+                    src={i}
                     alt={`Customer ${i}`}
                     width={64}
                     height={64}
-                    className="object-cover rounded-full"
+                    className="object-cover rounded-full h-full w-full"
                   />
                 </div>
               ))}

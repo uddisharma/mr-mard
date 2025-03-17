@@ -103,7 +103,8 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <main className="md:px-4 md:py-8 px-5">
-        <div className="bg-[url('/hero.png')] bg-cover bg-center py-4 mb-8 md:mb-16">
+        {/* bg-[url('/hero.png')] bg-cover bg-center */}
+        <div className=" py-4 mb-8 md:mb-16">
           <h1 className="text-4xl text-center mb-5">How Our AI Model Works</h1>
 
           <p className="text-btnblue">
@@ -123,13 +124,13 @@ export default function Home() {
 
         <WhyChooseUs />
 
-        <div className="my-16 md:px-16 bg-white rounded-[144px] md:p-8">
+        <div className="my-16 md:px-16 bg-white rounded-[144px] md:p-8 flex flex-col items-center text-center">
           <h2 className="text-2xl font-semibold mb-4">
-            Start Your AI-Driven Hair Health Journey
+            Start your Hair care journey today!
           </h2>
           <p className="text-btnblue mb-8">
-            Experience the future of hair wellness with Mr. Mard's cutting-edge
-            AI model. Get real-time, personalized insights today.
+            Experience cutting edge hair health diagnosis using AI. Get
+            real-time personalized insights for your hair.
           </p>
           <Button
             size="lg"

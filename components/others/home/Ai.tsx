@@ -6,7 +6,7 @@ export default function AIInsightsSection() {
   return (
     <section className="container text-center md:text-left mx-auto px-4 md:px-24">
       <h2 className="text-3xl md:text-4xl text-center text-btnblue  py-2 md:py-8 mb-12 bg-white">
-        Our Advance AI Modal
+        Our Advance AI Model
       </h2>
       <div className="grid items-center gap-12 lg:grid-cols-2">
         <div className="relative aspect-square max-w-[600px] rounded-[144px] bg-yellow p-8">
@@ -31,7 +31,7 @@ export default function AIInsightsSection() {
             AI-powered insights.
           </p>
           <div className="mt-10">
-            <Link href="/analyze">
+            <Link href="/technology">
               <Button
                 size="lg"
                 className="bg-btnblue hover:bg-btnblue/90 rounded-[12px]"

@@ -157,7 +157,9 @@ export default function SignupForm() {
           month: "",
           year: "",
         });
-        router.push("/profile");
+        router.push(
+          `${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")} ` : "/analyze"}`,
+        );
       } else {
         toast.error(res?.message);
       }
