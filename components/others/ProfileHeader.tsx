@@ -25,9 +25,9 @@ const ProfileHeader = ({ user }: { user: any }) => {
           </div>
 
           <div className="flex md:hidden items-center gap-4">
-            <Button variant="ghost" size="icon">
+            {/* <Button variant="ghost" size="icon">
               <Bell className="h-5 w-5" />
-            </Button>
+            </Button> */}
             <Logout image={user?.image || "/user.png"} hidden={false} />
           </div>
         </div>

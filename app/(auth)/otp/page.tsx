@@ -101,8 +101,10 @@ export default function VerificationPage() {
   useEffect(() => {
     if (status?.signupSuccess && status?.verifySuccess) {
       setTimeout(() => {
-        router.push("/profile");
-      }, 3000);
+        router.push(
+          `${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")}` : "/analyze"}`,
+        );
+      }, 2000);
     }
     if (!status?.signupSuccess && status?.verifySuccess) {
       setTimeout(() => {
@@ -181,7 +183,7 @@ export default function VerificationPage() {
             <p className="text-gray-500 mb-6">Contact number verified</p>
             <Link
               className="w-full bg-btnblue text-white rounded-lg hover:bg-btnblue transition-colors"
-              href={`/signup${decryptPhone ? `?token=${decryptPhone}` : ""}`}
+              href={`/signup${decryptPhone ? `?token=${decryptPhone}${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")}` : ""}` : ""}`}
             >
               <button className="w-full bg-btnblue text-white py-3.5 rounded-lg hover:bg-btnblue transition-colors">
                 Continue Sign up
@@ -201,7 +203,7 @@ export default function VerificationPage() {
             <p className="text-gray-500 mb-6">Logged in you account</p>
             <Link
               className="w-full bg-btnblue text-white  rounded-lg hover:bg-btnblue transition-colors"
-              href="/profile"
+              href={`${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")}` : "/profile"}`}
             >
               <button className="w-full bg-btnblue text-white py-3.5 rounded-lg hover:bg-btnblue transition-colors">
                 Continue

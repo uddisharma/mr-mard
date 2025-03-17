@@ -9,12 +9,12 @@ interface FAQItem {
 
 const faqItems: FAQItem[] = [
   {
-    question: "What is Mr. Mind?",
+    question: "What is Mr. Mard?",
     answer:
-      "Mr. Mind is an advanced AI-powered analysis platform that helps understand and improve mental health patterns.",
+      "Mr. Mard is an advanced AI-powered analysis platform that helps understand and improve mental health patterns.",
   },
   {
-    question: "How does Mr. Mind work?",
+    question: "How does Mr. Mard work?",
     answer:
       "Our platform uses advanced AI algorithms to analyze various parameters and provide comprehensive insights into mental health patterns.",
   },

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X } from "lucide-react";
 import { SubscriptionForm } from "./Form";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Image from "next/image";

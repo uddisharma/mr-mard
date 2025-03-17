@@ -26,13 +26,21 @@ const Hero = () => {
 
     shakeButton();
   }, []);
+
+  const images = [
+    "/users/1.png",
+    "/users/2.png",
+    "/users/3.png",
+    "/users/4.png",
+  ];
+
   return (
     <div className="bg-white pb-8">
       <div
         className="hidden relative md:flex justify-between bg-[#EDDE79]  rounded-[0px_0px_144px_144px] px-10 min-h-[650px]"
         style={{
           backgroundImage: 'url("/men.png")',
-          backgroundSize: "550px 630px",
+          backgroundSize: "580px 630px",
           backgroundPosition: "65% bottom",
           backgroundRepeat: "no-repeat",
         }}
@@ -62,25 +70,27 @@ const Hero = () => {
                 </button>
               </motion.div>
             </Link>
+            <Link href="/about-us">
+              <button className="px-14 py-[10px] w-[245px] text-[#1b1139] bg-yellow border-black border-[1.5px] rounded-[12px]  hover:opacity-90 font-normal">
+                Learn More
+              </button>
+            </Link>
             <Link
               className="min-w-[280px] flex justify-center items-center gap-1 m-auto text-gray-700"
               href="/technology"
             >
-              {/* <button className="px-14 py-[10px] w-[245px] text-[#1b1139] bg-yellow border-black border-[1.5px] rounded-[12px]  hover:opacity-90 font-normal">
-                Learn More
-              </button> */}
               <div className="flex -space-x-2 items-center text-[15px]">
-                {[1, 2, 3].map((i) => (
+                {images?.map((i) => (
                   <div
                     key={i}
                     className="relative w-10 h-10 rounded-full border-2 border-white overflow-hidden"
                   >
                     <Image
-                      src={`/user.png`}
+                      src={i}
                       alt={`Customer ${i}`}
                       width={320}
                       height={320}
-                      className="object-cover"
+                      className="object-cover w-full h-full"
                     />
                   </div>
                 ))}

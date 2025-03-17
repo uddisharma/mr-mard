@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { currentUser } from "@/lib/auth";
 import Logout from "./Logout";
 import Image from "next/image";
+import { SignupButton, SignupButton1 } from "./SignupButton";
 
 const Header = async ({ className }: { className?: string }) => {
   const sessions = await currentUser();
@@ -35,14 +36,7 @@ const Header = async ({ className }: { className?: string }) => {
               hidden={false}
             />
           ) : (
-            <Link href="/auth">
-              <Button
-                variant="default"
-                className="hidden md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px] py-5"
-              >
-                Sign up / Log in
-              </Button>
-            </Link>
+            <SignupButton />
           )}
           <Sheet>
             <SheetTrigger asChild>
@@ -122,13 +116,7 @@ const Header = async ({ className }: { className?: string }) => {
               hidden={false}
             />
           ) : (
-            <Link href="/auth">
-              <img
-                src="/user.png"
-                alt="User Profile"
-                className="h-10 w-10 rounded-full object-cover md:hidden"
-              />
-            </Link>
+            <SignupButton1 />
           )}
         </div>
       </div>
