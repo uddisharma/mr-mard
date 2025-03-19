@@ -70,11 +70,11 @@ const Hero = () => {
                 </button>
               </motion.div>
             </Link>
-            <Link href="/about-us">
+            {/* <Link href="/about-us">
               <button className="px-14 py-[10px] w-[245px] text-[#1b1139] bg-yellow border-black border-[1.5px] rounded-[12px]  hover:opacity-90 font-normal">
                 Learn More
               </button>
-            </Link>
+            </Link> */}
             <Link
               className="min-w-[280px] flex justify-center items-center gap-1 m-auto text-gray-700"
               href="/technology"

@@ -39,7 +39,7 @@ export const sendVerificationOTP = async (email: string, otp: number) => {
   try {
     await resend.emails
       .send({
-        from: "uddibhardwaj08@gmail.com",
+        from: "tech@mrmard.com",
         to: email,
         subject: "2FA Code",
         html: `<p>Your verification code: ${otp} and expires in 10 minutes</p>`,
