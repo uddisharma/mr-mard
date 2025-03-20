@@ -114,6 +114,21 @@ CREATE TABLE "two_factor_confirmations" (
 );
 
 -- CreateTable
+CREATE TABLE "Permission" (
+    "id" SERIAL NOT NULL,
+    "role" "UserRole" NOT NULL,
+    "resource" "Resource" NOT NULL,
+    "canCreate" BOOLEAN NOT NULL DEFAULT false,
+    "canRead" BOOLEAN NOT NULL DEFAULT false,
+    "canUpdate" BOOLEAN NOT NULL DEFAULT false,
+    "canDelete" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Permission_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "blogs" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(255) NOT NULL,
@@ -266,6 +281,17 @@ CREATE TABLE "NewsLetter" (
     CONSTRAINT "NewsLetter_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Leads" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Leads_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
@@ -297,6 +323,9 @@ CREATE UNIQUE INDEX "two_factor_tokens_email_token_key" ON "two_factor_tokens"("
 CREATE UNIQUE INDEX "two_factor_confirmations_userId_key" ON "two_factor_confirmations"("userId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Permission_role_resource_key" ON "Permission"("role", "resource");
+
+-- CreateIndex
 CREATE INDEX "blogs_authorId_idx" ON "blogs"("authorId");
 
 -- CreateIndex
@@ -322,6 +351,9 @@ CREATE UNIQUE INDEX "UserProgress_userId_key" ON "UserProgress"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "NewsLetter_email_key" ON "NewsLetter"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Leads_phone_key" ON "Leads"("phone");
 
 -- AddForeignKey
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

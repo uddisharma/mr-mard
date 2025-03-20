@@ -110,7 +110,7 @@ export default function PaymentForm() {
       sessionStorage.setItem("appointmentId", data.appointment.id);
 
       // Redirect to confirmation page
-      router.push("/book/confirmation");
+      router.push("/appointment-booking/confirmation");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to process payment",
@@ -208,7 +208,10 @@ export default function PaymentForm() {
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => router.push("/book/time")}>
+        <Button
+          variant="outline"
+          onClick={() => router.push("/appointment-booking/time")}
+        >
           Back
         </Button>
         <Button onClick={handleSubmit} disabled={isLoading}>

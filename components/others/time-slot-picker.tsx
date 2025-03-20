@@ -120,7 +120,7 @@ export default function TimeSlotPicker() {
       }
 
       // Redirect to payment page
-      router.push("/book/payment");
+      router.push("/appointment-booking/payment");
     } catch (error) {
       toast.error("Failed to save your selection");
     } finally {
@@ -155,7 +155,7 @@ export default function TimeSlotPicker() {
             <Button
               variant="outline"
               className="mt-4"
-              onClick={() => router.push("/book/date")}
+              onClick={() => router.push("/appointment-booking/date")}
             >
               Choose Another Date
             </Button>
@@ -199,7 +199,10 @@ export default function TimeSlotPicker() {
         )}
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => router.push("/book/date")}>
+        <Button
+          variant="outline"
+          onClick={() => router.push("/appointment-booking/date")}
+        >
           Back
         </Button>
         <Button

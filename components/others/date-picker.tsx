@@ -62,7 +62,7 @@ export default function DatePicker() {
       sessionStorage.setItem("selectedDate", date.toISOString());
 
       // Redirect to time slot selection
-      router.push("/book/time");
+      router.push("/appointment-booking/time");
     } catch (error) {
       toast.error("Failed to save your selection");
     } finally {

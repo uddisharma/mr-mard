@@ -10,6 +10,10 @@ import {
   ScanFace,
   Newspaper,
   Bolt,
+  CalendarCheck2,
+  AlarmClockCheck,
+  ArrowLeftRight,
+  CalendarMinus,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -17,6 +21,14 @@ import Image from "next/image";
 
 const navItems = [
   { icon: Home, label: "Dashboard", href: "/admin/dashboard" },
+  { icon: CalendarCheck2, label: "Appointments", href: "/admin/appointments" },
+  {
+    icon: CalendarMinus,
+    label: "Cancelled",
+    href: "/admin/cancelled-appointments",
+  },
+  { icon: AlarmClockCheck, label: "Time Slots", href: "/admin/slots" },
+  { icon: ArrowLeftRight, label: "Transactions", href: "/admin/transactions" },
   { icon: FileText, label: "Blogs", href: "/admin/blogs" },
   { icon: HelpCircle, label: "Questions", href: "/admin/questions" },
   { icon: FileBarChart, label: "Reports", href: "/admin/reports" },
@@ -47,7 +59,7 @@ export default function Sidebar({ role }: { role: string | undefined }) {
         </Link>
       </div>
 
-      <nav className="flex-1 px-4">
+      <nav className="flex-1 px-4 overflow-y-auto custom-scrollbar">
         {navItems.map((item) => (
           <Link
             key={item.label}

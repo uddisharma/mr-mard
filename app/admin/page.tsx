@@ -42,9 +42,9 @@ export default async function Dashboard({
 }) {
   const session = await currentUser();
 
-  if (!session) {
-    return redirect("/");
-  }
+  // if (!session) {
+  //   return redirect("/");
+  // }
 
   const admin = await db.user.findUnique({
     where: { id: session?.id },

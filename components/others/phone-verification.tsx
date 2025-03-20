@@ -48,7 +48,7 @@ export default function PhoneVerification() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/auth/verify-otp", {
+      const response = await fetch("/api/verify-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export default function PhoneVerification() {
       sessionStorage.setItem("userId", data.userId);
 
       // Redirect to date selection
-      router.push("/book/date");
+      router.push("/appointment-booking/date");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to verify OTP",
