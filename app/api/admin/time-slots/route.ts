@@ -1,0 +1,51 @@
+import { db } from "@/lib/db";
+import { type NextRequest, NextResponse } from "next/server";
+
+export async function GET() {
+  try {
+    const timeSlots = await db.timeSlot.findMany({
+      orderBy: [{ date: "asc" }, { startTime: "asc" }],
+    });
+
+    return NextResponse.json(timeSlots);
+  } catch (error) {
+    console.error("Error fetching time slots:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch time slots" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const { date, startTime, endTime, totalSeats, price, isActive } =
+      await request.json();
+
+    if (!date || !startTime || !endTime || totalSeats === undefined) {
+      return NextResponse.json(
+        { error: "Date, start time, end time, and total seats are required" },
+        { status: 400 },
+      );
+    }
+
+    const timeSlot = await db.timeSlot.create({
+      data: {
+        date: new Date(date),
+        startTime: new Date(startTime),
+        endTime: new Date(endTime),
+        totalSeats,
+        price: price || 50.0,
+        isActive: isActive ?? true,
+      },
+    });
+
+    return NextResponse.json(timeSlot);
+  } catch (error) {
+    console.error("Error creating time slot:", error);
+    return NextResponse.json(
+      { error: "Failed to create time slot" },
+      { status: 500 },
+    );
+  }
+}

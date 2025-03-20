@@ -9,23 +9,23 @@ datasource db {
 
 model User {
   id                      String                 @id @default(uuid())
+  firstName               String?                @db.VarChar(100)
+  lastName                String?                @db.VarChar(100)
   name                    String?
   email                   String?                @unique
-  emailVerified           DateTime?
-  image                   String?
+  phone                   String?                @unique @db.VarChar(15)
   password                String?
+  image                   String?
   role                    UserRole               @default(USER)
-  accounts                Account[]
+  emailVerified           DateTime?
   isTwoFactorEnabled      Boolean                @default(false)
   twoFactorConfirmation   TwoFactorConfirmation?
   twoFactorConfirmationId Int?
-  phone                   String?                @unique @db.VarChar(15)
   otp                     Int?
   otpExpires              DateTime?
-  loginType               LoginType?             @default(GOOGLE)
-  reports                 Report[]
-  firstName               String?                @db.VarChar(100)
-  lastName                String?                @db.VarChar(100)
+  loginType               LoginType?             @default(PHONE)
+  lastLogin               DateTime?
+  signUpSuccess           Boolean                @default(false)
   gender                  Gender?                @default(MALE)
   age                     Int?
   dob                     String?
@@ -33,15 +33,16 @@ model User {
   country                 String?
   language                String?
   timeZone                String?
-  emails                  Json[]
   pinCode                 Int?
   source                  String?
-  lastLogin               DateTime?
-  signUpSuccess           Boolean                @default(false)
+  accounts                Account[]
+  reports                 Report[]
+  emails                  Json[]
+  appointments            Appointment[]
+  userProgress            UserProgress?
+  blogs                   Blog[]
   createdAt               DateTime               @default(now())
   updatedAt               DateTime               @updatedAt
-
-  blogs Blog[]
 
   @@map("users")
 }
@@ -105,20 +106,35 @@ model TwoFactorConfirmation {
   @@map("two_factor_confirmations")
 }
 
+model Permission {
+  id        Int      @id @default(autoincrement())
+  role      UserRole
+  resource  Resource
+  canCreate Boolean  @default(false)
+  canRead   Boolean  @default(false)
+  canUpdate Boolean  @default(false)
+  canDelete Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([role, resource])
+}
+
 model Blog {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
-  content     String   @db.Text
+  id          Int     @id @default(autoincrement())
+  title       String  @db.VarChar(255)
+  content     String  @db.Text
   image       String?
-  published   Boolean  @default(false)
+  published   Boolean @default(false)
   authorId    String
-  category    String   @db.VarChar(100)
-  subCategory String?  @db.VarChar(100)
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
+  category    String  @db.VarChar(100)
+  subCategory String? @db.VarChar(100)
+  isActive    Boolean @default(true)
 
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@index([authorId])
   @@map("blogs")
@@ -131,12 +147,13 @@ model Report {
   endTime        DateTime
   sessionId      String
   recommendation Json
-  questions      Json[] // [{question: string, answer: string}]
+  questions      Json[]
   deletedAt      DateTime?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @default(now()) @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@index([userId])
   @@map("reports")
@@ -150,29 +167,91 @@ model Question {
   required     Boolean      @default(true)
   isActive     Boolean      @default(true)
   isDeleted    Boolean      @default(false)
+  options      Option[]
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @default(now()) @updatedAt
-
-  options Option[]
 
   @@index([questionType])
   @@map("questions")
 }
 
 model Option {
-  id         Int      @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   questionId Int
-  text       String   @db.Text
+  text       String  @db.Text
   sequence   Int
-  isActive   Boolean  @default(true)
-  isDeleted  Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
+  isActive   Boolean @default(true)
+  isDeleted  Boolean @default(false)
 
   question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   @@index([questionId])
   @@map("options")
+}
+
+model TimeSlot {
+  id           String        @id @default(cuid())
+  date         DateTime
+  startTime    DateTime
+  endTime      DateTime
+  totalSeats   Int
+  bookedSeats  Int           @default(0)
+  price        Float         @default(50.00)
+  isActive     Boolean       @default(true)
+  appointments Appointment[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@unique([date, startTime, endTime])
+}
+
+model Appointment {
+  id          String            @id @default(cuid())
+  userId      String
+  timeSlotId  String
+  status      AppointmentStatus @default(CONFIRMED)
+  user        User              @relation(fields: [userId], references: [id])
+  timeSlot    TimeSlot          @relation(fields: [timeSlotId], references: [id])
+  transaction Transaction?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model CanceledAppointment {
+  id                String        @id @default(cuid())
+  userId            String
+  timeSlotId        String
+  canceledAt        DateTime      @default(now())
+  reason            String?
+  phoneNumber       String
+  appointmentDate   DateTime
+}
+
+model Transaction {
+  id            String        @id @default(cuid())
+  appointmentId String        @unique
+  amount        Float
+  status        PaymentStatus @default(PENDING)
+  paymentMethod String?
+  transactionId String?       @unique
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserProgress {
+  id                 String      @id @default(cuid())
+  user               User        @relation(fields: [userId], references: [id])
+  userId             String      @unique
+  lastStep           BookingStep
+  selectedDate       DateTime?
+  selectedTimeSlotId String?
+  updatedAt          DateTime    @updatedAt
 }
 
 model ContactSubmission {
@@ -184,20 +263,6 @@ model ContactSubmission {
   subject   String
   message   String
   createdAt DateTime @default(now())
-}
-
-model Permission {
-  id        Int      @id @default(autoincrement())
-  role      UserRole
-  resource  Resource
-  canCreate Boolean  @default(false)
-  canRead   Boolean  @default(false)
-  canUpdate Boolean  @default(false)
-  canDelete Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([role, resource])
 }
 
 model NewsLetter {
@@ -249,3 +314,24 @@ enum LoginType {
   PHONE
   EMAIL
 }
+
+enum AppointmentStatus {
+  CONFIRMED
+  COMPLETED
+  NO_SHOW
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum BookingStep {
+  PHONE_VERIFICATION
+  DATE_SELECTION
+  TIME_SELECTION
+  PAYMENT
+}
+

@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
+//@ts-ignore
 import { Resource } from "@prisma/client";
 import { ProfileFormData, ProfileSchema } from "@/schemas";
 
