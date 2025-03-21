@@ -68,7 +68,7 @@ export default async function TimeSlotsPage({ searchParams }: PageProps) {
           </div>
           <div className="flex items-center gap-4 ml-auto">
             <ExportButton type="blog" />
-            <Link href="/time-slot-form">
+            <Link href="/admin/slots/new">
               <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
                 <Plus className="mr-2 h-4 w-4" /> Add Time Slot
               </Button>

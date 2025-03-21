@@ -72,13 +72,13 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
         <CardTitle>Select a Date</CardTitle>
         <CardDescription>Choose a date for your appointment</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="m-auto">
         <Calendar
           mode="single"
           selected={date}
           onSelect={setDate}
           disabled={disabledDays}
-          className="rounded-md border mx-auto"
+          className="rounded-md border mx-auto w-fit"
         />
       </CardContent>
       <CardFooter className="flex justify-between">
