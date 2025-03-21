@@ -106,8 +106,54 @@ export const sendOtpRequest = async (
         otpExpires,
       },
     });
-    return { success: "OTP sent successfully!" + !isProduction && otp };
+    return {
+      success: true,
+      message: isProduction
+        ? "OTP sent successfully"
+        : `OTP sent successfully ${otp}`,
+    };
   } catch (error) {
     return { error: "Failed to send OTP" };
+  }
+};
+
+export const OtpVerification = async (values: LoginWithPhoneSchemaData) => {
+  try {
+    const validatedFields = LoginWithPhoneSchema.safeParse(values);
+    if (!validatedFields.success) {
+      return { success: false, message: "Invalid fields!" };
+    }
+
+    const { phone, otp } = validatedFields.data;
+
+    let user = await getUserByPhone(phone);
+
+    if (!user) {
+      return { success: false, redirect: false, message: "User not found!" };
+    }
+
+    const isValid = await verifyOTP(user.id, Number(otp));
+
+    if (!isValid) {
+      return {
+        success: false,
+        redirect: false,
+        message: "Invalid OTP!",
+        id: user.id,
+      };
+    }
+
+    await db.userProgress.upsert({
+      where: { userId: user.id },
+      update: { lastStep: "DATE_SELECTION" },
+      create: {
+        userId: user.id,
+        lastStep: "DATE_SELECTION",
+      },
+    });
+
+    return { success: true, message: "OTP verified!", id: user.id };
+  } catch (error) {
+    return { success: false, message: "Failed to verify OTP" };
   }
 };

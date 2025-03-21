@@ -38,7 +38,7 @@ export default function Confirmation() {
     const appointmentId = sessionStorage.getItem("appointmentId");
 
     if (!appointmentId) {
-      router.push("/book");
+      router.push("/appointment-booking");
       return;
     }
 

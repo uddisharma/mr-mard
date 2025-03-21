@@ -41,11 +41,16 @@ export const registerWithOTP = async (values: RegisterWithOtpSchemaData) => {
       if (!response.ok) {
         return { success: false, message: "Failed to send OTP" };
       }
+      return {
+        success: true,
+        message: "OTP sent successfully",
+      };
+    } else {
+      return {
+        success: true,
+        message: "OTP sent successfully" + " " + otp,
+      };
     }
-    return {
-      success: true,
-      message: "OTP sent successfully" + !isProduction && otp,
-    };
   } catch (error) {
     console.log(error);
     return { success: false, message: "Something went wrong" };

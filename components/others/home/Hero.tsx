@@ -56,7 +56,7 @@ const Hero = () => {
             deserve results. Never let Hair loss take your confidence
           </p>
           <div className="flex flex-col space-y-7 w-[250px] max-w-[250px]">
-            <Link href="/analyze">
+            <Link href="/appointment-booking">
               <motion.div
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 1.001 }}
@@ -130,7 +130,7 @@ const Hero = () => {
           analysis.
         </p>
         <div className="flex flex-col justify-center items-center space-y-8 w-full pb-5">
-          <Link href="/analyze">
+          <Link href="/appointment-booking">
             <motion.div
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 1.001 }}

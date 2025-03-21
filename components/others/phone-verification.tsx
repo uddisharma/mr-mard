@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,13 +14,28 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { registerWithOTP } from "@/actions/register-phone";
+import { OtpVerification } from "@/actions/loginotp";
 
-export default function PhoneVerification() {
+export default function PhoneVerification({
+  phone,
+  id,
+}: {
+  phone?: string | undefined | null;
+  id?: string | undefined | null;
+}) {
   const router = useRouter();
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(phone || "");
   const [otp, setOtp] = useState("");
-  const [isOtpSent, setIsOtpSent] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(phone ? true : false);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (phone && id) {
+      sessionStorage.setItem("userId", id);
+      router.push("/appointment-booking/date");
+    }
+  }, [phone]);
 
   const handleSendOtp = async () => {
     if (!phoneNumber || phoneNumber.length < 10) {
@@ -28,15 +43,19 @@ export default function PhoneVerification() {
       return;
     }
 
-    setIsLoading(true);
-
-    // In a real app, you would call an API to send OTP
-    // This is a mock implementation
-    setTimeout(() => {
-      setIsOtpSent(true);
-      setIsLoading(false);
-      toast.success("Use 123456 as the OTP code for testing");
-    }, 1000);
+    try {
+      startTransition(async () => {
+        const response = await registerWithOTP({ phone: phoneNumber });
+        if (response.success) {
+          toast.success(response.message);
+          setIsOtpSent(true);
+        } else {
+          toast.error(response.message);
+        }
+      });
+    } catch (error: any) {
+      toast.error(error.message || "An error occurred.");
+    }
   };
 
   const handleVerifyOtp = async () => {
@@ -45,34 +64,25 @@ export default function PhoneVerification() {
       return;
     }
 
-    setIsLoading(true);
-
     try {
-      const response = await fetch("/api/verify-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ phoneNumber, otp }),
+      startTransition(async () => {
+        const res = await OtpVerification({ phone: phoneNumber, otp });
+        if (!res?.success && !res?.redirect) {
+          toast.error(res.message);
+        } else {
+          toast.success(res.message);
+        }
+        if (res?.id) {
+          sessionStorage.setItem("userId", res.id);
+          router.push("/appointment-booking/date");
+        } else {
+          toast.error("User ID is missing.");
+        }
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to verify OTP");
-      }
-
-      // Store user ID in session storage
-      sessionStorage.setItem("userId", data.userId);
-
-      // Redirect to date selection
-      router.push("/appointment-booking/date");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to verify OTP",
       );
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -114,7 +124,7 @@ export default function PhoneVerification() {
               <button
                 className="text-primary underline"
                 onClick={() => handleSendOtp()}
-                disabled={isLoading}
+                disabled={isPending}
               >
                 Resend
               </button>
@@ -127,17 +137,17 @@ export default function PhoneVerification() {
           <Button
             className="w-full"
             onClick={handleSendOtp}
-            disabled={isLoading}
+            disabled={isPending}
           >
-            {isLoading ? "Sending..." : "Send Verification Code"}
+            {isPending ? "Sending..." : "Send Verification Code"}
           </Button>
         ) : (
           <Button
             className="w-full"
             onClick={handleVerifyOtp}
-            disabled={isLoading}
+            disabled={isPending}
           >
-            {isLoading ? "Verifying..." : "Verify"}
+            {isPending ? "Verifying..." : "Verify"}
           </Button>
         )}
       </CardFooter>

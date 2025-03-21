@@ -1,6 +1,8 @@
 import DatePicker from "@/components/others/date-picker";
+import { currentUser } from "@/lib/auth";
 
-export default function DateSelectionPage() {
+export default async function DateSelectionPage() {
+  const session = await currentUser();
   return (
     <div className="container max-w-4xl mx-auto py-10">
       <div className="mb-8 text-center">
@@ -9,7 +11,7 @@ export default function DateSelectionPage() {
           Choose a date for your appointment
         </p>
       </div>
-      <DatePicker />
+      <DatePicker id={session?.id} />
     </div>
   );
 }

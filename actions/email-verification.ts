@@ -44,7 +44,7 @@ export async function EmailVerification(
       });
       return { success: true, message: "OTP sent successfully" };
     } else {
-      return { success: true, message: "OTP sent successfully" + otp };
+      return { success: true, message: "OTP sent successfully" + " " + otp };
     }
   } catch (error) {
     // @ts-ignore

@@ -46,7 +46,7 @@ export default function TimeSlotPicker() {
     const storedDate = sessionStorage.getItem("selectedDate");
 
     if (!storedUserId || !storedDate) {
-      router.push("/book");
+      router.push("/appointment-booking");
       return;
     }
 
@@ -85,7 +85,7 @@ export default function TimeSlotPicker() {
 
     if (!userId) {
       toast.warning("Please verify your phone number first");
-      router.push("/book");
+      router.push("/appointment-booking");
       return;
     }
 

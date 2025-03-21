@@ -14,17 +14,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-export default function DatePicker() {
+export default function DatePicker({ id }: { id?: string | undefined | null }) {
   const router = useRouter();
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(id ?? null);
 
   useEffect(() => {
-    // Get user ID from session storage
     const storedUserId = sessionStorage.getItem("userId");
     if (!storedUserId) {
-      router.push("/book");
+      router.push("/appointment-booking");
       return;
     }
     setUserId(storedUserId);
@@ -38,14 +37,13 @@ export default function DatePicker() {
 
     if (!userId) {
       toast.error("Authentication Error");
-      router.push("/book");
+      router.push("/appointment-booking");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      // Update user progress
       await fetch("/api/user-progress", {
         method: "PUT",
         headers: {
@@ -57,11 +55,7 @@ export default function DatePicker() {
           selectedDate: date.toISOString(),
         }),
       });
-
-      // Store selected date in session storage
       sessionStorage.setItem("selectedDate", date.toISOString());
-
-      // Redirect to time slot selection
       router.push("/appointment-booking/time");
     } catch (error) {
       toast.error("Failed to save your selection");
@@ -70,7 +64,6 @@ export default function DatePicker() {
     }
   };
 
-  // Disable past dates
   const disabledDays = { before: new Date() };
 
   return (
@@ -89,7 +82,10 @@ export default function DatePicker() {
         />
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" onClick={() => router.push("/book")}>
+        <Button
+          variant="outline"
+          onClick={() => router.push("/appointment-booking")}
+        >
           Back
         </Button>
         <Button onClick={handleContinue} disabled={!date || isLoading}>

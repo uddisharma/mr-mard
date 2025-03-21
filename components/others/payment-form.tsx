@@ -38,7 +38,7 @@ export default function PaymentForm() {
     const storedPrice = sessionStorage.getItem("selectedTimeSlotPrice");
 
     if (!storedUserId || !storedTimeSlotId) {
-      router.push("/book");
+      router.push("/appointment-booking");
       return;
     }
 
@@ -56,7 +56,7 @@ export default function PaymentForm() {
 
     if (!userId || !timeSlotId) {
       toast.warning("Missing required information. Please start over.");
-      router.push("/book");
+      router.push("/appointment-booking");
       return;
     }
 
