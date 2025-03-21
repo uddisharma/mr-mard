@@ -12,6 +12,7 @@ import { getUserByPhone } from "@/data/user";
 import { verifyOTP } from "@/data/verifyOtp";
 import { db } from "@/lib/db";
 import { generateOtp } from "@/lib/otp";
+import { isProduction } from "@/lib/utils";
 
 export const loginOTP = async (values: LoginWithPhoneSchemaData) => {
   const validatedFields = LoginWithPhoneSchema.safeParse(values);
@@ -87,12 +88,14 @@ export const sendOtpRequest = async (
 
   const { otp, otpExpires } = generateOtp();
 
-  const response = await fetch(
-    `https://www.fast2sms.com/dev/bulkV2?authorization=${process?.env.FAST2SMS_API_KEY}&route=dlt&sender_id=MRMOTP&message=179684&variables_values=${otp}%7C&flash=0&numbers=${phone}`,
-  );
+  if (isProduction) {
+    const response = await fetch(
+      `https://www.fast2sms.com/dev/bulkV2?authorization=${process?.env.FAST2SMS_API_KEY}&route=dlt&sender_id=MRMOTP&message=179684&variables_values=${otp}%7C&flash=0&numbers=${phone}`,
+    );
 
-  if (!response.ok) {
-    return { success: false, message: "Failed to send OTP" };
+    if (!response.ok) {
+      return { success: false, message: "Failed to send OTP" };
+    }
   }
 
   try {
@@ -103,7 +106,7 @@ export const sendOtpRequest = async (
         otpExpires,
       },
     });
-    return { success: "OTP sent successfully!" };
+    return { success: "OTP sent successfully!" + !isProduction && otp };
   } catch (error) {
     return { error: "Failed to send OTP" };
   }

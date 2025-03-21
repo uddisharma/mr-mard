@@ -3,6 +3,7 @@
 import { RegisterWithOtpSchema, RegisterWithOtpSchemaData } from "@/schemas";
 import { db } from "@/lib/db";
 import { generateOtp } from "@/lib/otp";
+import { isProduction } from "@/lib/utils";
 
 export const registerWithOTP = async (values: RegisterWithOtpSchemaData) => {
   try {
@@ -32,16 +33,19 @@ export const registerWithOTP = async (values: RegisterWithOtpSchemaData) => {
         loginType: "PHONE",
       },
     });
+    if (isProduction) {
+      const response = await fetch(
+        `https://www.fast2sms.com/dev/bulkV2?authorization=${process?.env.FAST2SMS_API_KEY}&route=dlt&sender_id=MRMOTP&message=179684&variables_values=${otp}%7C&flash=0&numbers=${phone}`,
+      );
 
-    const response = await fetch(
-      `https://www.fast2sms.com/dev/bulkV2?authorization=${process?.env.FAST2SMS_API_KEY}&route=dlt&sender_id=MRMOTP&message=179684&variables_values=${otp}%7C&flash=0&numbers=${phone}`,
-    );
-
-    if (!response.ok) {
-      return { success: false, message: "Failed to send OTP" };
+      if (!response.ok) {
+        return { success: false, message: "Failed to send OTP" };
+      }
     }
-
-    return { success: true, message: "OTP sent successfully" };
+    return {
+      success: true,
+      message: "OTP sent successfully" + !isProduction && otp,
+    };
   } catch (error) {
     console.log(error);
     return { success: false, message: "Something went wrong" };

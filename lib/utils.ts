@@ -28,3 +28,5 @@ export function formatCurrency(amount: number): string {
     currency: "USD",
   }).format(amount);
 }
+
+export const isProduction = process.env.NODE_ENV === "production";

@@ -3,6 +3,7 @@ import { verifyOTP } from "@/data/verifyOtp";
 import { db } from "@/lib/db";
 import { sendVerificationOTP } from "@/lib/mail";
 import { generateOtp } from "@/lib/otp";
+import { isProduction } from "@/lib/utils";
 import { z } from "zod";
 
 export async function EmailVerification(
@@ -29,20 +30,22 @@ export async function EmailVerification(
 
     const { otp, otpExpires } = await generateOtp();
 
-    const response = await sendVerificationOTP(email, otp);
-
-    if (!response?.success)
-      return { success: false, message: "Failed to send OTP" };
-
-    await db.user.update({
-      where: { phone },
-      data: {
-        email,
-        otp,
-        otpExpires,
-      },
-    });
-    return { success: true, message: "OTP sent successfully" };
+    if (isProduction) {
+      const response = await sendVerificationOTP(email, otp);
+      if (!response?.success)
+        return { success: false, message: "Failed to send OTP" };
+      await db.user.update({
+        where: { phone },
+        data: {
+          email,
+          otp,
+          otpExpires,
+        },
+      });
+      return { success: true, message: "OTP sent successfully" };
+    } else {
+      return { success: true, message: "OTP sent successfully" + otp };
+    }
   } catch (error) {
     // @ts-ignore
     if (error instanceof z.ZodError) {
