@@ -151,7 +151,7 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
         </div>
         <Pagination
           searchParams={searchParams}
-          totalBlogs={totalAppointments}
+          total={totalAppointments}
           totalPages={totalPages}
         />
       </main>

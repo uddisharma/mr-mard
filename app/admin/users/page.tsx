@@ -132,7 +132,7 @@ export default async function UsersPage({ searchParams }: PageProps) {
         </div>
         <Pagination
           searchParams={searchParams}
-          totalBlogs={totalUsers}
+          total={totalUsers}
           totalPages={totalPages}
         />
       </main>

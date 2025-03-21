@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 import {
@@ -18,18 +18,19 @@ type PageProps = {
     search?: string;
     category?: string;
   };
-  totalBlogs: number;
+  total: number;
   totalPages: number;
 };
 
 export default function Pagination({
   searchParams,
-  totalBlogs,
+  total,
   totalPages,
 }: PageProps) {
   const router = useRouter();
   const page = Number(searchParams.page) || 1;
   const limit = Number(searchParams.limit) || 10;
+  const path = usePathname();
   const search =
     typeof searchParams.search === "string" ? searchParams.search : undefined;
   const category =
@@ -39,13 +40,13 @@ export default function Pagination({
 
   const handlePageChange = (newPage: number) => {
     router.push(
-      `/admin/blogs?page=${newPage}&limit=${limit}${search ? `&search=${search}` : ""}${category ? `&category=${category}` : ""}`,
+      `${path}?page=${newPage}&limit=${limit}${search ? `&search=${search}` : ""}${category ? `&category=${category}` : ""}`,
     );
   };
 
   const handleLimitChange = (newLimit: string) => {
     router.push(
-      `/admin/blogs?page=1&limit=${newLimit}${search ? `&search=${search}` : ""}${category ? `&category=${category}` : ""}`,
+      `${path}?page=1&limit=${newLimit}${search ? `&search=${search}` : ""}${category ? `&category=${category}` : ""}`,
     );
   };
 

@@ -29,6 +29,7 @@ export default function PhoneVerification({
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(phone ? true : false);
   const [isPending, startTransition] = useTransition();
+  const [resendTimer, setResendTimer] = useState(0);
 
   useEffect(() => {
     if (phone && id) {
@@ -36,6 +37,14 @@ export default function PhoneVerification({
       router.push("/appointment-booking/date");
     }
   }, [phone]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (resendTimer > 0) {
+      timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [resendTimer]);
 
   const handleSendOtp = async () => {
     if (!phoneNumber || phoneNumber.length < 10) {
@@ -49,6 +58,7 @@ export default function PhoneVerification({
         if (response.success) {
           toast.success(response.message);
           setIsOtpSent(true);
+          setResendTimer(30);
         } else {
           toast.error(response.message);
         }
@@ -122,11 +132,13 @@ export default function PhoneVerification({
             <p className="text-sm text-muted-foreground">
               Didn't receive a code?{" "}
               <button
-                className="text-primary underline"
+                className={`text-primary underline cursor-${
+                  resendTimer > 0 ? "not-allowed" : "pointer"
+                }`}
                 onClick={() => handleSendOtp()}
-                disabled={isPending}
+                disabled={isPending || resendTimer > 0}
               >
-                Resend
+                {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend"}
               </button>
             </p>
           </div>

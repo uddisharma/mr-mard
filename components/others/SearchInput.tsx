@@ -6,9 +6,13 @@ import { useState } from "react";
 
 interface SearchInputProps {
   defaultValue?: string;
+  type?: string;
 }
 
-export default function SearchInput({ defaultValue }: SearchInputProps) {
+export default function SearchInput({
+  defaultValue,
+  type = "text",
+}: SearchInputProps) {
   const [search, setSearch] = useState(defaultValue || "");
   const router = useRouter();
 
@@ -24,6 +28,7 @@ export default function SearchInput({ defaultValue }: SearchInputProps) {
     <Input
       placeholder="Search items..."
       value={search}
+      type={type}
       onChange={handleSearchChange}
     />
   );

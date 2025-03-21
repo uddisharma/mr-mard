@@ -100,7 +100,7 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
         </div>
         <Pagination
           searchParams={searchParams}
-          totalBlogs={totalleads}
+          total={totalleads}
           totalPages={totalPages}
         />
       </main>

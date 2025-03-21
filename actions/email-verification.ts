@@ -44,6 +44,14 @@ export async function EmailVerification(
       });
       return { success: true, message: "OTP sent successfully" };
     } else {
+      await db.user.update({
+        where: { phone },
+        data: {
+          email,
+          otp,
+          otpExpires,
+        },
+      });
       return { success: true, message: "OTP sent successfully" + " " + otp };
     }
   } catch (error) {
