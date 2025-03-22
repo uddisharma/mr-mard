@@ -11,7 +11,6 @@ import { TimeSlot } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import ExcelImportExport from "./excel-import-export";
 import TimeSlotForm from "./time-slot-form";
-import QuestionActions from "../actions/questions";
 import TimeSlotsActions from "../actions/time-slots";
 import CleartButton from "./clear-button";
 

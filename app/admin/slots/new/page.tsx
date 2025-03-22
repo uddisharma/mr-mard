@@ -1,8 +1,6 @@
 "use client";
 
-import type React from "react";
-
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,46 +14,14 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
-interface TimeSlotFormProps {
-  onSuccess: () => void;
-  initialData?: {
-    id: string;
-    date: string;
-    startTime: string;
-    endTime: string;
-    totalSeats: number;
-    price: number;
-    isActive: boolean;
-  };
-}
-
-export default function TimeSlotForm({
-  onSuccess,
-  initialData,
-}: TimeSlotFormProps) {
-  const [date, setDate] = useState(
-    initialData?.date
-      ? new Date(initialData.date).toISOString().split("T")[0]
-      : "",
-  );
-  const [startTime, setStartTime] = useState(
-    initialData?.startTime
-      ? new Date(initialData.startTime).toISOString().slice(0, 16)
-      : "",
-  );
-  const [endTime, setEndTime] = useState(
-    initialData?.endTime
-      ? new Date(initialData.endTime).toISOString().slice(0, 16)
-      : "",
-  );
-  const [totalSeats, setTotalSeats] = useState(
-    initialData?.totalSeats?.toString() || "",
-  );
-  const [price, setPrice] = useState(initialData?.price?.toString() || "50.00");
-  const [isActive, setIsActive] = useState(initialData?.isActive ?? true);
+export default function TimeSlotForm({}) {
+  const [date, setDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [totalSeats, setTotalSeats] = useState("");
+  const [price, setPrice] = useState("50");
+  const [isActive, setIsActive] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
-  const isEditing = !!initialData;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,11 +34,9 @@ export default function TimeSlotForm({
     setIsLoading(true);
 
     try {
-      const endpoint = isEditing
-        ? `/api/admin/time-slots/${initialData.id}`
-        : "/api/admin/time-slots";
+      const endpoint = "/api/admin/time-slots";
 
-      const method = isEditing ? "PUT" : "POST";
+      const method = "POST";
 
       const response = await fetch(endpoint, {
         method,
@@ -94,11 +58,7 @@ export default function TimeSlotForm({
         throw new Error(errorData.error || "Failed to save time slot");
       }
 
-      toast.success(
-        isEditing
-          ? "The time slot has been updated successfully"
-          : "A new time slot has been created",
-      );
+      toast.success("A new time slot has been created");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to save time slot",
@@ -114,9 +74,7 @@ export default function TimeSlotForm({
       <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border-[1px] border-whiteGray">
         <Card>
           <CardHeader>
-            <CardTitle>
-              {isEditing ? "Edit Time Slot" : "Create New Time Slot"}
-            </CardTitle>
+            <CardTitle>Create New Time Slot</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -189,11 +147,9 @@ export default function TimeSlotForm({
             </form>
           </CardContent>
           <CardFooter className="flex justify-end space-x-2">
-            <Button variant="outline" onClick={onSuccess}>
-              Cancel
-            </Button>
+            <Button variant="outline">Cancel</Button>
             <Button onClick={handleSubmit} disabled={isLoading}>
-              {isLoading ? "Saving..." : isEditing ? "Update" : "Create"}
+              {isLoading ? "Saving..." : "Create"}
             </Button>
           </CardFooter>
         </Card>
