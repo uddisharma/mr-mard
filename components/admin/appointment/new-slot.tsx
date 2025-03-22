@@ -11,6 +11,9 @@ import { TimeSlot } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import ExcelImportExport from "./excel-import-export";
 import TimeSlotForm from "./time-slot-form";
+import QuestionActions from "../actions/questions";
+import TimeSlotsActions from "../actions/time-slots";
+import CleartButton from "./clear-button";
 
 const NewSLot = ({
   timeSlots,
@@ -51,21 +54,19 @@ const NewSLot = ({
     setShowForm(false);
     setEditingTimeSlot(null);
   };
+
+  const handleEditTimeSlot = (timeSlot: { data: TimeSlot }) => {
+    setEditingTimeSlot(timeSlot?.data);
+    setShowForm(true);
+    setShowImportExport(false);
+  };
+
   return (
     <>
       {showForm ? (
         <TimeSlotForm
           onSuccess={handleFormSuccess}
-          initialData={
-            editingTimeSlot
-              ? {
-                  ...editingTimeSlot,
-                  date: editingTimeSlot.date.toISOString(),
-                  startTime: editingTimeSlot.startTime.toISOString(),
-                  endTime: editingTimeSlot.endTime.toISOString(),
-                }
-              : undefined
-          }
+          initialData={editingTimeSlot ? editingTimeSlot : undefined}
         />
       ) : showImportExport ? (
         <ExcelImportExport
@@ -80,16 +81,7 @@ const NewSLot = ({
           <div className="flex flex-wrap gap-4 mb-6">
             <div className="flex items-center gap-4">
               <SearchInput defaultValue={search} type="date" />
-              {search && (
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    router.push("/admin/slots");
-                  }}
-                >
-                  Clear
-                </Button>
-              )}
+              <CleartButton search={search} />
             </div>
             <div className="flex items-center gap-4 ml-auto">
               <Button variant="outline" onClick={toggleImportExport}>
@@ -142,10 +134,13 @@ const NewSLot = ({
                       >
                         {timeSlot.isActive ? "Active" : "Inactive"}
                       </div>
-                      <div>
-                        <Button variant="destructive" size="sm">
-                          Delete
-                        </Button>
+                      <div className="flex items-left justify-left ">
+                        <TimeSlotsActions
+                          timeslot={{
+                            data: timeSlot,
+                            handleEditTimeSlot: handleEditTimeSlot,
+                          }}
+                        />
                       </div>
                     </div>
                   ))

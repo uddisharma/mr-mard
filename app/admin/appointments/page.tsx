@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { FormError } from "@/components/others/form-error";
 import Pagination from "@/components/admin/pagination";
@@ -12,6 +12,8 @@ import { Loader2 } from "lucide-react";
 import SearchInput from "@/components/others/SearchInput";
 import ExportButton from "@/components/admin/export";
 import Link from "next/link";
+import AppointmentActions from "@/components/admin/actions/appointments";
+import CleartButton from "@/components/admin/appointment/clear-button";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -38,20 +40,9 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
   // if (!hasPermission) {
   //   return <FormError message="You do not have permission to view this content!" />;
   // }
-
   const where: Prisma.AppointmentWhereInput = {
     ...(search && {
-      OR: [
-        { id: { contains: search, mode: "insensitive" as Prisma.QueryMode } },
-        {
-          user: {
-            phone: {
-              contains: search,
-              mode: "insensitive" as Prisma.QueryMode,
-            },
-          },
-        },
-      ],
+      OR: [{ timeSlot: { date: new Date(search).toISOString() } }],
     }),
   };
 
@@ -74,11 +65,12 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
         </div>
         <div className="flex flex-wrap gap-4 mb-6">
           <div className="flex items-center gap-4">
-            <SearchInput defaultValue={search} />
+            <SearchInput defaultValue={search} type="date" />
+            <CleartButton search={search} />
           </div>
 
           <div className="flex items-center gap-4 ml-auto">
-            <ExportButton type="blog" />
+            <ExportButton type="appointment" />
             <Link href={"/appointment-booking"}>
               <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
                 + New Appointment
@@ -138,10 +130,14 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
                       {appointment.status}
                     </div>
 
-                    <div>
-                      <Button variant="destructive" size="sm">
-                        Cancel
-                      </Button>
+                    <div className="flex items-left justify-left ">
+                      <AppointmentActions
+                        appointment={{
+                          id: appointment.id,
+                          phone: appointment.user.phone ?? "",
+                          status: appointment.status,
+                        }}
+                      />
                     </div>
                   </div>
                 ))

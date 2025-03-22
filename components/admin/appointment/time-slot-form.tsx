@@ -15,14 +15,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
+import { ToggleLeft } from "lucide-react";
 
 interface TimeSlotFormProps {
   onSuccess: () => void;
   initialData?: {
     id: string;
-    date: string;
-    startTime: string;
-    endTime: string;
+    date: Date;
+    startTime: Date;
+    endTime: Date;
     totalSeats: number;
     price: number;
     isActive: boolean;
@@ -33,6 +34,7 @@ export default function TimeSlotForm({
   onSuccess,
   initialData,
 }: TimeSlotFormProps) {
+  console.log(initialData);
   const [date, setDate] = useState(
     initialData?.date
       ? new Date(initialData.date).toISOString().split("T")[0]
@@ -111,90 +113,101 @@ export default function TimeSlotForm({
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          {isEditing ? "Edit Time Slot" : "Create New Time Slot"}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="date">Date</Label>
-            <Input
-              id="date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="start-time">Start Time</Label>
-            <Input
-              id="start-time"
-              type="datetime-local"
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="end-time">End Time</Label>
-            <Input
-              id="end-time"
-              type="datetime-local"
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="total-seats">Total Seats</Label>
-            <Input
-              id="total-seats"
-              type="number"
-              min="1"
-              value={totalSeats}
-              onChange={(e) => setTotalSeats(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="price">Price ($)</Label>
-            <Input
-              id="price"
-              type="number"
-              min="0"
-              step="0.01"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="active"
-              checked={isActive}
-              onCheckedChange={setIsActive}
-            />
-            <Label htmlFor="active">Active</Label>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-end space-x-2">
-        <Button variant="outline" onClick={onSuccess}>
-          Cancel
+    <main className="container mx-auto py-8">
+      <div className="flex justify-between items-center mb-6 gap-4">
+        <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
+          <h2 className="text-2xl font-bold">Time Slots</h2>
+        </div>
+        <Button onClick={onSuccess} variant="outline">
+          <ToggleLeft className="mr-2 h-4 w-4" />
+          Close
         </Button>
-        <Button onClick={handleSubmit} disabled={isLoading}>
-          {isLoading ? "Saving..." : isEditing ? "Update" : "Create"}
-        </Button>
-      </CardFooter>
-    </Card>
+      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            {isEditing ? "Edit Time Slot" : "Create New Time Slot"}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="date">Date</Label>
+              <Input
+                id="date"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="start-time">Start Time</Label>
+              <Input
+                id="start-time"
+                type="datetime-local"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="end-time">End Time</Label>
+              <Input
+                id="end-time"
+                type="datetime-local"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="total-seats">Total Seats</Label>
+              <Input
+                id="total-seats"
+                type="number"
+                min="1"
+                value={totalSeats}
+                onChange={(e) => setTotalSeats(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="price">Price ($)</Label>
+              <Input
+                id="price"
+                type="number"
+                min="0"
+                step="0.01"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="active"
+                checked={isActive}
+                onCheckedChange={setIsActive}
+              />
+              <Label htmlFor="active">Active</Label>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-end space-x-2">
+          <Button variant="outline" onClick={onSuccess}>
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} disabled={isLoading}>
+            {isLoading ? "Saving..." : isEditing ? "Update" : "Create"}
+          </Button>
+        </CardFooter>
+      </Card>
+    </main>
   );
 }

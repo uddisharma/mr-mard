@@ -7,7 +7,9 @@ export type ExportType =
   | "report"
   | "user"
   | "newsletter"
-  | "leads";
+  | "leads"
+  | "appointment"
+  | "cancelled";
 
 export interface User {
   id: string;

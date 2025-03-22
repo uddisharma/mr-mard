@@ -37,6 +37,13 @@ export async function GET(
       case "newsletter":
         const newsletters = await db.newsLetter.findMany();
         return NextResponse.json(newsletters, { status: 200 });
+      case "appointment":
+        const appointments = await db.appointment.findMany();
+        return NextResponse.json(appointments, { status: 200 });
+      case "cancelled":
+        const cancelledAppointments = await db.userProgress.findMany();
+        return NextResponse.json(cancelledAppointments, { status: 200 });
+      default:
     }
   } catch (error) {
     return NextResponse.json(
