@@ -32,15 +32,22 @@ export async function submitReport(reportData: ReportFormData) {
 
   let { questions } = validatedData;
 
+  const startTime = new Date();
+  const endTime = new Date(startTime.getTime() + 1 * 60 * 1000);
+  const createdAt = new Date();
+  createdAt.setHours(createdAt.getHours() + 5);
+  createdAt.setMinutes(createdAt.getMinutes() + 30);
+
   try {
     await db.report.create({
       data: {
         userId: session?.id,
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime,
+        endTime,
         sessionId: session.id,
         recommendation: {},
         questions,
+        // createdAt
       },
     });
 

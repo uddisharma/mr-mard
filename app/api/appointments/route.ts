@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get user and time slot
     const user = await db.user.findUnique({
       where: { id: userId },
     });
@@ -28,7 +27,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if there are available seats
     if (timeSlot.bookedSeats >= timeSlot.totalSeats) {
       return NextResponse.json(
         { error: "No available seats for this time slot" },
@@ -36,7 +34,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check for canceled appointments
     const canceledAppointment = await db.canceledAppointment.findFirst({
       where: {
         phoneNumber: user.phone ?? "",
@@ -45,21 +42,17 @@ export async function POST(request: NextRequest) {
     });
 
     if (canceledAppointment) {
-      // Delete the canceled appointment record
       await db.canceledAppointment.delete({
         where: { id: canceledAppointment.id },
       });
     }
 
-    // Create appointment and transaction in a transaction
     const result = await db.$transaction(async (tx: any) => {
-      // Update time slot to increment booked seats
       const updatedTimeSlot = await tx.timeSlot.update({
         where: { id: timeSlotId },
         data: { bookedSeats: { increment: 1 } },
       });
 
-      // Create appointment
       const appointment = await tx.appointment.create({
         data: {
           userId,
@@ -67,7 +60,6 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      // Create transaction record
       const transaction = await tx.transaction.create({
         data: {
           appointmentId: appointment.id,
@@ -78,10 +70,8 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      // Update user progress
-      await tx.userProgress.update({
+      await tx.userProgress.delete({
         where: { userId },
-        data: { lastStep: "PAYMENT" },
       });
 
       return { appointment, transaction };

@@ -103,7 +103,7 @@ export default async function ViewReportPage({ params }: PageProps) {
               <div className="flex items-center">
                 <Mail className="mr-2 h-4 w-4 opacity-70" />
                 <span className="font-semibold mr-2">Email:</span>
-                {report.user.firstName} {report.user.lastName}
+                {report.user.email}
               </div>
               <div className="flex items-center">
                 <HelpCircle className="mr-2 h-4 w-4 opacity-70" />

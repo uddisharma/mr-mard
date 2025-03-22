@@ -43,6 +43,9 @@ export async function GET(
       case "cancelled":
         const cancelledAppointments = await db.userProgress.findMany();
         return NextResponse.json(cancelledAppointments, { status: 200 });
+      case "transaction":
+        const transactions = await db.transaction.findMany();
+        return NextResponse.json(transactions, { status: 200 });
       default:
     }
   } catch (error) {

@@ -67,13 +67,15 @@ export default async function CancelledAppointmentsPage({
 
         <div className="bg-white rounded-lg border overflow-x-auto">
           <div className="min-w-[800px]">
-            <div className="grid grid-cols-[1fr_1fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
-              <div>ID</div>
-              <div>Phone</div>
-              <div>Last Step</div>
-              <div>Updated At</div>
+            {/* Table Header */}
+            <div className="grid grid-cols-4 gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+              <div className="font-semibold">ID</div>
+              <div className="font-semibold">Phone</div>
+              <div className="font-semibold">Last Step</div>
+              <div className="font-semibold">Updated At</div>
             </div>
 
+            {/* Table Body */}
             <div className="divide-y">
               {cancelledAppointments.length === 0 ? (
                 <div className="p-4 text-center text-muted-foreground">
@@ -83,7 +85,7 @@ export default async function CancelledAppointmentsPage({
                 cancelledAppointments.map((progress) => (
                   <div
                     key={progress.id}
-                    className="grid grid-cols-[1fr_1fr_1fr_auto] gap-4 p-4 hover:bg-gray-50 text-left"
+                    className="grid grid-cols-4 gap-4 p-4 hover:bg-gray-50 text-left"
                   >
                     <div>{progress.id.substring(0, 8).toUpperCase()}</div>
                     <div>{progress.user.phone}</div>
@@ -100,6 +102,7 @@ export default async function CancelledAppointmentsPage({
             </div>
           </div>
         </div>
+
         <Pagination
           searchParams={searchParams}
           total={totalCancelled}

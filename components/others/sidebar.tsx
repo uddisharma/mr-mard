@@ -29,18 +29,18 @@ const navItems = [
   },
   { icon: AlarmClockCheck, label: "Time Slots", href: "/admin/slots" },
   { icon: ArrowLeftRight, label: "Transactions", href: "/admin/transactions" },
-  { icon: FileText, label: "Blogs", href: "/admin/blogs" },
-  { icon: HelpCircle, label: "Questions", href: "/admin/questions" },
   { icon: FileBarChart, label: "Reports", href: "/admin/reports" },
+  { icon: HelpCircle, label: "Questions", href: "/admin/questions" },
+  { icon: ScanFace, label: "Permissions", href: "/admin/permissions" },
   { icon: Users, label: "Users", href: "/admin/users" },
+  { icon: FileText, label: "Blogs", href: "/admin/blogs" },
+  { icon: Bolt, label: "Leads", href: "/admin/leads" },
   {
     icon: Users,
     label: "Contacts",
     href: "/admin/contact-submissions",
   },
-  { icon: ScanFace, label: "Permissions", href: "/admin/permissions" },
   { icon: Newspaper, label: "NewsLetter", href: "/admin/newsletter" },
-  { icon: Bolt, label: "Leads", href: "/admin/leads" },
 ];
 
 export default function Sidebar({ role }: { role: string | undefined }) {

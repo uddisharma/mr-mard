@@ -8,13 +8,13 @@ interface SearchInputProps {
   type?: string;
 }
 
-export default function SearchInput({ type = "text" }: SearchInputProps) {
+export default function SearchInputDate({ type = "text" }: SearchInputProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set("search", e.target.value);
+    searchParams.set("date", e.target.value);
     searchParams.set("page", "1");
     router.push(`?${searchParams.toString()}`);
   };
@@ -22,7 +22,7 @@ export default function SearchInput({ type = "text" }: SearchInputProps) {
   return (
     <Input
       placeholder="Search items..."
-      value={searchParams.get("search") || ""}
+      value={searchParams.get("date") || ""}
       type={type}
       onChange={handleSearchChange}
     />

@@ -9,7 +9,8 @@ export type ExportType =
   | "newsletter"
   | "leads"
   | "appointment"
-  | "cancelled";
+  | "cancelled"
+  | "transaction";
 
 export interface User {
   id: string;

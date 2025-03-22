@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -32,7 +31,6 @@ export default function PaymentForm() {
   const [appointmentPrice, setAppointmentPrice] = useState(50.0);
 
   useEffect(() => {
-    // Get user ID and selected time slot from session storage
     const storedUserId = sessionStorage.getItem("userId");
     const storedTimeSlotId = sessionStorage.getItem("selectedTimeSlotId");
     const storedPrice = sessionStorage.getItem("selectedTimeSlotPrice");
@@ -45,7 +43,6 @@ export default function PaymentForm() {
     setUserId(storedUserId);
     setTimeSlotId(storedTimeSlotId);
 
-    // Set the price from session storage if available
     if (storedPrice) {
       setAppointmentPrice(Number.parseFloat(storedPrice));
     }
@@ -60,7 +57,6 @@ export default function PaymentForm() {
       return;
     }
 
-    // Basic validation
     if (paymentMethod === "credit-card") {
       if (!cardNumber || !cardName || !expiryDate || !cvv) {
         toast.warning("Please fill in all payment details");
@@ -71,13 +67,10 @@ export default function PaymentForm() {
     setIsLoading(true);
 
     try {
-      // In a real app, you would process payment with a payment provider
-      // This is a mock implementation
+      //razorpay payment gateway
 
-      // Create a mock payment transaction ID
       const mockTransactionId = `tx-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-      // Create appointment with payment details
       const response = await fetch("/api/appointments", {
         method: "POST",
         headers: {
@@ -101,15 +94,11 @@ export default function PaymentForm() {
 
       const data = await response.json();
 
-      // Clear session storage
       sessionStorage.removeItem("selectedDate");
       sessionStorage.removeItem("selectedTimeSlotId");
       sessionStorage.removeItem("selectedTimeSlotPrice");
-
-      // Store appointment ID for confirmation page
       sessionStorage.setItem("appointmentId", data.appointment.id);
 
-      // Redirect to confirmation page
       router.push("/appointment-booking/confirmation");
     } catch (error) {
       toast.error(

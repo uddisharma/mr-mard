@@ -41,8 +41,6 @@ export default function Confirmation() {
       router.push("/appointment-booking");
       return;
     }
-
-    // Fetch appointment details
     fetchAppointmentDetails(appointmentId);
   }, [router]);
 
@@ -59,7 +57,6 @@ export default function Confirmation() {
       setAppointment(data);
     } catch (error) {
       console.error("Error fetching appointment details:", error);
-      // We'll show a generic confirmation if we can't fetch the details
     } finally {
       setIsLoading(false);
     }
@@ -120,7 +117,7 @@ export default function Confirmation() {
 
         <div className="text-center text-sm text-muted-foreground">
           <p>Need to make changes to your appointment?</p>
-          <p>Contact us at support@example.com or call (123) 456-7890</p>
+          <p>Contact us at +91 1234567890</p>
         </div>
       </CardContent>
       <CardFooter className="flex justify-center">
