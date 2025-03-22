@@ -7,6 +7,7 @@ import ExportButton from "@/components/admin/export";
 import Pagination from "@/components/admin/pagination";
 import CleartButton from "@/components/admin/appointment/clear-button";
 import SearchInputDate from "@/components/others/SearchInput Date";
+import { Badge } from "@/components/ui/badge";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -89,19 +90,19 @@ export default async function TransactionsPage({ searchParams }: PageProps) {
                   >
                     <div>{transaction?.transactionId?.toUpperCase()}</div>
                     <div>₹{transaction.amount.toFixed(2)}</div>
-                    <div
-                      className={
-                        transaction.status === "COMPLETED"
-                          ? "text-green-500"
-                          : transaction.status === "PENDING"
-                            ? "text-yellow-500"
-                            : transaction.status === "FAILED"
-                              ? "text-red-500"
-                              : "text-blue-500"
-                      }
+                    <Badge
+                      className="w-fit h-6"
+                      variant={`${
+                        transaction.status == "COMPLETED"
+                          ? "sucess"
+                          : "destructive"
+                      }`}
                     >
-                      {transaction.status}
-                    </div>
+                      {transaction.status
+                        ? transaction.status.charAt(0).toUpperCase() +
+                          transaction.status.slice(1).toLowerCase()
+                        : "N/A"}
+                    </Badge>
                     <div>{transaction.paymentMethod || "N/A"}</div>
                     <div>
                       {format(

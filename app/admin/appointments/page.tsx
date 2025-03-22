@@ -14,6 +14,7 @@ import ExportButton from "@/components/admin/export";
 import Link from "next/link";
 import AppointmentActions from "@/components/admin/actions/appointments";
 import CleartButton from "@/components/admin/appointment/clear-button";
+import { Badge } from "@/components/ui/badge";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -120,16 +121,19 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
                         "hh:mm a",
                       )}
                     </div>
-                    <div
-                      className={
-                        appointment.status === "CONFIRMED"
-                          ? "text-green-500"
-                          : "text-red-500"
-                      }
+                    <Badge
+                      className="w-fit h-6"
+                      variant={`${
+                        appointment?.status == "CONFIRMED"
+                          ? "sucess"
+                          : "destructive"
+                      }`}
                     >
-                      {appointment.status}
-                    </div>
-
+                      {appointment?.status
+                        ? appointment.status.charAt(0).toUpperCase() +
+                          appointment.status.slice(1).toLowerCase()
+                        : "N/A"}
+                    </Badge>
                     <div className="flex items-left justify-left ">
                       <AppointmentActions
                         appointment={{
