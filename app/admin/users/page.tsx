@@ -108,25 +108,31 @@ export default async function UsersPage({ searchParams }: PageProps) {
             </div>
 
             <div className="divide-y">
-              {users.map((user) => (
-                <div
-                  key={user.id}
-                  className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
-                >
-                  <div>{user?.name}</div>
-
-                  <div>{user.email}</div>
-                  <div>{user.role}</div>
-
-                  <div>{format(new Date(user.createdAt), "dd/MM/yyyy")}</div>
-
-                  <div className="flex items-left justify-left ">
-                    <UserActions
-                      user={{ id: user.id, name: user?.name ?? "" }}
-                    />
-                  </div>
+              {users.length === 0 ? (
+                <div className="p-4 text-center text-muted-foreground">
+                  No users found
                 </div>
-              ))}
+              ) : (
+                users.map((user) => (
+                  <div
+                    key={user.id}
+                    className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                  >
+                    <div>{user?.name}</div>
+
+                    <div>{user.email}</div>
+                    <div>{user.role}</div>
+
+                    <div>{format(new Date(user.createdAt), "dd/MM/yyyy")}</div>
+
+                    <div className="flex items-left justify-left ">
+                      <UserActions
+                        user={{ id: user.id, name: user?.name ?? "" }}
+                      />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
