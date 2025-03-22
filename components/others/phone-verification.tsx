@@ -27,7 +27,7 @@ export default function PhoneVerification({
   const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState(phone || "");
   const [otp, setOtp] = useState("");
-  const [isOtpSent, setIsOtpSent] = useState(phone ? true : false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [resendTimer, setResendTimer] = useState(0);
 

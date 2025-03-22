@@ -17,6 +17,11 @@ export default auth(async (req) => {
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
   if (isApiAuthRoute) return null;
   const isAdminDashboard = nextUrl.pathname.startsWith("/admin");
+
+  // if (isLoggedIn && nextUrl.pathname === "/appointment-booking") {
+  //   return Response.redirect(new URL("/appointment-booking/date", nextUrl));
+  // }
+
   if (isLoggedIn && isAdminDashboard) {
     const userRole = (await currentRole()) || "";
     const allowedRoles = ["SUPER_ADMIN", "ADMIN", "EDITOR"];

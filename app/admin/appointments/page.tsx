@@ -87,7 +87,7 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
               <div>Phone</div>
               <div>Date</div>
               <div>Time</div>
-              <div>Payment</div>
+              <div>Status</div>
               <div>Actions</div>
             </div>
 
