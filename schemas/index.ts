@@ -269,6 +269,13 @@ export const profileSchema = z.object({
   isTwoFactorEnabled: z.boolean(),
 });
 
+export const orderSchema = z.object({
+  amount: z.number().positive(),
+  currency: z.string().default("INR"),
+  receipt: z.string().optional(),
+  notes: z.record(z.string()).optional(),
+});
+
 export type ProfileFormValues = z.infer<typeof profileSchema>;
 export type userSchema2Data = z.infer<typeof userSchema2>;
 export type userSchema1Data = z.infer<typeof userSchema1>;

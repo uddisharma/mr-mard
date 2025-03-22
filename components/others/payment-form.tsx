@@ -12,23 +12,28 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { formatCurrency } from "@/lib/utils";
 import { toast } from "sonner";
+import { createOrder } from "@/actions/payment";
 
 export default function PaymentForm() {
   const router = useRouter();
-  const [paymentMethod, setPaymentMethod] = useState("credit-card");
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardName, setCardName] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [cvv, setCvv] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [timeSlotId, setTimeSlotId] = useState<string | null>(null);
-  const [appointmentPrice, setAppointmentPrice] = useState(50.0);
+  const [appointmentPrice, setAppointmentPrice] = useState("50");
+
+  // Load Razorpay SDK
+  const loadRazorpayScript = () => {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+  };
 
   useEffect(() => {
     const storedUserId = sessionStorage.getItem("userId");
@@ -44,7 +49,7 @@ export default function PaymentForm() {
     setTimeSlotId(storedTimeSlotId);
 
     if (storedPrice) {
-      setAppointmentPrice(Number.parseFloat(storedPrice));
+      setAppointmentPrice(Number.parseFloat(storedPrice).toString());
     }
   }, [router]);
 
@@ -57,55 +62,124 @@ export default function PaymentForm() {
       return;
     }
 
-    if (paymentMethod === "credit-card") {
-      if (!cardNumber || !cardName || !expiryDate || !cvv) {
-        toast.warning("Please fill in all payment details");
-        return;
-      }
-    }
-
     setIsLoading(true);
 
     try {
-      //razorpay payment gateway
+      const amountInPaise = Math.round(
+        Number.parseFloat(appointmentPrice) * 100,
+      );
 
-      const mockTransactionId = `tx-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
-      const response = await fetch("/api/appointments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          timeSlotId,
-          paymentDetails: {
-            method: paymentMethod,
-            amount: appointmentPrice,
-            transactionId: mockTransactionId,
-          },
-        }),
+      const order = await createOrder({
+        amount: amountInPaise,
+        currency: "INR",
+        receipt: `receipt_${Date.now()}`,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to create appointment");
+      if (!order.success) {
+        throw new Error(order.error || "Failed to create order");
       }
 
-      const data = await response.json();
+      await loadRazorpayScript();
 
-      sessionStorage.removeItem("selectedDate");
-      sessionStorage.removeItem("selectedTimeSlotId");
-      sessionStorage.removeItem("selectedTimeSlotPrice");
-      sessionStorage.setItem("appointmentId", data.appointment.id);
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || order.keyId,
+        amount: amountInPaise.toString(),
+        currency: "INR",
+        name: "Mr Mard",
+        description: "Hair Solution",
+        order_id: order.orderId,
+        handler: (response: any) => {
+          verifyPayment(
+            response,
+            amountInPaise,
+            userId,
+            timeSlotId,
+            Number.parseFloat(appointmentPrice),
+          );
+        },
+        theme: {
+          color: "#3B82F6",
+        },
+      };
 
-      router.push("/appointment-booking/confirmation");
+      const paymentObject = new (window as any).Razorpay(options);
+      paymentObject.open();
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to process payment",
       );
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const verifyPayment = async (
+    response: any,
+    amount: number,
+    userId: string,
+    timeSlotId: string,
+    appointmentPrice: number,
+  ) => {
+    try {
+      const result = await fetch("/api/verify-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_signature: response.razorpay_signature,
+          amount: amount,
+        }),
+      });
+      const data = await result.json();
+
+      if (data.success) {
+        const res = await fetch("/api/appointments", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            timeSlotId,
+            paymentDetails: {
+              method: "razorpay",
+              amount: appointmentPrice,
+              transactionId: response.razorpay_payment_id,
+            },
+          }),
+        });
+
+        if (!res.ok) {
+          const errorData = res.headers
+            .get("content-type")
+            ?.includes("application/json")
+            ? await res.json()
+            : { error: "Unknown error occurred" };
+          throw new Error(errorData.error || "Failed to create appointment");
+        }
+
+        const appointmentData = await res.json();
+        sessionStorage.removeItem("selectedDate");
+        sessionStorage.removeItem("selectedTimeSlotId");
+        sessionStorage.removeItem("selectedTimeSlotPrice");
+        sessionStorage.setItem("appointmentId", appointmentData.appointment.id);
+
+        await router.push(
+          `/appointment-booking/confirmation?paymentId=${response.razorpay_payment_id}`,
+        );
+      } else {
+        throw new Error(data.error || "Payment verification failed");
+      }
+    } catch (error) {
+      console.error("Verification error:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Payment could not be verified",
+      );
     }
   };
 
@@ -118,82 +192,13 @@ export default function PaymentForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 flex justify-center">
           <div className="space-y-2">
             <Label>Amount</Label>
             <div className="text-2xl font-bold">
-              {formatCurrency(appointmentPrice)}
+              {formatCurrency(Number(appointmentPrice))}
             </div>
           </div>
-
-          <div className="space-y-2">
-            <Label>Payment Method</Label>
-            <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="credit-card" id="credit-card" />
-                <Label htmlFor="credit-card">Credit Card</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="paypal" id="paypal" />
-                <Label htmlFor="paypal">PayPal</Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          {paymentMethod === "credit-card" && (
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="card-number">Card Number</Label>
-                <Input
-                  id="card-number"
-                  placeholder="1234 5678 9012 3456"
-                  value={cardNumber}
-                  onChange={(e) => setCardNumber(e.target.value)}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="card-name">Name on Card</Label>
-                <Input
-                  id="card-name"
-                  placeholder="John Doe"
-                  value={cardName}
-                  onChange={(e) => setCardName(e.target.value)}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="expiry">Expiry Date</Label>
-                  <Input
-                    id="expiry"
-                    placeholder="MM/YY"
-                    value={expiryDate}
-                    onChange={(e) => setExpiryDate(e.target.value)}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="cvv">CVV</Label>
-                  <Input
-                    id="cvv"
-                    placeholder="123"
-                    value={cvv}
-                    onChange={(e) => setCvv(e.target.value)}
-                    maxLength={4}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {paymentMethod === "paypal" && (
-            <div className="bg-muted p-4 rounded-md text-center">
-              <p className="text-sm text-muted-foreground">
-                You will be redirected to PayPal to complete your payment.
-              </p>
-            </div>
-          )}
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">

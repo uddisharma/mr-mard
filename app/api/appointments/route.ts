@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await db.$transaction(async (tx: any) => {
-      const updatedTimeSlot = await tx.timeSlot.update({
+      await tx.timeSlot.update({
         where: { id: timeSlotId },
         data: { bookedSeats: { increment: 1 } },
       });
