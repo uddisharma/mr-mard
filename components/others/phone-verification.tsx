@@ -15,7 +15,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { registerWithOTP } from "@/actions/register-phone";
-import { OtpVerification } from "@/actions/loginotp";
+import { OtpVerification, UpsertUserProgress } from "@/actions/loginotp";
 
 export default function PhoneVerification({
   phone,
@@ -34,6 +34,7 @@ export default function PhoneVerification({
   useEffect(() => {
     if (phone && id) {
       sessionStorage.setItem("userId", id);
+      UpsertUserProgress(id);
       router.push("/appointment-booking/date");
     }
   }, [phone]);

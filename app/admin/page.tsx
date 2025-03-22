@@ -1,3 +1,4 @@
+import DashboardStats from "@/components/admin/appointment/dashboard-stats";
 import ProfileCard from "@/components/others/profile-card";
 import ProfileForm from "@/components/others/profile-form";
 import { currentUser } from "@/lib/auth";
@@ -42,9 +43,9 @@ export default async function Dashboard({
 }) {
   const session = await currentUser();
 
-  // if (!session) {
-  //   return redirect("/");
-  // }
+  if (!session) {
+    return redirect("/");
+  }
 
   const admin = await db.user.findUnique({
     where: { id: session?.id },
@@ -63,16 +64,32 @@ export default async function Dashboard({
   const stats = await fetchStats(timeRange || null);
 
   return (
-    <main className="p-4 sm:p-6 ">
-      <h1 className="text-2xl font-semibold mb-6">Profile Settings</h1>
-      <div className="bg-yellow h-[270px] w-full border-b rounded-xl">
-        <div className="grid lg:grid-cols-[300px,1fr] gap-6 px-4 sm:px-5 pt-16 md:pt-32">
-          <ProfileCard admin={admin} stats={stats} />
-          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border-[1px] border-whiteGray">
-            <ProfileForm admin={admin} />
+    <>
+      {/* <main className="p-4 sm:p-6 ">
+        <h1 className="text-2xl font-semibold mb-6">Profile Settings</h1>
+        <div className="bg-yellow h-[270px] w-full border-b rounded-xl">
+          <div className="grid lg:grid-cols-[300px,1fr] gap-6 px-4 sm:px-5 pt-16 md:pt-32">
+            <ProfileCard admin={admin} stats={stats} />
+            <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border-[1px] border-whiteGray">
+              <ProfileForm admin={admin} />
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main> */}
+      <main className="p-4 sm:p-6 ">
+        <h1 className="text-2xl font-semibold mb-6">Profile Settings</h1>
+        <div className="bg-yellow h-[350px] w-full border-b rounded-xl">
+          <div className="container mx-auto pt-8 px-4">
+            <DashboardStats />
+          </div>
+          <div className="grid lg:grid-cols-[300px,1fr] gap-6 px-4 sm:px-5 pt-16 md:pt-8">
+            <ProfileCard admin={admin} stats={stats} />
+            <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border-[1px] border-whiteGray">
+              <ProfileForm admin={admin} />
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
   );
 }

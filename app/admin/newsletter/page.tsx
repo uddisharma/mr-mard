@@ -80,27 +80,33 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
             </div>
 
             <div className="divide-y">
-              {newsLetters.map((newsLetter) => (
-                <div
-                  key={newsLetter.id}
-                  className="grid grid-cols-[1.5fr_1.5fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
-                >
-                  <div>{newsLetter.email}</div>
-
-                  <div>
-                    {format(new Date(newsLetter.createdAt), "dd/MM/yyyy")}
-                  </div>
-
-                  <div className="flex items-left justify-left ">
-                    <NewsLetterActions
-                      newsletter={{
-                        id: newsLetter.id,
-                        email: newsLetter.email,
-                      }}
-                    />
-                  </div>
+              {newsLetters.length === 0 ? (
+                <div className="p-4 text-center text-muted-foreground">
+                  No Newsletter subscriptions found
                 </div>
-              ))}
+              ) : (
+                newsLetters.map((newsLetter) => (
+                  <div
+                    key={newsLetter.id}
+                    className="grid grid-cols-[1.5fr_1.5fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                  >
+                    <div>{newsLetter.email}</div>
+
+                    <div>
+                      {format(new Date(newsLetter.createdAt), "dd/MM/yyyy")}
+                    </div>
+
+                    <div className="flex items-left justify-left ">
+                      <NewsLetterActions
+                        newsletter={{
+                          id: newsLetter.id,
+                          email: newsLetter.email,
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

@@ -80,21 +80,27 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
             </div>
 
             <div className="divide-y">
-              {leads.map((lead) => (
-                <div
-                  key={lead.id}
-                  className="grid grid-cols-[1.5fr_1.5fr_1.5fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
-                >
-                  <div>{lead?.name}</div>
-                  <div>{lead?.phone}</div>
-
-                  <div>{format(new Date(lead.createdAt), "dd/MM/yyyy")}</div>
-
-                  <div className="flex items-left justify-left ">
-                    <LeadActions lead={{ id: lead.id, name: lead.name }} />
-                  </div>
+              {leads.length === 0 ? (
+                <div className="p-4 text-center text-muted-foreground">
+                  No leads found
                 </div>
-              ))}
+              ) : (
+                leads.map((lead) => (
+                  <div
+                    key={lead.id}
+                    className="grid grid-cols-[1.5fr_1.5fr_1.5fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                  >
+                    <div>{lead?.name}</div>
+                    <div>{lead?.phone}</div>
+
+                    <div>{format(new Date(lead.createdAt), "dd/MM/yyyy")}</div>
+
+                    <div className="flex items-left justify-left ">
+                      <LeadActions lead={{ id: lead.id, name: lead.name }} />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

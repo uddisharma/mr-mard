@@ -107,31 +107,37 @@ export default async function BlogsPage({ searchParams }: PageProps) {
             </div>
 
             <div className="divide-y">
-              {blogs.map((blog) => (
-                <div
-                  key={blog.id}
-                  className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
-                >
-                  <div>{blog.title?.slice(0, 20)}</div>
-                  <div
-                    className="text-left"
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        blog.content?.slice(0, 50) + "..." || "Big Content",
-                    }}
-                  />
-
-                  <div>{blog.author?.name}</div>
-
-                  <div>{blog.category}</div>
-
-                  <div>{format(new Date(blog.createdAt), "dd/MM/yyyy")}</div>
-
-                  <div className="flex items-left justify-left ">
-                    <BlogActions blog={{ id: blog.id, title: blog.title }} />
-                  </div>
+              {blogs.length === 0 ? (
+                <div className="p-4 text-center text-muted-foreground">
+                  No Blogs Found
                 </div>
-              ))}
+              ) : (
+                blogs.map((blog) => (
+                  <div
+                    key={blog.id}
+                    className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                  >
+                    <div>{blog.title?.slice(0, 20)}</div>
+                    <div
+                      className="text-left"
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          blog.content?.slice(0, 50) + "..." || "Big Content",
+                      }}
+                    />
+
+                    <div>{blog.author?.name}</div>
+
+                    <div>{blog.category}</div>
+
+                    <div>{format(new Date(blog.createdAt), "dd/MM/yyyy")}</div>
+
+                    <div className="flex items-left justify-left ">
+                      <BlogActions blog={{ id: blog.id, title: blog.title }} />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

@@ -87,30 +87,36 @@ export default async function SubmissionsPage({ searchParams }: PageProps) {
             </div>
 
             <div className="divide-y">
-              {submissions.map((submission) => (
-                <div
-                  key={submission.id}
-                  className="grid grid-cols-[1fr_2fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
-                >
-                  <div>{submission.firstName}</div>
-
-                  <div>{submission.email}</div>
-
-                  <div>{submission.phone}</div>
-
-                  <div>{submission.subject}</div>
-
-                  <div>
-                    {format(new Date(submission.createdAt), "dd/MM/yyyy")}
-                  </div>
-
-                  <div className="flex items-left justify-left ">
-                    <ContactActions
-                      contact={{ id: submission.id, submission: submission }}
-                    />
-                  </div>
+              {submissions.length === 0 ? (
+                <div className="p-4 text-center text-muted-foreground">
+                  No submissions found
                 </div>
-              ))}
+              ) : (
+                submissions.map((submission) => (
+                  <div
+                    key={submission.id}
+                    className="grid grid-cols-[1fr_2fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                  >
+                    <div>{submission.firstName}</div>
+
+                    <div>{submission.email}</div>
+
+                    <div>{submission.phone}</div>
+
+                    <div>{submission.subject}</div>
+
+                    <div>
+                      {format(new Date(submission.createdAt), "dd/MM/yyyy")}
+                    </div>
+
+                    <div className="flex items-left justify-left ">
+                      <ContactActions
+                        contact={{ id: submission.id, submission: submission }}
+                      />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

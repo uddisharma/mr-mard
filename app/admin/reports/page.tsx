@@ -108,35 +108,41 @@ export default async function ReportsPage({ searchParams }: PageProps) {
             </div>
 
             <div className="divide-y">
-              {reports.map((report) => (
-                <div
-                  key={report.id}
-                  className="grid grid-cols-[1fr_1.5fr_1fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
-                >
-                  <div>
-                    {report.user.firstName} {report.user.lastName}
-                  </div>
-
-                  <div className="text-center">{report.user.email}</div>
-
-                  <div className="text-center">
-                    {report?.questions?.length} questions
-                  </div>
-
-                  <div className="text-center">
-                    {format(new Date(report.createdAt), "dd/MM/yyyy")}
-                  </div>
-
-                  <div className="flex items-left justify-left ">
-                    <ReportActions
-                      report={{
-                        id: report.id,
-                        name: report?.user?.firstName ?? "",
-                      }}
-                    />
-                  </div>
+              {reports.length === 0 ? (
+                <div className="p-4 text-center text-muted-foreground">
+                  No reports found
                 </div>
-              ))}
+              ) : (
+                reports.map((report) => (
+                  <div
+                    key={report.id}
+                    className="grid grid-cols-[1fr_1.5fr_1fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                  >
+                    <div>
+                      {report.user.firstName} {report.user.lastName}
+                    </div>
+
+                    <div className="text-center">{report.user.email}</div>
+
+                    <div className="text-center">
+                      {report?.questions?.length} questions
+                    </div>
+
+                    <div className="text-center">
+                      {format(new Date(report.createdAt), "dd/MM/yyyy")}
+                    </div>
+
+                    <div className="flex items-left justify-left ">
+                      <ReportActions
+                        report={{
+                          id: report.id,
+                          name: report?.user?.firstName ?? "",
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

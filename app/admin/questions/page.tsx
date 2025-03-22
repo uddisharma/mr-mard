@@ -93,28 +93,34 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
             </div>
 
             <div className="divide-y">
-              {questions.map((question) => (
-                <div
-                  key={question.id}
-                  className="grid grid-cols-[0.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
-                >
-                  <div className="text-center">{question.sequence}</div>
-
-                  <div>{question.text}</div>
-
-                  <div>{question.questionType}</div>
-
-                  <div>
-                    {format(new Date(question.createdAt), "dd/MM/yyyy")}
-                  </div>
-
-                  <div className="flex items-left justify-left ">
-                    <QuestionActions
-                      question={{ id: question.id, text: question.text }}
-                    />
-                  </div>
+              {questions.length === 0 ? (
+                <div className="p-4 text-center text-muted-foreground">
+                  No questions found
                 </div>
-              ))}
+              ) : (
+                questions.map((question) => (
+                  <div
+                    key={question.id}
+                    className="grid grid-cols-[0.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                  >
+                    <div className="text-center">{question.sequence}</div>
+
+                    <div>{question.text}</div>
+
+                    <div>{question.questionType}</div>
+
+                    <div>
+                      {format(new Date(question.createdAt), "dd/MM/yyyy")}
+                    </div>
+
+                    <div className="flex items-left justify-left ">
+                      <QuestionActions
+                        question={{ id: question.id, text: question.text }}
+                      />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

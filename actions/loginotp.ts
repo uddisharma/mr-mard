@@ -157,3 +157,19 @@ export const OtpVerification = async (values: LoginWithPhoneSchemaData) => {
     return { success: false, message: "Failed to verify OTP" };
   }
 };
+
+export const UpsertUserProgress = async (id: string) => {
+  try {
+    await db.userProgress.upsert({
+      where: { userId: id },
+      update: { lastStep: "DATE_SELECTION" },
+      create: {
+        userId: id,
+        lastStep: "DATE_SELECTION",
+      },
+    });
+    return { success: true, message: "User progress updated!" };
+  } catch (error) {
+    return { success: false, message: "Failed to update user progress" };
+  }
+};
