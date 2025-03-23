@@ -267,3 +267,39 @@ pre {
     background: #4b5563;
   }
 }
+
+.apple-button {
+  @apply px-6 py-3 rounded-full bg-btnblue text-primary-foreground font-semibold transition-all duration-300 ease-in-out hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50;
+}
+
+.section-title {
+  @apply text-4xl font-bold mb-8 text-center text-foreground;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-btnblue;
+}
+
+.hover-lift {
+  @apply transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg;
+}
+
+.custom-day-picker {
+  @apply p-3 bg-background rounded-lg shadow-lg border border-border;
+}
+
+.custom-day-picker .rdp-months {
+  @apply bg-background;
+}
+
+.custom-day-picker .rdp-caption {
+  @apply mb-4;
+}
+
+.custom-day-picker .rdp-caption_label {
+  @apply text-base font-semibold text-foreground;
+}
+
+.custom-day-picker .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  @apply bg-primary/10;
+}

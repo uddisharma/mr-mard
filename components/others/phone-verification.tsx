@@ -2,20 +2,10 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { registerWithOTP } from "@/actions/register-phone";
 import { OtpVerification, UpsertUserProgress } from "@/actions/loginotp";
+import { motion } from "framer-motion";
 
 export default function PhoneVerification({
   phone,
@@ -98,72 +88,141 @@ export default function PhoneVerification({
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle>Verify Your Phone Number</CardTitle>
-        <CardDescription>
-          {isOtpSent
-            ? "Enter the verification code sent to your phone"
-            : "We'll send a verification code to your phone"}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {!isOtpSent ? (
-          <div className="space-y-2">
-            <Label htmlFor="phone">Phone Number</Label>
-            <Input
-              id="phone"
-              type="tel"
-              placeholder="Enter your phone number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-          </div>
-        ) : (
-          <div className="space-y-2">
-            <Label htmlFor="otp">Verification Code</Label>
-            <Input
-              id="otp"
-              type="text"
-              placeholder="Enter 6-digit code"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              maxLength={6}
-            />
-            <p className="text-sm text-muted-foreground">
-              Didn't receive a code?{" "}
-              <button
-                className={`text-primary underline cursor-${
-                  resendTimer > 0 ? "not-allowed" : "pointer"
-                }`}
-                onClick={() => handleSendOtp()}
-                disabled={isPending || resendTimer > 0}
+    <div className="relative isolate overflow-hidden bg-background">
+      <div className="mx-auto max-w-7xl px-6 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8">
+        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg lg:flex-shrink-0">
+          <motion.h1
+            className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span style={{ lineHeight: "1.1" }} className="text-gradient ">
+              Book Your Appointment{" "}
+            </span>
+          </motion.h1>
+          <motion.p
+            className="mt-5 text-lg leading-8 text-muted-foreground"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Start by verifying your phone number
+          </motion.p>
+          {!isOtpSent ? (
+            <>
+              <motion.div
+                className="mt-8 flex items-center gap-x-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
               >
-                {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend"}
-              </button>
-            </p>
+                <input
+                  id="phone"
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    if (e.target.value.match(/^[0-9]*$/))
+                      setPhoneNumber(e.target.value);
+                  }}
+                  className="border w-[350px] h-[45px] border-btnblue rounded-full px-4 py-2"
+                />
+              </motion.div>
+              <motion.div
+                className="mt-7 flex items-center gap-x-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <button
+                  className="apple-button"
+                  onClick={handleSendOtp}
+                  disabled={isPending}
+                >
+                  {isPending ? "Sending..." : "Send OTP"}
+                </button>
+                <a
+                  href="/analyze"
+                  className="text-sm font-semibold leading-6 text-foreground"
+                >
+                  Analyze your hairs <span aria-hidden="true">→</span>
+                </a>
+              </motion.div>
+            </>
+          ) : (
+            <>
+              <motion.div
+                className="mt-7 flex items-center gap-x-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <input
+                  id="otp"
+                  type="text"
+                  placeholder="Enter 6-digit code"
+                  value={otp}
+                  onChange={(e) => {
+                    if (e.target.value.match(/^[0-9]*$/))
+                      setOtp(e.target.value);
+                  }}
+                  maxLength={4}
+                  className="border w-[350px] h-[45px] border-btnblue rounded-full px-4 py-2"
+                />
+              </motion.div>
+              <p className="text-sm text-muted-foreground mt-2.5 ml-2">
+                Didn't receive a code?{" "}
+                <button
+                  className={`text-primary underline cursor-${
+                    resendTimer > 0 ? "not-allowed" : "pointer"
+                  }`}
+                  onClick={() => handleSendOtp()}
+                  disabled={isPending || resendTimer > 0}
+                >
+                  {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend"}
+                </button>
+              </p>
+              <motion.div
+                className="mt-8 flex items-center gap-x-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <button
+                  className="apple-button"
+                  onClick={handleVerifyOtp}
+                  disabled={isPending}
+                >
+                  {isPending ? "Verifying..." : "Verify OTP"}
+                </button>
+                <a
+                  href="/analyze"
+                  className="text-sm font-semibold leading-6 text-foreground"
+                >
+                  Analyze your hairs <span aria-hidden="true">→</span>
+                </a>
+              </motion.div>
+            </>
+          )}
+        </div>
+        <motion.div
+          className="mx-auto mt-16 lg:mt-0"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <div className="relative">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/creative-SW6QDQbcVuwPgb6a2CYtYmRbsJa4k1.png"
+              alt="Flowers & Saints design concept"
+              width={600}
+              height={600}
+              className="w-[500px] rounded-2xl"
+            />
           </div>
-        )}
-      </CardContent>
-      <CardFooter>
-        {!isOtpSent ? (
-          <Button
-            className="w-full"
-            onClick={handleSendOtp}
-            disabled={isPending}
-          >
-            {isPending ? "Sending..." : "Send Verification Code"}
-          </Button>
-        ) : (
-          <Button
-            className="w-full"
-            onClick={handleVerifyOtp}
-            disabled={isPending}
-          >
-            {isPending ? "Verifying..." : "Verify"}
-          </Button>
-        )}
-      </CardFooter>
-    </Card>
+        </motion.div>
+      </div>
+    </div>
   );
 }

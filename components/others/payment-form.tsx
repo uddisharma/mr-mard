@@ -3,19 +3,12 @@
 import type React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { formatCurrency } from "@/lib/utils";
 import { toast } from "sonner";
 import { createOrder } from "@/actions/payment";
+import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 
 export default function PaymentForm() {
   const router = useRouter();
@@ -24,7 +17,6 @@ export default function PaymentForm() {
   const [timeSlotId, setTimeSlotId] = useState<string | null>(null);
   const [appointmentPrice, setAppointmentPrice] = useState("50");
 
-  // Load Razorpay SDK
   const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
@@ -184,34 +176,89 @@ export default function PaymentForm() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle>Payment</CardTitle>
-        <CardDescription>
-          Complete your booking by making a payment
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6 flex justify-center">
-          <div className="space-y-2">
-            <Label>Amount</Label>
-            <div className="text-2xl font-bold">
-              {formatCurrency(Number(appointmentPrice))}
-            </div>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button
-          variant="outline"
-          onClick={() => router.push("/appointment-booking/time")}
+    <div className="relative isolate overflow-hidden bg-background">
+      <div className="mx-auto max-w-7xl px-6 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8">
+        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg lg:flex-shrink-0">
+          <motion.h1
+            className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span style={{ lineHeight: "1.1" }} className="text-gradient ">
+              Pay Fee for your Appointment
+            </span>
+          </motion.h1>
+          <motion.p
+            className="mt-5 text-lg leading-8 text-muted-foreground"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Complete your booking by making a payment
+          </motion.p>
+
+          <motion.div
+            className="mt-7 flex justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6 flex justify-center"
+            >
+              <div className="space-y-2">
+                <Label>Amount</Label>
+                <div className="text-2xl font-bold">
+                  {formatCurrency(Number(appointmentPrice))}
+                </div>
+              </div>
+            </form>
+          </motion.div>
+
+          <motion.div
+            className="mt-8 flex items-center justify-between gap-x-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <button
+              className="text-sm font-semibold leading-6 text-foreground flex items-center gap-1"
+              onClick={() => router.push("/appointment-booking/time")}
+            >
+              <span aria-hidden="true">
+                <ArrowLeft className="w-4 h-4" />
+              </span>
+              Back
+            </button>
+            <button
+              style={isLoading ? { cursor: "not-allowed" } : undefined}
+              className={`apple-button`}
+              onClick={handleSubmit}
+              disabled={isLoading}
+            >
+              {isLoading ? "Processing..." : "Pay Now"}
+            </button>
+          </motion.div>
+        </div>
+        <motion.div
+          className="mx-auto mt-16 lg:mt-0"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
-          Back
-        </Button>
-        <Button onClick={handleSubmit} disabled={isLoading}>
-          {isLoading ? "Processing..." : "Pay Now"}
-        </Button>
-      </CardFooter>
-    </Card>
+          <div className="relative">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/creative-SW6QDQbcVuwPgb6a2CYtYmRbsJa4k1.png"
+              alt="Flowers & Saints design concept"
+              width={600}
+              height={600}
+              className="w-[500px] rounded-2xl"
+            />
+          </div>
+        </motion.div>
+      </div>
+    </div>
   );
 }

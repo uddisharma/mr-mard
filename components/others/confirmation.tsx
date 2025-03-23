@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -29,10 +29,12 @@ interface AppointmentDetails {
 
 export default function Confirmation() {
   const router = useRouter();
+  const params = useSearchParams();
   const [appointment, setAppointment] = useState<AppointmentDetails | null>(
     null,
   );
   const [isLoading, setIsLoading] = useState(true);
+  const paymentId = params.get("paymentId");
 
   useEffect(() => {
     const appointmentId = sessionStorage.getItem("appointmentId");
@@ -93,8 +95,12 @@ export default function Confirmation() {
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Booking ID:</span>
                 <span className="font-medium">
-                  {appointment.id.substring(0, 8).toUpperCase()}
+                  {appointment.id.substring(0, 16).toUpperCase()}
                 </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Payment ID:</span>
+                <span className="font-medium">{paymentId?.toUpperCase()}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Payment Status:</span>
@@ -117,7 +123,7 @@ export default function Confirmation() {
 
         <div className="text-center text-sm text-muted-foreground">
           <p>Need to make changes to your appointment?</p>
-          <p>Contact us at +91 1234567890</p>
+          <p>Contact us at +91 8861452659</p>
         </div>
       </CardContent>
       <CardFooter className="flex justify-center">
