@@ -6,6 +6,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import { Stepper2 } from "./step-indicator";
 
 export default function DatePicker({ id }: { id?: string | undefined | null }) {
   const router = useRouter();
@@ -63,6 +64,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
     <div className="relative isolate overflow-hidden bg-background">
       <div className="mx-auto max-w-7xl px-6 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg lg:flex-shrink-0">
+          <Stepper2 />
           <motion.h1
             className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
             initial={{ opacity: 0, y: 20 }}
@@ -92,7 +94,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
               mode="single"
               selected={date}
               onSelect={setDate}
-              disabled={disabledDays}
+              // disabled={disabledDays}
               className="rounded-md border mx-auto w-fit border-none"
             />
           </motion.div>

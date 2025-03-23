@@ -8,7 +8,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Header />
       <div className="flex flex-col px-5 md:px-10">
         <main className="flex-1 md:px-4 md:py-10 w-full">
-          <div className="flex justify-center gap-20 items-center">
+          <div className="flex justify-center gap-20 items-center mb-10">
             {children}
           </div>
         </main>

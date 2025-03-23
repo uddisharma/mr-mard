@@ -69,11 +69,10 @@ export default async function TransactionsPage({ searchParams }: PageProps) {
 
         <div className="bg-white rounded-lg border overflow-x-auto">
           <div className="min-w-[800px]">
-            <div className="grid grid-cols-[1.5fr_0.8fr_0.8fr_0.8fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+            <div className="grid grid-cols-[1.5fr_0.8fr_0.8fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
               <div>Transaction ID</div>
               <div>Amount</div>
               <div>Status</div>
-              <div>Payment Method</div>
               <div>Created At</div>
             </div>
 
@@ -86,7 +85,7 @@ export default async function TransactionsPage({ searchParams }: PageProps) {
                 transactions.map((transaction) => (
                   <div
                     key={transaction.id}
-                    className="grid grid-cols-[1.5fr_0.8fr_0.8fr_0.8fr_1fr_auto] gap-4 p-4 hover:bg-gray-50 text-left"
+                    className="grid grid-cols-[1.5fr_0.8fr_0.8fr_1fr_auto] gap-4 p-4 hover:bg-gray-50 text-left"
                   >
                     <div>{transaction?.transactionId?.toUpperCase()}</div>
                     <div>₹{transaction.amount.toFixed(2)}</div>
@@ -103,7 +102,7 @@ export default async function TransactionsPage({ searchParams }: PageProps) {
                           transaction.status.slice(1).toLowerCase()
                         : "N/A"}
                     </Badge>
-                    <div>{transaction.paymentMethod || "N/A"}</div>
+                    {/* <div>{transaction.paymentMethod || "N/A"}</div> */}
                     <div>
                       {format(
                         new Date(transaction.createdAt),

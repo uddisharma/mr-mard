@@ -2,24 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { formatCurrency, formatDate, formatTime } from "@/lib/utils";
+import { formatCurrency, formatTime } from "@/lib/utils";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { Stepper3 } from "./step-indicator";
 
 interface TimeSlot {
   id: string;
@@ -39,7 +32,7 @@ export default function TimeSlotPicker() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedSlot1, setSelectedSlot] = useState<string | null>(null);
 
   useEffect(() => {
     const storedUserId = sessionStorage.getItem("userId");
@@ -51,7 +44,6 @@ export default function TimeSlotPicker() {
     }
 
     setUserId(storedUserId);
-    setSelectedDate(storedDate);
 
     fetchTimeSlots(storedDate);
   }, [router]);
@@ -102,7 +94,7 @@ export default function TimeSlotPicker() {
           selectedTimeSlotId: selectedTimeSlot,
         }),
       });
-
+      sessionStorage.setItem("selectedTime", selectedSlot1 || "");
       sessionStorage.setItem("selectedTimeSlotId", selectedTimeSlot);
 
       const selectedSlot = timeSlots.find(
@@ -131,6 +123,7 @@ export default function TimeSlotPicker() {
     <div className="relative isolate overflow-hidden bg-background">
       <div className="mx-auto max-w-7xl px-6 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg lg:flex-shrink-0">
+          <Stepper3 />
           <motion.h1
             className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
             initial={{ opacity: 0, y: 20 }}
@@ -188,7 +181,12 @@ export default function TimeSlotPicker() {
                           }
                           className="w-full"
                           disabled={!isAvailable}
-                          onClick={() => setSelectedTimeSlot(slot.id)}
+                          onClick={() => {
+                            setSelectedSlot(
+                              formatDisplayTime(slot.startTime, slot.endTime),
+                            );
+                            setSelectedTimeSlot(slot.id);
+                          }}
                         >
                           {formatDisplayTime(slot.startTime, slot.endTime)}
                         </Button>

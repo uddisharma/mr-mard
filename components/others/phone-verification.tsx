@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { registerWithOTP } from "@/actions/register-phone";
 import { OtpVerification, UpsertUserProgress } from "@/actions/loginotp";
 import { motion } from "framer-motion";
+import { Stepper1 } from "./step-indicator";
 
 export default function PhoneVerification({
   phone,
@@ -91,6 +92,7 @@ export default function PhoneVerification({
     <div className="relative isolate overflow-hidden bg-background">
       <div className="mx-auto max-w-7xl px-6 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg lg:flex-shrink-0">
+          <Stepper1 />
           <motion.h1
             className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
             initial={{ opacity: 0, y: 20 }}
