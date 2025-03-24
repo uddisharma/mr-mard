@@ -300,7 +300,7 @@ export default function PaymentForm() {
               >
                 <button
                   className="text-sm font-semibold leading-6 text-foreground flex items-center gap-1"
-                  onClick={() => router.push("/appointment-booking/time")}
+                  onClick={() => router.push("/appointment-booking/date")}
                 >
                   <span aria-hidden="true">
                     <ArrowLeft className="w-4 h-4" />

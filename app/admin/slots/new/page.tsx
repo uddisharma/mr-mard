@@ -18,8 +18,10 @@ export default function TimeSlotForm({}) {
   const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [totalSeats, setTotalSeats] = useState("");
-  const [price, setPrice] = useState("50");
+  const [totalSeats, setTotalSeats] = useState("5");
+  const [OriginalPrice, setOriginalPrice] = useState("600");
+  const [price, setPrice] = useState("500");
+  const [label, setLabel] = useState("");
   const [isActive, setIsActive] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,6 +51,8 @@ export default function TimeSlotForm({}) {
           endTime,
           totalSeats: Number.parseInt(totalSeats),
           price: Number.parseFloat(price),
+          OriginalPrice: Number.parseFloat(OriginalPrice),
+          label,
           isActive,
         }),
       });
@@ -124,7 +128,20 @@ export default function TimeSlotForm({}) {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="price">Price</Label>
+                <Label htmlFor="o_price">Original Price</Label>
+                <Input
+                  id="o_price"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={OriginalPrice}
+                  onChange={(e) => setOriginalPrice(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="price">Discounted Price</Label>
                 <Input
                   id="price"
                   type="number"
@@ -133,6 +150,18 @@ export default function TimeSlotForm({}) {
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="label">Label ( Optional )</Label>
+                <Input
+                  id="label"
+                  type="string"
+                  min="0"
+                  step="0.01"
+                  value={label}
+                  onChange={(e) => setLabel(e.target.value)}
                 />
               </div>
 

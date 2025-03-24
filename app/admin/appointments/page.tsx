@@ -2,13 +2,8 @@ import * as React from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
-import { currentUser } from "@/lib/auth";
-import { redirect, useRouter } from "next/navigation";
-import { checkPermission } from "@/lib/checkPermission";
-import { FormError } from "@/components/others/form-error";
 import Pagination from "@/components/admin/pagination";
 import { Prisma } from "@prisma/client";
-import { Loader2 } from "lucide-react";
 import SearchInput from "@/components/others/SearchInput";
 import ExportButton from "@/components/admin/export";
 import Link from "next/link";
@@ -82,11 +77,12 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
 
         <div className="bg-white rounded-lg border overflow-x-auto">
           <div className="min-w-[800px]">
-            <div className="grid grid-cols-[1fr_0.8fr_0.8fr_1fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+            <div className="grid grid-cols-[1fr_0.8fr_0.8fr_1fr_1fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
               <div>ID</div>
               <div>Phone</div>
               <div>Date</div>
               <div>Time</div>
+              <div>Date</div>
               <div>Status</div>
               <div>Actions</div>
             </div>
@@ -100,7 +96,7 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
                 appointments.map((appointment) => (
                   <div
                     key={appointment.id}
-                    className="grid grid-cols-[1fr_0.8fr_0.8fr_1fr_1fr_auto] gap-4 p-4 hover:bg-gray-50 text-left"
+                    className="grid grid-cols-[1fr_0.8fr_0.8fr_1fr_1fr_1fr_auto] gap-4 p-4 hover:bg-gray-50 text-left"
                   >
                     <div>{appointment.id.substring(0, 8).toUpperCase()}</div>
                     <div>{appointment.user.phone}</div>
@@ -120,6 +116,9 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
                         new Date(appointment.timeSlot.endTime),
                         "hh:mm a",
                       )}
+                    </div>
+                    <div>
+                      {format(new Date(appointment.createdAt), "dd/MM/yyyy")}
                     </div>
                     <Badge
                       className="w-fit h-6"

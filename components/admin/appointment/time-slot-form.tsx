@@ -26,6 +26,8 @@ interface TimeSlotFormProps {
     endTime: Date;
     totalSeats: number;
     price: number;
+    originalPrice: number;
+    label?: string;
     isActive: boolean;
   };
 }
@@ -53,7 +55,11 @@ export default function TimeSlotForm({
   const [totalSeats, setTotalSeats] = useState(
     initialData?.totalSeats?.toString() || "",
   );
-  const [price, setPrice] = useState(initialData?.price?.toString() || "50.00");
+  const [OriginalPrice, setOriginalPrice] = useState(
+    initialData?.originalPrice?.toString() || "600",
+  );
+  const [price, setPrice] = useState(initialData?.price?.toString() || "500");
+  const [label, setLabel] = useState(initialData?.label || "");
   const [isActive, setIsActive] = useState(initialData?.isActive ?? true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -177,6 +183,19 @@ export default function TimeSlotForm({
             </div>
 
             <div className="space-y-2">
+              <Label htmlFor="o_price">Original Price</Label>
+              <Input
+                id="o_price"
+                type="number"
+                min="0"
+                step="0.01"
+                value={OriginalPrice}
+                onChange={(e) => setOriginalPrice(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="price">Price</Label>
               <Input
                 id="price"
@@ -186,6 +205,18 @@ export default function TimeSlotForm({
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="label">Label</Label>
+              <Input
+                id="lable"
+                type="string"
+                min="0"
+                step="0.01"
+                value={label}
+                onChange={(e) => setLabel(e.target.value)}
               />
             </div>
 

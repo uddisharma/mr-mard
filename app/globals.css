@@ -266,6 +266,15 @@ pre {
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #4b5563;
   }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 .apple-button {
