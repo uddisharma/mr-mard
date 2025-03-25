@@ -19,8 +19,16 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { date, startTime, endTime, totalSeats, price, isActive } =
-      await request.json();
+    const {
+      date,
+      startTime,
+      endTime,
+      totalSeats,
+      originalPrice,
+      price,
+      label,
+      isActive,
+    } = await request.json();
 
     if (!date || !startTime || !endTime || totalSeats === undefined) {
       return NextResponse.json(
@@ -35,7 +43,9 @@ export async function POST(request: NextRequest) {
         startTime: new Date(startTime),
         endTime: new Date(endTime),
         totalSeats,
-        price: price || 50.0,
+        originalPrice: originalPrice || 600,
+        price: price || 500,
+        label: label || "",
         isActive: isActive ?? true,
       },
     });

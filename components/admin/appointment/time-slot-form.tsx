@@ -93,6 +93,8 @@ export default function TimeSlotForm({
           endTime,
           totalSeats: Number.parseInt(totalSeats),
           price: Number.parseFloat(price),
+          originalPrice: Number.parseFloat(OriginalPrice),
+          label,
           isActive,
         }),
       });

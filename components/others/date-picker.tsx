@@ -18,6 +18,8 @@ interface TimeSlot {
   totalSeats: number;
   bookedSeats: number;
   price: number;
+  originalPrice: number;
+  label: string;
   isActive: boolean;
 }
 
@@ -198,15 +200,26 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                   <CalendarIcon className="mr-2 h-4 w-4 text-btnblue" /> Select
                   a Slot
                 </p>
-                <p className="text-md font-bold leading-6 text-btnblue">
-                  {selectedTimeSlot &&
-                    formatCurrency(
-                      Number(
-                        timeSlots.find((slot) => slot.id === selectedTimeSlot)
-                          ?.price,
-                      ),
-                    )}
-                </p>
+                <div className="flex items-center gap-x-2">
+                  <del className="text-md leading-6 text-btnblue">
+                    {selectedTimeSlot &&
+                      formatCurrency(
+                        Number(
+                          timeSlots.find((slot) => slot.id === selectedTimeSlot)
+                            ?.originalPrice,
+                        ),
+                      )}
+                  </del>
+                  <p className="text-md font-bold leading-6 text-btnblue">
+                    {selectedTimeSlot &&
+                      formatCurrency(
+                        Number(
+                          timeSlots.find((slot) => slot.id === selectedTimeSlot)
+                            ?.price,
+                        ),
+                      )}
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -282,7 +295,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                           variant={
                             selectedTimeSlot === slot.id ? "default" : "outline"
                           }
-                          className="w-full"
+                          className="w-full flex flex-col gap-0"
                           disabled={!isAvailable}
                           onClick={() => {
                             setSelectedSlot(
@@ -295,15 +308,24 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-3">
-                        <div className="space-y-1">
+                        <div className="">
                           <p className="text-sm font-medium">
                             {isAvailable
                               ? `${remainingSeats} seat${remainingSeats !== 1 ? "s" : ""} available`
                               : "No seats available"}
                           </p>
+                          {slot?.label && (
+                            <p className="text-sm text-muted-foreground mt-1 text-[#9f6ef0] font-semibold">
+                              {slot.label}
+                            </p>
+                          )}
+
+                          {/* <del className="text-sm">
+                            Original Price: {formatCurrency(slot.originalPrice)}
+                          </del>
                           <p className="text-sm">
-                            Price: {formatCurrency(slot.price)}
-                          </p>
+                            Discounted Price: {formatCurrency(slot.price)}
+                          </p> */}
                         </div>
                       </PopoverContent>
                     </Popover>

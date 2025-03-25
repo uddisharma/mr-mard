@@ -32,8 +32,16 @@ export async function PUT(
   { params }: { params: { id: string } },
 ) {
   try {
-    const { date, startTime, endTime, totalSeats, price, isActive } =
-      await request.json();
+    const {
+      date,
+      startTime,
+      endTime,
+      totalSeats,
+      originalPrice,
+      price,
+      label,
+      isActive,
+    } = await request.json();
 
     const timeSlot = await db.timeSlot.update({
       where: { id: params.id },
@@ -42,7 +50,9 @@ export async function PUT(
         startTime: startTime ? new Date(startTime) : undefined,
         endTime: endTime ? new Date(endTime) : undefined,
         totalSeats,
+        originalPrice,
         price,
+        label,
         isActive,
       },
     });
