@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { ArrowLeft, CalendarIcon, Loader2 } from "lucide-react";
+import { ArrowLeft, CalendarIcon, ChevronDown, Loader2 } from "lucide-react";
 import { Stepper2 } from "./step-indicator";
 import { cn, formatCurrency, formatTime } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -165,6 +165,21 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
     return `${formatTime(new Date(start))}`;
   };
 
+  const monthShortNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
   return (
     <div className="relative isolate overflow-hidden bg-background">
       <div className="mx-auto max-w-7xl px-6 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8">
@@ -248,7 +263,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                   <span className="text-sm text-gray-500">{date.day}</span>
                   <span className="text-lg font-semibold">{date.dayNum}</span>
                   <span className="text-xs text-gray-500">
-                    {date.date?.getFullYear()}
+                    {monthShortNames[date.date?.getMonth()]}
                   </span>
                 </div>
               ))}
@@ -295,7 +310,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                           variant={
                             selectedTimeSlot === slot.id ? "default" : "outline"
                           }
-                          className="w-full flex flex-col gap-0"
+                          className="w-full flex gap-2"
                           disabled={!isAvailable}
                           onClick={() => {
                             setSelectedSlot(
@@ -305,6 +320,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                           }}
                         >
                           {formatDisplayTime(slot.startTime, slot.endTime)}
+                          <ChevronDown className="h-4 w-4" />
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-3">
@@ -315,7 +331,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                               : "No seats available"}
                           </p>
                           {slot?.label && (
-                            <p className="text-sm text-muted-foreground mt-1 text-[#9f6ef0] font-semibold">
+                            <p className="text-sm  mt-1 text-[#9f6ef0] font-semibold">
                               {slot.label}
                             </p>
                           )}

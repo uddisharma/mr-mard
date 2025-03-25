@@ -65,7 +65,14 @@ const NewSLot = ({
       {showForm ? (
         <TimeSlotForm
           onSuccess={handleFormSuccess}
-          initialData={editingTimeSlot ? editingTimeSlot : undefined}
+          initialData={
+            editingTimeSlot
+              ? {
+                  ...editingTimeSlot,
+                  label: editingTimeSlot.label ?? undefined,
+                }
+              : undefined
+          }
         />
       ) : showImportExport ? (
         <ExcelImportExport
