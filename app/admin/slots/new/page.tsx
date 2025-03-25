@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { revalidatePath } from "next/cache";
+// import { revalidatePath } from "next/cache";
 
 export default function TimeSlotForm({}) {
   const [date, setDate] = useState("");
@@ -64,7 +64,7 @@ export default function TimeSlotForm({}) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to save time slot");
       }
-      revalidatePath("/admin/slots");
+      // revalidatePath("/admin/slots");
       router.push("/admin/slots");
       toast.success("A new time slot has been created");
     } catch (error) {
