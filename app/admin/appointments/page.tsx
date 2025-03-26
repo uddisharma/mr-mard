@@ -10,6 +10,7 @@ import Link from "next/link";
 import AppointmentActions from "@/components/admin/actions/appointments";
 import CleartButton from "@/components/admin/appointment/clear-button";
 import { Badge } from "@/components/ui/badge";
+import { formatAppointmentTime } from "@/lib/utils";
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -36,6 +37,7 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
   // if (!hasPermission) {
   //   return <FormError message="You do not have permission to view this content!" />;
   // }
+
   const where: Prisma.AppointmentWhereInput = {
     ...(search && {
       OR: [{ timeSlot: { date: new Date(search).toISOString() } }],
@@ -107,7 +109,11 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
                       )}
                     </div>
                     <div>
-                      {format(
+                      {formatAppointmentTime(
+                        appointment.timeSlot.startTime?.toISOString() ?? "",
+                        appointment.timeSlot.endTime?.toISOString() ?? "",
+                      )}
+                      {/* {format(
                         new Date(appointment.timeSlot.startTime),
                         "hh:mm a",
                       )}{" "}
@@ -115,7 +121,7 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
                       {format(
                         new Date(appointment.timeSlot.endTime),
                         "hh:mm a",
-                      )}
+                      )} */}
                     </div>
                     <div>
                       {format(new Date(appointment.createdAt), "dd/MM/yyyy")}

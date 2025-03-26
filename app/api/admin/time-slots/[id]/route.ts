@@ -1,4 +1,6 @@
 import { db } from "@/lib/db";
+import { timeZone } from "@/lib/utils";
+import { toZonedTime } from "date-fns-tz";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -46,9 +48,11 @@ export async function PUT(
     const timeSlot = await db.timeSlot.update({
       where: { id: params.id },
       data: {
-        date: date ? new Date(date) : undefined,
-        startTime: startTime ? new Date(startTime) : undefined,
-        endTime: endTime ? new Date(endTime) : undefined,
+        date: date ? toZonedTime(new Date(date), timeZone) : undefined,
+        startTime: startTime
+          ? toZonedTime(new Date(startTime), timeZone)
+          : undefined,
+        endTime: endTime ? toZonedTime(new Date(endTime), timeZone) : undefined,
         totalSeats,
         originalPrice,
         price,

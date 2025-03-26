@@ -36,7 +36,6 @@ export default function TimeSlotForm({
   onSuccess,
   initialData,
 }: TimeSlotFormProps) {
-  console.log(initialData);
   const [date, setDate] = useState(
     initialData?.date
       ? new Date(initialData.date).toISOString().split("T")[0]
@@ -44,14 +43,20 @@ export default function TimeSlotForm({
   );
   const [startTime, setStartTime] = useState(
     initialData?.startTime
-      ? new Date(initialData.startTime).toISOString().slice(0, 16)
+      ? new Date(initialData.startTime)
+          .toLocaleString("sv-SE", { timeZone: "Asia/Kolkata" })
+          .slice(0, 16)
       : "",
   );
+
   const [endTime, setEndTime] = useState(
     initialData?.endTime
-      ? new Date(initialData.endTime).toISOString().slice(0, 16)
+      ? new Date(initialData.endTime)
+          .toLocaleString("sv-SE", { timeZone: "Asia/Kolkata" })
+          .slice(0, 16)
       : "",
   );
+
   const [totalSeats, setTotalSeats] = useState(
     initialData?.totalSeats?.toString() || "",
   );

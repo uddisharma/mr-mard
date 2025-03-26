@@ -1,5 +1,7 @@
 import { db } from "@/lib/db";
 import { type NextRequest, NextResponse } from "next/server";
+import { toZonedTime } from "date-fns-tz";
+import { timeZone } from "@/lib/utils";
 
 export async function GET() {
   try {
@@ -39,9 +41,9 @@ export async function POST(request: NextRequest) {
 
     const timeSlot = await db.timeSlot.create({
       data: {
-        date: new Date(date),
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
+        date: toZonedTime(new Date(date), timeZone),
+        startTime: toZonedTime(new Date(startTime), timeZone),
+        endTime: toZonedTime(new Date(endTime), timeZone),
         totalSeats,
         originalPrice: originalPrice || 600,
         price: price || 500,
