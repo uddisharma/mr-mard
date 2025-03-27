@@ -12,6 +12,8 @@ import AIInsightsSection from "@/components/others/home/Ai";
 import Blogs from "@/components/others/home/Blogs";
 import Progress from "@/components/others/home/Progress";
 import Analyze from "@/components/others/home/Analyze";
+import OurApproach from "@/components/others/home/OurApproach";
+import TestingDiagnostics from "@/components/others/home/testing-diagnostics";
 
 const Home = () => {
   return (
@@ -19,10 +21,12 @@ const Home = () => {
       <Header className="bg-yellow md:pb-20" />
       <Hero />
       <Cta />
-      <Work />
+      {/* <Work /> */}
+      <OurApproach />
       <Progress />
       <Analyze />
       <Testimonials />
+      <TestingDiagnostics />
       <Chart />
       <Chart1 />
       <AIInsightsSection />
