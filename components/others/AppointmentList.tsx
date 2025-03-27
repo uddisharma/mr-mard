@@ -13,12 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
-import { Appointment, TimeSlot, Transaction } from "@prisma/client";
-
-interface AppointmentWithDetails extends Appointment {
-  timeSlot: TimeSlot;
-  transaction: Transaction;
-}
+import { formatTime } from "@/lib/utils";
 
 export default function AppointmentsList({
   appointments,
@@ -68,13 +63,8 @@ export default function AppointmentsList({
                     {new Date(appointment.timeSlot.date).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="md:table-cell">
-                    {new Date(
-                      appointment.timeSlot.startTime,
-                    ).toLocaleTimeString()}{" "}
-                    -{" "}
-                    {new Date(
-                      appointment.timeSlot.endTime,
-                    ).toLocaleTimeString()}
+                    {formatTime(new Date(appointment.timeSlot.startTime))}-{" "}
+                    {formatTime(new Date(appointment.timeSlot.endTime))}
                   </TableCell>
                   <TableCell className="md:table-cell">
                     {appointment?.transaction?.transactionId || "N/A"}
