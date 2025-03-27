@@ -254,6 +254,7 @@ model UserProgress {
   selectedDate       DateTime?
   selectedTimeSlotId String?
   updatedAt          DateTime    @updatedAt
+  processedAt        DateTime?
 }
 
 model ContactSubmission {
