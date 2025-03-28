@@ -23,11 +23,14 @@ export default function PhoneVerification({
   const [resendTimer, setResendTimer] = useState(0);
 
   useEffect(() => {
-    if (phone && id) {
-      sessionStorage.setItem("userId", id);
-      UpsertUserProgress(id);
-      router.push("/appointment-booking/date");
-    }
+    const fetchData = async () => {
+      if (phone && id) {
+        sessionStorage.setItem("userId", id);
+        await UpsertUserProgress(id);
+        router.push("/appointment-booking/date");
+      }
+    };
+    fetchData();
   }, [phone]);
 
   useEffect(() => {
@@ -163,7 +166,7 @@ export default function PhoneVerification({
                 <input
                   id="otp"
                   type="text"
-                  placeholder="Enter 6-digit code"
+                  placeholder="Enter 4-digit code"
                   value={otp}
                   onChange={(e) => {
                     if (e.target.value.match(/^[0-9]*$/))

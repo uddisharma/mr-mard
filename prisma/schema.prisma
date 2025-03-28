@@ -39,7 +39,7 @@ model User {
   reports                 Report[]
   emails                  Json[]
   appointments            Appointment[]
-  userProgress            UserProgress?
+  userProgress            UserProgress[]
   blogs                   Blog[]
   createdAt               DateTime               @default(now())
   updatedAt               DateTime               @updatedAt
@@ -249,12 +249,15 @@ model Transaction {
 model UserProgress {
   id                 String      @id @default(cuid())
   user               User        @relation(fields: [userId], references: [id])
-  userId             String      @unique
+  userId             String
   lastStep           BookingStep
   selectedDate       DateTime?
   selectedTimeSlotId String?
   updatedAt          DateTime    @updatedAt
+  createdAt          DateTime    @default(now())
   processedAt        DateTime?
+
+  @@index([userId]) 
 }
 
 model ContactSubmission {

@@ -143,14 +143,7 @@ export const OtpVerification = async (values: LoginWithPhoneSchemaData) => {
       };
     }
 
-    await db.userProgress.upsert({
-      where: { userId: user.id },
-      update: { lastStep: "DATE_SELECTION" },
-      create: {
-        userId: user.id,
-        lastStep: "DATE_SELECTION",
-      },
-    });
+    await UpsertUserProgress(user?.id);
 
     return { success: true, message: "OTP verified!", id: user.id };
   } catch (error) {
@@ -160,16 +153,36 @@ export const OtpVerification = async (values: LoginWithPhoneSchemaData) => {
 
 export const UpsertUserProgress = async (id: string) => {
   try {
-    await db.userProgress.upsert({
-      where: { userId: id },
-      update: { lastStep: "DATE_SELECTION" },
-      create: {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const existingProgress = await db.userProgress.findFirst({
+      where: {
         userId: id,
-        lastStep: "DATE_SELECTION",
+        createdAt: today,
       },
     });
+
+    let userProgress;
+
+    if (existingProgress) {
+      userProgress = await db.userProgress.update({
+        where: { id: existingProgress.id },
+        data: {
+          lastStep: "DATE_SELECTION",
+        },
+      });
+    } else {
+      userProgress = await db.userProgress.create({
+        data: {
+          userId: id,
+          lastStep: "DATE_SELECTION",
+        },
+      });
+    }
     return { success: true, message: "User progress updated!" };
   } catch (error) {
+    console.log(error);
     return { success: false, message: "Failed to update user progress" };
   }
 };

@@ -13,20 +13,43 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const userProgress = await db.userProgress.update({
-      where: { userId },
-      data: {
-        lastStep,
-        selectedDate: selectedDate ? new Date(selectedDate) : undefined,
-        selectedTimeSlotId,
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const existingProgress = await db.userProgress.findFirst({
+      where: {
+        userId,
+        createdAt: today,
       },
     });
 
+    let userProgress;
+
+    if (existingProgress) {
+      userProgress = await db.userProgress.update({
+        where: { id: existingProgress.id },
+        data: {
+          lastStep,
+          selectedDate: selectedDate ? new Date(selectedDate) : undefined,
+          selectedTimeSlotId,
+        },
+      });
+    } else {
+      userProgress = await db.userProgress.create({
+        data: {
+          userId,
+          lastStep,
+          selectedDate: selectedDate ? new Date(selectedDate) : undefined,
+          selectedTimeSlotId,
+        },
+      });
+    }
+
     return NextResponse.json(userProgress);
   } catch (error) {
-    console.error("Error updating user progress:", error);
+    console.error("Error updating or creating user progress:", error);
     return NextResponse.json(
-      { error: "Failed to update user progress" },
+      { error: "Failed to update or create user progress" },
       { status: 500 },
     );
   }
