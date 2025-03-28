@@ -163,7 +163,7 @@ export default function PhoneVerification({
                 <input
                   id="otp"
                   type="text"
-                  placeholder="Enter 6-digit code"
+                  placeholder="Enter 4-digit code"
                   value={otp}
                   onChange={(e) => {
                     if (e.target.value.match(/^[0-9]*$/))
