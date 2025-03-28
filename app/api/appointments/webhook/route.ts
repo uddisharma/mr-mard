@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { tree } from "next/dist/build/templates/app-page";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -14,6 +15,13 @@ export async function POST(request: Request) {
       const cancelledAppointments = await tx.userProgress.findMany({
         where: {
           updatedAt: { gt: lastProcessedTime },
+        },
+        include: {
+          user: {
+            select: {
+              phone: true,
+            },
+          },
         },
       });
 
