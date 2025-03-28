@@ -1,8 +1,7 @@
 import { db } from "@/lib/db";
-import { tree } from "next/dist/build/templates/app-page";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST() {
   try {
     const result = await db.$transaction(async (tx) => {
       const lastProcessed = await tx.userProgress.findFirst({
