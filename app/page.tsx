@@ -14,6 +14,7 @@ import Progress from "@/components/others/home/Progress";
 import Analyze from "@/components/others/home/Analyze";
 import OurApproach from "@/components/others/home/OurApproach";
 import TestingDiagnostics from "@/components/others/home/testing-diagnostics";
+import HealthcareSpecialists from "@/components/others/home/HealthcareSpecialists";
 
 const Home = () => {
   return (
@@ -30,7 +31,8 @@ const Home = () => {
       <Chart />
       <Chart1 />
       <AIInsightsSection />
-      <Blogs />
+      <HealthcareSpecialists />
+      {/* <Blogs /> */}
       <div className="my-8 md:my-16">
         <FAQ />
       </div>

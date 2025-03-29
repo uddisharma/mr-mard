@@ -26,11 +26,6 @@ export default function TestingDiagnostics() {
       icon: <HeartHandshakeIcon className="h-4 w-4 mr-2" />,
     },
     {
-      id: "testing",
-      label: "Testing & Diagnostics",
-      icon: <FlaskConicalIcon className="h-4 w-4 mr-2" />,
-    },
-    {
       id: "medications",
       label: "Medications",
       icon: <PillIcon className="h-4 w-4 mr-2" />,
@@ -48,7 +43,7 @@ export default function TestingDiagnostics() {
   ];
 
   return (
-    <div className="w-full mt-12 mb-20 md:mb-0">
+    <div className="w-full mt-12 mb-20  md:mb-0 rounded-2xl mx-auto px-4 max-w-5xl bg-gray-50 py-10">
       {/* Tabs */}
       <div className="flex justify-center gap-2  relative overflow-x-auto hide-scrollbar">
         {tabs.map((tab) => (
@@ -65,7 +60,7 @@ export default function TestingDiagnostics() {
       </div>
 
       {/* Content */}
-      <div className="max-w-5xl mx-auto px-4 md:mb-16 mt-12">
+      <div className="max-w-5xl mx-auto px-4 md:mb-5 mt-12">
         {activeTab === "consultations" && (
           <div className="md:flex grid grid-cols-1 gap-8">
             <div className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full">
@@ -129,7 +124,7 @@ export default function TestingDiagnostics() {
           </div>
         )}
 
-        {activeTab !== "testing" && (
+        {activeTab !== "consultations" && (
           <div className="flex justify-center items-center p-12 text-gray-500">
             <p>
               Content for {tabs.find((t) => t.id === activeTab)?.label} tab

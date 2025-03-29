@@ -1,4 +1,4 @@
-import { BeakerIcon, UsersIcon, TrendingUpIcon, CheckIcon } from "lucide-react";
+import { BeakerIcon, CircleCheckBig } from "lucide-react";
 
 export default function OurApproach() {
   return (
@@ -19,93 +19,86 @@ export default function OurApproach() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full ">
         {/* Card 1 */}
         <div className="border border-gray-200 bg-white rounded-xl p-8">
-          <div className="flex justify-center mb-4 items-center gap-3">
-            <div className="flex justify-center mb-4">
-              <div className="bg-purple-100 p-4 rounded-full">
-                <BeakerIcon className="h-5 w-5 text-btnblue" />
-              </div>
+          <div className="flex justify-center items-center gap-3 mb-4">
+            <div className="bg-purple-100 p-4 rounded-full">
+              <BeakerIcon className="h-5 w-5 text-btnblue" />
             </div>
-            <h3 className="text-md font-semibold text-center text-btnblue mb-6">
+            <h3 className="text-md font-semibold text-center text-btnblue">
               100% Science-backed
             </h3>
           </div>
-
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <CheckIcon className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
-              <p className="text-gray-500">Research backed Assessment tools</p>
+              <CircleCheckBig className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
+              <p className="text-gray-500">Research backed Asses</p>
             </div>
 
             <div className="flex items-start gap-3">
-              <CheckIcon className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
+              <CircleCheckBig className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
               <p className="text-gray-500">Evidence based diagnosis</p>
             </div>
 
             <div className="flex items-start gap-3">
-              <CheckIcon className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
-              <p className="text-gray-500">Outcome oriented treatment plans</p>
+              <CircleCheckBig className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
+              <p className="text-gray-500">Outcome oriented treatment</p>
             </div>
           </div>
         </div>
 
         {/* Card 2 */}
         <div className="border border-gray-200 bg-white rounded-xl p-8">
-          <div className="flex justify-center mb-4 items-center gap-3">
-            <div className="flex justify-center mb-4">
-              <div className="bg-purple-100 p-4 rounded-full">
-                <BeakerIcon className="h-5 w-5 text-teal-500" />
-              </div>
+          <div className="flex justify-center items-center gap-3 mb-4">
+            <div className="bg-purple-100 p-4 rounded-full">
+              <BeakerIcon className="h-5 w-5 text-teal-500" />
             </div>
-            <h3 className="text-md font-semibold text-center text-btnblue mb-6">
+            <h3 className="text-md font-semibold text-center text-btnblue">
               100% Science-backed
             </h3>
           </div>
 
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <CheckIcon className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
-              <p className="text-gray-500">Research backed Assessment tools</p>
+              <CircleCheckBig className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
+              <p className="text-gray-500">Research backed Asses</p>
             </div>
 
             <div className="flex items-start gap-3">
-              <CheckIcon className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
+              <CircleCheckBig className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
               <p className="text-gray-500">Evidence based diagnosis</p>
             </div>
 
             <div className="flex items-start gap-3">
-              <CheckIcon className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
-              <p className="text-gray-500">Outcome oriented treatment plans</p>
+              <CircleCheckBig className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
+              <p className="text-gray-500">Outcome oriented treatment </p>
             </div>
           </div>
         </div>
 
         {/* Card 3 */}
         <div className="border border-gray-200 bg-white rounded-xl p-8">
-          <div className="flex justify-center mb-4 items-center gap-3">
-            <div className="flex justify-center mb-4">
-              <div className="bg-purple-100 p-4 rounded-full">
-                <BeakerIcon className="h-5 w-5 text-amber-500" />
-              </div>
+          <div className="flex justify-center items-center gap-3 mb-4">
+            <div className="bg-purple-100 p-4 rounded-full">
+              <BeakerIcon className="h-5 w-5 text-amber-500" />
             </div>
-            <h3 className="text-md font-semibold text-center text-btnblue mb-6">
+            <h3 className="text-md font-semibold text-center text-btnblue">
               100% Science-backed
             </h3>
           </div>
 
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <CheckIcon className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
-              <p className="text-gray-500">Research backed Assessment tools</p>
+              <CircleCheckBig className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
+              <p className="text-gray-500">Research backed Assess</p>
             </div>
 
             <div className="flex items-start gap-3">
-              <CheckIcon className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
+              <CircleCheckBig className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
               <p className="text-gray-500">Evidence based diagnosis</p>
             </div>
 
             <div className="flex items-start gap-3">
-              <CheckIcon className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
-              <p className="text-gray-500">Outcome oriented treatment plans</p>
+              <CircleCheckBig className="h-5 w-5 text-btnblue mt-0.5 flex-shrink-0" />
+              <p className="text-gray-500">Outcome oriented treatment </p>
             </div>
           </div>
         </div>
