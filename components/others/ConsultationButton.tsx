@@ -7,12 +7,20 @@ const ConsultationButton = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowButton(window.scrollY > 500);
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      setShowButton(
+        scrollPosition > 500 &&
+          scrollPosition + windowHeight < documentHeight - 500,
+      );
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <>
       {showButton && (
