@@ -16,11 +16,13 @@ const ConsultationButton = () => {
   return (
     <>
       {showButton && (
-        <Link href="/appointment-booking">
-          <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-black text-white px-20 py-3 rounded-full shadow-lg cursor-pointer hover:bg-gray-800 transition duration-300">
-            Book Consultation
-          </div>
-        </Link>
+        <div className="fixed bottom-0 left-0 w-full bg-white py-3">
+          <Link href="/appointment-booking">
+            <div className="mx-auto w-max bg-black text-white px-20 py-3 rounded-full shadow-lg cursor-pointer hover:bg-gray-800 transition duration-300">
+              Book Consultation
+            </div>
+          </Link>
+        </div>
       )}
     </>
   );
