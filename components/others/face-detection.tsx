@@ -19,6 +19,7 @@ export default function FaceDetection() {
   );
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
 
+  // Load face-api models
   useEffect(() => {
     const loadModels = async () => {
       try {
@@ -28,6 +29,7 @@ export default function FaceDetection() {
           faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
         ]);
         setModelsLoaded(true);
+        console.log("Models loaded successfully");
       } catch (error) {
         console.error("Error loading models:", error);
       }
@@ -42,6 +44,7 @@ export default function FaceDetection() {
     };
   }, []);
 
+  // Start camera when models are loaded
   useEffect(() => {
     if (modelsLoaded) {
       startCamera();
@@ -66,6 +69,7 @@ export default function FaceDetection() {
     }
   };
 
+  // Face detection logic
   useEffect(() => {
     if (!modelsLoaded || !videoRef.current || !stream) return;
 
@@ -79,16 +83,19 @@ export default function FaceDetection() {
 
     const detectFace = async () => {
       if (video.readyState === 4) {
+        // Get canvas context
         const displaySize = {
           width: video.videoWidth,
           height: video.videoHeight,
         };
         faceapi.matchDimensions(canvas, displaySize);
 
+        // Detect faces
         const detections = await faceapi
           .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
           .withFaceLandmarks();
 
+        // Clear previous drawings
         const ctx = canvas.getContext("2d");
         if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -96,9 +103,11 @@ export default function FaceDetection() {
           const detection = detections[0];
           const faceBox = detection.detection.box;
 
+          // Get oval dimensions from the overlay
           const ovalRect = overlay.getBoundingClientRect();
           const videoRect = video.getBoundingClientRect();
 
+          // Convert overlay position to video coordinates
           const ovalOnVideo = {
             x:
               (ovalRect.left - videoRect.left) *
@@ -110,18 +119,62 @@ export default function FaceDetection() {
             height: ovalRect.height * (video.videoHeight / videoRect.height),
           };
 
+          // Calculate face size relative to frame
+          const faceArea = faceBox.width * faceBox.height;
+          const frameArea = video.videoWidth * video.videoHeight;
+          const facePercentage = (faceArea / frameArea) * 100;
+
+          // Define thresholds for distance
+          const tooFarThreshold = 8; // If face occupies less than 5% of frame, it's too far
+          const tooCloseThreshold = 10; // If face occupies more than 25% of frame, it's too close
+
+          // Check if face is too far or too close
+          const isTooFar = facePercentage < tooFarThreshold;
+          const isTooClose = facePercentage > tooCloseThreshold;
+
+          // Check if face is within the oval
           const faceInOval =
             faceBox.x > ovalOnVideo.x &&
             faceBox.y > ovalOnVideo.y &&
             faceBox.x + faceBox.width < ovalOnVideo.x + ovalOnVideo.width &&
             faceBox.y + faceBox.height < ovalOnVideo.y + ovalOnVideo.height;
 
-          setFaceDetected(faceInOval);
-          setMessage(
-            faceInOval
-              ? "Face positioned correctly!"
-              : "Please position your face within the oval",
-          );
+          // Update state based on face position and distance
+          if (isTooFar) {
+            setFaceDetected(false);
+            setMessage("You're too far from the camera. Please move closer.");
+          } else if (isTooClose) {
+            setFaceDetected(false);
+            setMessage("You're too close to the camera. Please move back.");
+          } else if (!faceInOval) {
+            setFaceDetected(false);
+            setMessage("Please position your face within the oval");
+          } else {
+            setFaceDetected(true);
+            setMessage("Face positioned correctly!");
+          }
+
+          // Draw face box for debugging (optional)
+          if (ctx) {
+            ctx.strokeStyle = isTooFar
+              ? "red"
+              : isTooClose
+                ? "orange"
+                : faceInOval
+                  ? "green"
+                  : "yellow";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(faceBox.x, faceBox.y, faceBox.width, faceBox.height);
+
+            // Display distance percentage for debugging
+            ctx.fillStyle = "white";
+            ctx.font = "16px Arial";
+            ctx.fillText(
+              `Face: ${facePercentage.toFixed(1)}% of frame`,
+              10,
+              30,
+            );
+          }
         } else {
           setFaceDetected(false);
           setMessage("No face detected. Please look at the camera.");
