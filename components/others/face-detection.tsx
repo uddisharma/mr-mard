@@ -18,8 +18,8 @@ export default function FaceDetection() {
     "Please position your face within the oval",
   );
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
 
-  // Load face-api models
   useEffect(() => {
     const loadModels = async () => {
       try {
@@ -44,32 +44,35 @@ export default function FaceDetection() {
     };
   }, []);
 
-  // Start camera when models are loaded
   useEffect(() => {
     if (modelsLoaded) {
       startCamera();
     }
-  }, [modelsLoaded]);
+  }, [modelsLoaded, facingMode]);
 
   const startCamera = async () => {
-    try {
-      const currentStream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 640, height: 480, facingMode: "user" },
-      });
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        const currentStream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 640, height: 480, facingMode },
+        });
 
-      if (videoRef.current) {
-        videoRef.current.srcObject = currentStream;
-        setStream(currentStream);
+        if (videoRef.current) {
+          videoRef.current.srcObject = currentStream;
+          setStream(currentStream);
+        }
+      } catch (error) {
+        console.error("Error accessing camera:", error);
+        setMessage(
+          "Error accessing camera. Please ensure you've granted camera permissions.",
+        );
       }
-    } catch (error) {
-      console.error("Error accessing camera:", error);
-      setMessage(
-        "Error accessing camera. Please ensure you've granted camera permissions.",
-      );
+    } else {
+      console.log("not supported");
+      setMessage("Error accessing camera. Not Supported by browser");
     }
   };
 
-  // Face detection logic
   useEffect(() => {
     if (!modelsLoaded || !videoRef.current || !stream) return;
 
@@ -83,19 +86,16 @@ export default function FaceDetection() {
 
     const detectFace = async () => {
       if (video.readyState === 4) {
-        // Get canvas context
         const displaySize = {
           width: video.videoWidth,
           height: video.videoHeight,
         };
         faceapi.matchDimensions(canvas, displaySize);
 
-        // Detect faces
         const detections = await faceapi
           .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
           .withFaceLandmarks();
 
-        // Clear previous drawings
         const ctx = canvas.getContext("2d");
         if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -103,11 +103,9 @@ export default function FaceDetection() {
           const detection = detections[0];
           const faceBox = detection.detection.box;
 
-          // Get oval dimensions from the overlay
           const ovalRect = overlay.getBoundingClientRect();
           const videoRect = video.getBoundingClientRect();
 
-          // Convert overlay position to video coordinates
           const ovalOnVideo = {
             x:
               (ovalRect.left - videoRect.left) *
@@ -119,27 +117,22 @@ export default function FaceDetection() {
             height: ovalRect.height * (video.videoHeight / videoRect.height),
           };
 
-          // Calculate face size relative to frame
           const faceArea = faceBox.width * faceBox.height;
           const frameArea = video.videoWidth * video.videoHeight;
           const facePercentage = (faceArea / frameArea) * 100;
 
-          // Define thresholds for distance
-          const tooFarThreshold = 8; // If face occupies less than 5% of frame, it's too far
-          const tooCloseThreshold = 10; // If face occupies more than 25% of frame, it's too close
+          const tooFarThreshold = 10; // If face occupies less than 5% of frame, it's too far
+          const tooCloseThreshold = 25; // If face occupies more than 25% of frame, it's too close
 
-          // Check if face is too far or too close
           const isTooFar = facePercentage < tooFarThreshold;
           const isTooClose = facePercentage > tooCloseThreshold;
 
-          // Check if face is within the oval
           const faceInOval =
             faceBox.x > ovalOnVideo.x &&
             faceBox.y > ovalOnVideo.y &&
             faceBox.x + faceBox.width < ovalOnVideo.x + ovalOnVideo.width &&
             faceBox.y + faceBox.height < ovalOnVideo.y + ovalOnVideo.height;
 
-          // Update state based on face position and distance
           if (isTooFar) {
             setFaceDetected(false);
             setMessage("You're too far from the camera. Please move closer.");
@@ -153,34 +146,11 @@ export default function FaceDetection() {
             setFaceDetected(true);
             setMessage("Face positioned correctly!");
           }
-
-          // Draw face box for debugging (optional)
-          if (ctx) {
-            ctx.strokeStyle = isTooFar
-              ? "red"
-              : isTooClose
-                ? "orange"
-                : faceInOval
-                  ? "green"
-                  : "yellow";
-            ctx.lineWidth = 2;
-            ctx.strokeRect(faceBox.x, faceBox.y, faceBox.width, faceBox.height);
-
-            // Display distance percentage for debugging
-            ctx.fillStyle = "white";
-            ctx.font = "16px Arial";
-            ctx.fillText(
-              `Face: ${facePercentage.toFixed(1)}% of frame`,
-              10,
-              30,
-            );
-          }
         } else {
           setFaceDetected(false);
           setMessage("No face detected. Please look at the camera.");
         }
       }
-
       animationId = requestAnimationFrame(detectFace);
     };
 
@@ -191,24 +161,56 @@ export default function FaceDetection() {
     };
   }, [modelsLoaded, stream]);
 
-  const captureImage = () => {
-    if (!videoRef.current || !faceDetected) return;
+  const switchCamera = () => {
+    setFacingMode((prevMode) => (prevMode === "user" ? "environment" : "user"));
+  };
 
+  const captureImage = () => {
+    if (!videoRef.current || !overlayRef.current || !faceDetected) return;
     setProcessing(true);
 
     try {
       const video = videoRef.current;
+      const overlay = overlayRef.current;
       const canvas = document.createElement("canvas");
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-
       const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        const imageData = canvas.toDataURL("image/png");
-        setCapturedImage(imageData);
-        setMessage("Image captured successfully!");
-      }
+      if (!ctx) return;
+
+      const overlayRect = overlay.getBoundingClientRect();
+      const videoRect = video.getBoundingClientRect();
+
+      const scaleX = video.videoWidth / videoRect.width;
+      const scaleY = video.videoHeight / videoRect.height;
+
+      const x = (overlayRect.left - videoRect.left) * scaleX;
+      const y = (overlayRect.top - videoRect.top) * scaleY;
+      const width = overlayRect.width * scaleX;
+      const height = overlayRect.height * scaleY;
+
+      const cropAmount = height * 0.15;
+      const croppedHeight = height - 2 * cropAmount;
+
+      canvas.width = width;
+      canvas.height = croppedHeight;
+
+      ctx.translate(width, 0);
+      ctx.scale(-1, 1);
+
+      ctx.drawImage(
+        video,
+        x,
+        y + cropAmount,
+        width,
+        croppedHeight,
+        0,
+        0,
+        width,
+        croppedHeight,
+      );
+
+      const imageData = canvas.toDataURL("image/png");
+      setCapturedImage(imageData);
+      setMessage("Image captured, cropped, and mirrored successfully!");
     } catch (error) {
       console.error("Error capturing image:", error);
       setMessage("Error capturing image. Please try again.");
@@ -219,6 +221,7 @@ export default function FaceDetection() {
 
   const resetCapture = () => {
     setCapturedImage(null);
+    setFacingMode("user");
     setMessage("Please position your face within the oval");
   };
 
@@ -255,12 +258,12 @@ export default function FaceDetection() {
               autoPlay
               playsInline
               muted
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover transform scale-x-[-1]"
               onLoadedMetadata={(e) => e.currentTarget.play()}
             />
             <canvas
               ref={canvasRef}
-              className="absolute top-0 left-0 h-full w-full"
+              className="absolute top-0 left-0 h-full w-full scale-x-[-1]"
             />
             <div
               ref={overlayRef}
@@ -287,20 +290,22 @@ export default function FaceDetection() {
             </AlertDescription>
           </Alert>
 
-          <Button
-            onClick={captureImage}
-            disabled={!faceDetected || processing}
-            className="mt-4"
-          >
-            {processing ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Processing...
-              </>
-            ) : (
-              "Capture Image"
-            )}
-          </Button>
+          <div className="flex gap-4 mt-4">
+            <Button
+              onClick={captureImage}
+              disabled={!faceDetected || processing}
+            >
+              {processing ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (
+                "Capture Image"
+              )}
+            </Button>
+            <Button onClick={switchCamera}>Switch Camera</Button>
+          </div>
         </div>
       )}
     </div>
