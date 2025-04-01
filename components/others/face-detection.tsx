@@ -223,6 +223,15 @@ export default function FaceDetection() {
     setCapturedImage(null);
     setFacingMode("user");
     setMessage("Please position your face within the oval");
+
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      setStream(null);
+    }
+
+    setTimeout(() => {
+      startCamera();
+    }, 100);
   };
 
   return (
@@ -269,7 +278,10 @@ export default function FaceDetection() {
               ref={overlayRef}
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[400px] border-4 border-white rounded-full pointer-events-none"
               style={{
-                boxShadow: "0 0 0 1000px rgba(0, 0, 0, 0.5)",
+                boxShadow: faceDetected
+                  ? "0 0 0 1000px rgba(0, 255, 0, 0.5)"
+                  : "0 0 0 1000px rgba(255, 0, 0, 0.5)",
+                borderColor: faceDetected ? "green" : "red",
               }}
             />
           </div>
