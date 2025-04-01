@@ -45,7 +45,7 @@ export default function Component() {
 
   if (!isMobile) {
     return (
-      <div className="h-full bg-white pb-1">
+      <div className="h-full bg-white pb-1 pt-10">
         <h2 className="text-3xl md:text-4xl text-center text-btnblue pt-8 pb-5">
           Track Your Progress
         </h2>
