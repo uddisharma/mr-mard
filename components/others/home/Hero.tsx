@@ -47,30 +47,15 @@ const Hero = () => {
       >
         <div className="flex flex-col space-y-8">
           <h1 className="text-[45px] text-btnblue text-left xs:text-center">
-            NO MORE{" "}
-            <span className="text-btnblue font-bold">TRAIL AND ERROR</span>{" "}
+            REGAIN HAIR,{" "}
+            <span className="text-btnblue font-bold">REGAIN CONFIDENCE</span>{" "}
             <br />
           </h1>
-          <p className="text-[18px] text-black max-w-lg pr-10">
-            It’s time to find the solution you can finally trust because you
-            deserve results. Never let Hair loss take your confidence
+          <p className="text-[18px] text-black max-w-xl pr-10">
+            Let’s have a honest conversation about hair regrowth 👇
           </p>
           <div className="space-y-7">
             <div className="flex gap-5">
-              <Link href="/analyze">
-                <motion.div
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 1.001 }}
-                  style={{
-                    boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
-                  }}
-                  className={`bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[12px] animate-wiggle ${isShaking ? "animate-shake" : ""}`}
-                >
-                  <button className="inline-flex h-12 animate-shimmer items-center justify-center rounded-[12px] border border-[#1b1139] bg-[linear-gradient(110deg,#0f0f1a,45%,#3a3f56,55%,#0f0f1a)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full ">
-                    Get Your Hair Analysis
-                  </button>
-                </motion.div>
-              </Link>
               <Link href="/appointment-booking">
                 <motion.div
                   whileHover={{ scale: 1.01 }}
@@ -81,9 +66,23 @@ const Hero = () => {
                   className={`bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[12px] animate-wiggle ${isShaking ? "animate-shake" : ""}`}
                 >
                   <button className="inline-flex h-12 animate-shimmer items-center justify-center rounded-[12px] border border-[#1b1139] bg-[linear-gradient(110deg,#0f0f1a,45%,#3a3f56,55%,#0f0f1a)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full ">
-                    Book your Appointment
+                    Book Consultation
                   </button>
                 </motion.div>
+              </Link>
+              <Link href="/analyze">
+                <div
+                  // whileHover={{ scale: 1.01 }}
+                  // whileTap={{ scale: 1.001 }}
+                  // style={{
+                  //   boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
+                  // }}
+                  className={`bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[12px] animate-wiggle `}
+                >
+                  <button className="inline-flex h-12 items-center justify-center rounded-[12px] border border-[#1b1139] bg-[linear-gradient(110deg,#0f0f1a,45%,#3a3f56,55%,#0f0f1a)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full ">
+                    Try AI Hair Analysis
+                  </button>
+                </div>
               </Link>
             </div>
             <Link
@@ -133,12 +132,12 @@ const Hero = () => {
 
       <div className="flex md:hidden flex-col space-y-8 bg-yellow px-5 pt-10 rounded-[0px_0px_48px_48px] overflow-hidden">
         <h1 className="text-[40px] md:text-[45px] w-full text-btnblue text-center">
-          NO MORE{" "}
-          <span className="text-btnblue font-bold">TRAIL AND ERROR</span> <br />{" "}
+          REGAIN HAIR,{" "}
+          <span className="text-btnblue font-bold">REGAIN CONFIDENCE</span>{" "}
+          <br />{" "}
         </h1>
         <p className="text-[16px] text-black w-full text-center ">
-          Get tailored hair care treatments based on advanced hair and scalp
-          analysis.
+          Let’s have a honest conversation about hair regrowth 👇
         </p>
         <div className="flex flex-col justify-center items-center space-y-5 w-full pb-5">
           <Link href="/analyze">
@@ -151,23 +150,23 @@ const Hero = () => {
               className={`bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[12px] animate-wiggle ${isShaking ? "animate-shake" : ""}`}
             >
               <button className="inline-flex h-12 animate-shimmer items-center justify-center rounded-[12px] border border-[#1b1139] bg-[linear-gradient(110deg,#0f0f1a,45%,#3a3f56,55%,#0f0f1a)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full ">
-                Get Your Hair Analysis
+                Try AI Hair Analysis
               </button>
             </motion.div>
           </Link>
           <Link href="/appointment-booking">
-            <motion.div
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 1.001 }}
-              style={{
-                boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
-              }}
-              className={`bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[12px] animate-wiggle ${isShaking ? "animate-shake" : ""}`}
+            <div
+              // whileHover={{ scale: 1.01 }}
+              // whileTap={{ scale: 1.001 }}
+              // style={{
+              //   boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
+              // }}
+              className={`bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[12px] animate-wiggle `}
             >
               <button className="inline-flex h-12 animate-shimmer items-center justify-center rounded-[12px] border border-[#1b1139] bg-[linear-gradient(110deg,#0f0f1a,45%,#3a3f56,55%,#0f0f1a)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full ">
-                Book your Appointment
+                Book Consultation
               </button>
-            </motion.div>
+            </div>
           </Link>
         </div>
         <div className="bg-white rounded-[30px] overflow-hidden mx-2 mt-5">

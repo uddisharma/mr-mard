@@ -6,17 +6,17 @@ import React from "react";
 
 const data = [
   {
-    title: "Angle Hair Analysis",
-    content: "Understand your current scalp condition.",
+    title: "Get Accurate Diagnosis",
+    content: "Get right diagnosis that doesn’t need any second opinions",
   },
   {
-    title: "Personalized Hair-health Report",
-    content: "Get personalized report which was designed by doctors",
+    title: "Treatment Plans made for ‘You’",
+    content: "we believe you are unique and so is our treatment plan",
   },
   {
-    title: "Effective Treatment",
+    title: "Build a habit",
     content:
-      "Get treated prescribed by our expert and achieve noticeable improvements in less time.",
+      "get the right guidance from our hair coach to reach your hair goals",
   },
 ];
 

@@ -21,11 +21,6 @@ export default function TestingDiagnostics() {
       icon: <MessageSquareIcon className="h-4 w-4 mr-2" />,
     },
     {
-      id: "counselling",
-      label: "Counselling",
-      icon: <HeartHandshakeIcon className="h-4 w-4 mr-2" />,
-    },
-    {
       id: "medications",
       label: "Medications",
       icon: <PillIcon className="h-4 w-4 mr-2" />,
@@ -36,8 +31,8 @@ export default function TestingDiagnostics() {
       icon: <HeartPulseIcon className="h-4 w-4 mr-2" />,
     },
     {
-      id: "wellness",
-      label: "Wellness Products",
+      id: "coaching",
+      label: "Coaching",
       icon: <ShoppingBagIcon className="h-4 w-4 mr-2" />,
     },
   ];
@@ -68,7 +63,10 @@ export default function TestingDiagnostics() {
                 <div className="bg-yellow p-4 rounded-full">
                   <FlaskConicalIcon className="h-5 w-5 text-btnblue " />
                 </div>
-                <h2 className="text-2xl text-btnblue">Testing & Diagnostics</h2>
+                <h2 className="text-2xl text-btnblue">
+                  {" "}
+                  Detailed Root Cause Assessment
+                </h2>
               </div>
 
               <div className="space-y-5">
@@ -77,34 +75,23 @@ export default function TestingDiagnostics() {
                     Hormonal Analysis
                   </h3>
                   <p className="text-gray-500">
-                    For detecting hormonal sex-issues
+                    360 degree assessment to find root-cause
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-normal text-btnblue">
-                    STI & STD Test Panels
+                    Personalised Treatment
                   </h3>
-                  <p className="text-gray-500">
-                    Advanced testing for all STIs/STDs
-                  </p>
+                  <p className="text-gray-500">Personalised for your goals</p>
                 </div>
 
                 <div>
                   <h3 className="text-lg font-normal text-btnblue">
-                    Scans & Ultrasounds
+                    Doctor’s care from start to finish
                   </h3>
                   <p className="text-gray-500">
-                    For detecting physical sex-issues
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-normal text-btnblue">
-                    Discreet Report Delivery
-                  </h3>
-                  <p className="text-gray-500">
-                    Instant digital report delivery
+                    Regular follow-ups & progress tracking
                   </p>
                 </div>
               </div>
@@ -124,12 +111,169 @@ export default function TestingDiagnostics() {
           </div>
         )}
 
-        {activeTab !== "consultations" && (
-          <div className="flex justify-center items-center p-12 text-gray-500">
-            <p>
-              Content for {tabs.find((t) => t.id === activeTab)?.label} tab
-              would appear here.
-            </p>
+        {activeTab === "medications" && (
+          <div className="md:flex grid grid-cols-1 gap-8">
+            <div className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full">
+              <div className="flex items-center gap-4">
+                <div className="bg-yellow p-4 rounded-full">
+                  <FlaskConicalIcon className="h-5 w-5 text-btnblue " />
+                </div>
+                <h2 className="text-2xl text-btnblue">Medications</h2>
+              </div>
+
+              <div className="space-y-5">
+                <div>
+                  <h3 className="text-lg font-normal text-btnblue">
+                    Clinically Approved
+                  </h3>
+                  <p className="text-gray-500">Safe with guaranteed results</p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-normal text-btnblue">
+                    Safe from harsh chemicals
+                  </h3>
+                  <p className="text-gray-500">Free from suphates & paraben</p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-normal text-btnblue">
+                    Effective & Proven Results
+                  </h3>
+                  <p className="text-gray-500">
+                    We recommend products that has proven track record
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center items-center flex-3 md:w-[35%] w-full">
+              <div className="rounded-full overflow-hidden w-80 h-80">
+                <Image
+                  src="/ai.png"
+                  alt="Medical testing procedure"
+                  width={400}
+                  height={400}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "lifestyle" && (
+          <div className="md:flex grid grid-cols-1 gap-8">
+            <div className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full">
+              <div className="flex items-center gap-4">
+                <div className="bg-yellow p-4 rounded-full">
+                  <FlaskConicalIcon className="h-5 w-5 text-btnblue " />
+                </div>
+                <h2 className="text-2xl text-btnblue">
+                  Lifestyle Recommendations
+                </h2>
+              </div>
+
+              <div className="space-y-5">
+                <div>
+                  <h3 className="text-lg font-normal text-btnblue">
+                    Bridging Nutritional Gaps
+                  </h3>
+                  <p className="text-gray-500">
+                    Address nutritional deficiency through diet
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-normal text-btnblue">
+                    Relieve from stress Stress
+                  </h3>
+                  <p className="text-gray-500">
+                    relieving activities to promote hair growth
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-normal text-btnblue">
+                    Improve Quality of Sleep
+                  </h3>
+                  <p className="text-gray-500">For improved hair health</p>
+                </div>
+                <div>
+                  <h3 className="text-lg font-normal text-btnblue">
+                    Reduce environment impact
+                  </h3>
+                  <p className="text-gray-500">
+                    simple swaps to improve surroundings
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center items-center flex-3 md:w-[35%] w-full">
+              <div className="rounded-full overflow-hidden w-80 h-80">
+                <Image
+                  src="/ai.png"
+                  alt="Medical testing procedure"
+                  width={400}
+                  height={400}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "coaching" && (
+          <div className="md:flex grid grid-cols-1 gap-8">
+            <div className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full">
+              <div className="flex items-center gap-4">
+                <div className="bg-yellow p-4 rounded-full">
+                  <FlaskConicalIcon className="h-5 w-5 text-btnblue " />
+                </div>
+                <h2 className="text-2xl text-btnblue">Coaching</h2>
+              </div>
+
+              <div className="space-y-5">
+                <div>
+                  <h3 className="text-lg font-normal text-btnblue">
+                    Habit formation
+                  </h3>
+                  <p className="text-gray-500">
+                    We help in forming a routine that you can follow
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-normal text-btnblue">
+                    Expert guidance
+                  </h3>
+                  <p className="text-gray-500">
+                    we can answer any unanswered question
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-normal text-btnblue">
+                    Diet enhancement
+                  </h3>
+                  <p className="text-gray-500">
+                    Helps curate your diet and lifestyle as per your need
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center items-center flex-3 md:w-[35%] w-full">
+              <div className="rounded-full overflow-hidden w-80 h-80">
+                <Image
+                  src="/ai.png"
+                  alt="Medical testing procedure"
+                  width={400}
+                  height={400}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            </div>
           </div>
         )}
       </div>
