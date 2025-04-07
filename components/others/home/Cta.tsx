@@ -106,16 +106,17 @@ const Cta = () => {
         </div>
       </div>
 
-      {/* Timeline - Vertical for mobile, horizontal for larger screens */}
       <div className="relative  flex-col items-center md:grid md:grid-cols-3 md:gap-6 md:pt-6 hidden">
         {data?.map((step, index) => (
           <React.Fragment key={index}>
             {index > 0 && <div className="h-16 w-[2px] bg-black md:hidden" />}
             <Card className="relative flex flex-col items-center text-center bg-btnblue text-white p-6 rounded-lg w-full md:h-[200px]">
               {index == 2 && (
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-red-600 text-white text-sm font-bold px-4 py-1 rounded-b-xl">
-                  COMING SOON
-                </div>
+                <img
+                  src="/coming-soon1.png"
+                  alt="Coming Soon"
+                  className="absolute top-[-25px] right-0 w-28 h-auto"
+                />
               )}
               <h3 className="text-2xl pt-4">{step.title}</h3>
               <p className="text-lg md:text-sm m-4 text-gray-300">
