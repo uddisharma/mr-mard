@@ -100,8 +100,8 @@ const Header = async ({ className }: { className?: string }) => {
           <Image
             src="/logo2.png"
             alt="Milele Health"
-            className="m-auto"
-            width={120}
+            className="m-auto mt-[-15px]"
+            width={80}
             height={50}
           />
         </Link>
