@@ -24,7 +24,12 @@ export default function OurApproach() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full ">
         {/* Card 1 */}
-        <div className="border border-gray-200 bg-white rounded-xl p-8">
+        <div
+          style={{
+            boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+          }}
+          className="border border-gray-200 bg-white rounded-xl p-8"
+        >
           <div className="flex justify-center items-center gap-3 mb-4">
             <div className="bg-purple-100 p-4 rounded-full">
               <FlaskConical className="h-5 w-5 text-btnblue" />
@@ -57,7 +62,12 @@ export default function OurApproach() {
         </div>
 
         {/* Card 2 */}
-        <div className="border border-gray-200 bg-white rounded-xl p-8">
+        <div
+          style={{
+            boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+          }}
+          className="border border-gray-200 bg-white rounded-xl p-8"
+        >
           <div className="flex justify-center items-center gap-3 mb-4">
             <div className="bg-purple-100 p-4 rounded-full">
               <Users className="h-5 w-5 text-teal-500" />
@@ -86,7 +96,12 @@ export default function OurApproach() {
         </div>
 
         {/* Card 3 */}
-        <div className="border border-gray-200 bg-white rounded-xl p-8">
+        <div
+          style={{
+            boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+          }}
+          className="border border-gray-200 bg-white rounded-xl p-8"
+        >
           <div className="flex justify-center items-center gap-3 mb-4">
             <div className="bg-purple-100 p-4 rounded-full">
               <ChartNoAxesCombined className="h-5 w-5 text-amber-500" />

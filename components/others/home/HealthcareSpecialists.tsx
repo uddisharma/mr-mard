@@ -8,19 +8,17 @@ export default function HealthcareSpecialists() {
         <div className="space-y-6">
           <div>
             <h2 className="text-4xl md:text-5xl font-bold text-btnblue leading-tight">
-              Sexual Healthcare specialists
+              Meet our healthcare specialist
             </h2>
             <p className="mt-4 text-gray-600 text-lg">
-              We have a multidisciplinary team of India's best healthcare
-              doctors and therapists from fields of psychiatry, cardiology,
-              psychology and general medicine.
+              We’ve brought together some of India’s top dermatologists &
+              trichologists.
             </p>
           </div>
 
           <p className="text-gray-600 text-lg">
-            All our doctors & therapists go through rigorous training through
-            our Advanced Medicine Course to ensure standardised, high quality
-            care delivery to patients across India.
+            All our doctors are 10+ years experienced and are obsessed with
+            customer care
           </p>
 
           <div className="flex items-center mt-6">

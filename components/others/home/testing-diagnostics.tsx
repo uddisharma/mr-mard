@@ -57,7 +57,12 @@ export default function TestingDiagnostics() {
       <div className="max-w-5xl mx-auto px-4 md:mb-5 mt-12">
         {activeTab === "consultations" && (
           <div className="md:flex grid grid-cols-1 gap-8">
-            <div className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full">
+            <div
+              style={{
+                boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+              }}
+              className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full"
+            >
               <div className="flex items-center gap-4">
                 <div className="bg-yellow p-4 rounded-full">
                   <FlaskConicalIcon className="h-5 w-5 text-btnblue " />
@@ -109,7 +114,12 @@ export default function TestingDiagnostics() {
 
         {activeTab === "medications" && (
           <div className="md:flex grid grid-cols-1 gap-8">
-            <div className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full">
+            <div
+              style={{
+                boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+              }}
+              className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full"
+            >
               <div className="flex items-center gap-4">
                 <div className="bg-yellow p-4 rounded-full">
                   <FlaskConicalIcon className="h-5 w-5 text-btnblue " />
@@ -159,7 +169,12 @@ export default function TestingDiagnostics() {
 
         {activeTab === "lifestyle" && (
           <div className="md:flex grid grid-cols-1 gap-8">
-            <div className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full">
+            <div
+              style={{
+                boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+              }}
+              className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full"
+            >
               <div className="flex items-center gap-4">
                 <div className="bg-yellow p-4 rounded-full">
                   <FlaskConicalIcon className="h-5 w-5 text-btnblue " />
@@ -221,7 +236,12 @@ export default function TestingDiagnostics() {
 
         {activeTab === "coaching" && (
           <div className="md:flex grid grid-cols-1 gap-8">
-            <div className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full">
+            <div
+              style={{
+                boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+              }}
+              className="space-y-8 bg-white p-8 rounded-2xl border border-gray-200 md:w-[65%] w-full"
+            >
               <div className="flex items-center gap-4">
                 <div className="bg-yellow p-4 rounded-full">
                   <FlaskConicalIcon className="h-5 w-5 text-btnblue " />
