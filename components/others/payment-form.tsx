@@ -92,7 +92,7 @@ export default function PaymentForm() {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || order.keyId,
         amount: amountInPaise.toString(),
         currency: "INR",
-        name: "Mr Mard",
+        name: "Milele Health",
         description: "Hair Solution",
         order_id: order.orderId,
         handler: (response: any) => {
@@ -327,7 +327,7 @@ export default function PaymentForm() {
         >
           <div className="relative">
             <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/creative-SW6QDQbcVuwPgb6a2CYtYmRbsJa4k1.png"
+              src="/appointment/3.png"
               alt="Flowers & Saints design concept"
               width={600}
               height={600}

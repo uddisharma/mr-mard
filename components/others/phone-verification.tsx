@@ -216,7 +216,7 @@ export default function PhoneVerification({
         >
           <div className="relative">
             <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/creative-SW6QDQbcVuwPgb6a2CYtYmRbsJa4k1.png"
+              src="/appointment/1.png"
               alt="Flowers & Saints design concept"
               width={600}
               height={600}

@@ -17,8 +17,8 @@ const Footer = () => {
             <div className="m-auto">
               <Link href="/" className="text-xl font-bold">
                 <Image
-                  src="/logo.png"
-                  alt="Mr. Mard"
+                  src="/logo2.png"
+                  alt="Milele Health"
                   className="pb-5"
                   width={120}
                   height={50}
@@ -82,8 +82,8 @@ const Footer = () => {
           </div>
           <div className="bg-yellow py-4 md:mx-6 px-4 rounded-[144px] md:mt-20">
             <p className="text-[#1E2A4A] text-sm text-center">
-              © {new Date().getFullYear()} Mr Mard. All Rights Reserved. Made
-              With ❤️ In India.
+              © {new Date().getFullYear()} Milele Health. All Rights Reserved.
+              Made With ❤️ In India.
             </p>
           </div>
         </div>
@@ -94,9 +94,9 @@ const Footer = () => {
             <div className="">
               <Link href="/" className="text-xl font-bold">
                 <Image
-                  src="/logo.png"
+                  src="/logo2.png"
                   className="pb-5"
-                  alt="Mr. Mard"
+                  alt="Milele Health"
                   width={120}
                   height={50}
                 />
@@ -159,8 +159,8 @@ const Footer = () => {
           </div>
           <div className="bg-yellow py-4 md:mx-6 px-4 rounded-[144px] md:mt-20">
             <p className="text-[#1E2A4A] text-sm text-center">
-              © {new Date().getFullYear()} Mr Mard. All Rights Reserved. Made
-              With ❤️ In India.
+              © {new Date().getFullYear()} Milele Health. All Rights Reserved.
+              Made With ❤️ In India.
             </p>
           </div>
         </div>

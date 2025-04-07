@@ -50,8 +50,8 @@ export default function Sidebar({ role }: { role: string | undefined }) {
       <div className="p-6">
         <Link href="/" className="text-xl font-serif font-bold">
           <Image
-            src="/logo.png"
-            alt="Mr. Mard"
+            src="/logo2.png"
+            alt="Milele Health"
             className="ml-3"
             width={120}
             height={50}
@@ -85,8 +85,8 @@ export default function Sidebar({ role }: { role: string | undefined }) {
       </nav>
 
       <div className="p-6 text-sm text-gray-400">
-        © {new Date().getFullYear()} Mr Mard. All Rights Reserved. Made With ❤️
-        In India.
+        © {new Date().getFullYear()} Milele Health. All Rights Reserved. Made
+        With ❤️ In India.
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${blog.title} | Mr Mard`;
+  const title = `${blog.title} | Milele Health`;
   const description = removeHtmlCssTags(blog.content.slice(0, 160) ?? "");
 
   return {

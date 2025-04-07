@@ -8,8 +8,8 @@ import Cta from "@/components/others/home/Cta";
 import Testimonials from "@/components/others/home/Testimonial";
 import Chart from "@/components/others/home/Chart";
 import Chart1 from "@/components/others/home/Chart1";
-import AIInsightsSection from "@/components/others/home/Ai";
-// import Blogs from "@/components/others/home/Blogs";
+// import AIInsightsSection from "@/components/others/home/Ai";
+import Blogs from "@/components/others/home/Blogs";
 import Progress from "@/components/others/home/Progress";
 import Analyze from "@/components/others/home/Analyze";
 import OurApproach from "@/components/others/home/OurApproach";
@@ -31,9 +31,9 @@ const Home = () => {
       <TestingDiagnostics />
       <Chart />
       <Chart1 />
-      <AIInsightsSection />
+      {/* <AIInsightsSection /> */}
       <HealthcareSpecialists />
-      {/* <Blogs /> */}
+      <Blogs />
       <div className="my-8 md:my-16">
         <FAQ />
       </div>

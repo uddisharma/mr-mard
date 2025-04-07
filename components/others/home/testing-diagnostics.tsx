@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import {
   MessageSquareIcon,
-  HeartHandshakeIcon,
   FlaskConicalIcon,
   PillIcon,
   HeartPulseIcon,
@@ -26,14 +25,14 @@ export default function TestingDiagnostics() {
       icon: <PillIcon className="h-4 w-4 mr-2" />,
     },
     {
-      id: "lifestyle",
-      label: "Lifestyle Recommendations",
-      icon: <HeartPulseIcon className="h-4 w-4 mr-2" />,
-    },
-    {
       id: "coaching",
       label: "Coaching",
       icon: <ShoppingBagIcon className="h-4 w-4 mr-2" />,
+    },
+    {
+      id: "lifestyle",
+      label: "Lifestyle Recommendations",
+      icon: <HeartPulseIcon className="h-4 w-4 mr-2" />,
     },
   ];
 
@@ -63,16 +62,13 @@ export default function TestingDiagnostics() {
                 <div className="bg-yellow p-4 rounded-full">
                   <FlaskConicalIcon className="h-5 w-5 text-btnblue " />
                 </div>
-                <h2 className="text-2xl text-btnblue">
-                  {" "}
-                  Detailed Root Cause Assessment
-                </h2>
+                <h2 className="text-2xl text-btnblue"> Consultations</h2>
               </div>
 
               <div className="space-y-5">
                 <div>
                   <h3 className="text-lg font-normal text-btnblue">
-                    Hormonal Analysis
+                    Detailed Root Cause Assessment
                   </h3>
                   <p className="text-gray-500">
                     360 degree assessment to find root-cause
@@ -98,13 +94,13 @@ export default function TestingDiagnostics() {
             </div>
 
             <div className="flex justify-center items-center flex-3 md:w-[35%] w-full">
-              <div className="rounded-full overflow-hidden w-80 h-80">
+              <div>
                 <Image
-                  src="/ai.png"
+                  src="/appointment/Treatment.png"
                   alt="Medical testing procedure"
                   width={400}
                   height={400}
-                  className="object-cover w-full h-full"
+                  className="w-full h-auto object-contain rounded-lg"
                 />
               </div>
             </div>
@@ -148,13 +144,13 @@ export default function TestingDiagnostics() {
             </div>
 
             <div className="flex justify-center items-center flex-3 md:w-[35%] w-full">
-              <div className="rounded-full overflow-hidden w-80 h-80">
+              <div>
                 <Image
-                  src="/ai.png"
+                  src="/appointment/Medication.png"
                   alt="Medical testing procedure"
                   width={400}
                   height={400}
-                  className="object-cover w-full h-full"
+                  className="w-full h-auto object-contain rounded-lg"
                 />
               </div>
             </div>
@@ -210,13 +206,13 @@ export default function TestingDiagnostics() {
             </div>
 
             <div className="flex justify-center items-center flex-3 md:w-[35%] w-full">
-              <div className="rounded-full overflow-hidden w-80 h-80">
+              <div>
                 <Image
-                  src="/ai.png"
+                  src="/appointment/Life style changes.png"
                   alt="Medical testing procedure"
                   width={400}
                   height={400}
-                  className="object-cover w-full h-full"
+                  className="w-full h-auto object-contain rounded-lg"
                 />
               </div>
             </div>
@@ -264,13 +260,13 @@ export default function TestingDiagnostics() {
             </div>
 
             <div className="flex justify-center items-center flex-3 md:w-[35%] w-full">
-              <div className="rounded-full overflow-hidden w-80 h-80">
+              <div>
                 <Image
-                  src="/ai.png"
+                  src="/appointment/Coaching.png"
                   alt="Medical testing procedure"
                   width={400}
                   height={400}
-                  className="object-cover w-full h-full"
+                  className="w-full h-auto object-contain rounded-lg"
                 />
               </div>
             </div>

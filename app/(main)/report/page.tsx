@@ -120,7 +120,7 @@ const MobileVerion = () => {
         <Card className="w-full bg-white border-[1px] border-black">
           <CardHeader>
             <CardTitle className="text-2xl font-semibold text-center">
-              Naveen’s projection with and without Mr Mard
+              Naveen’s projection with and without Milele Health
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 pb-5 my-5">

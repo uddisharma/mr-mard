@@ -44,7 +44,7 @@ const Cta = () => {
           {/* Customer count */}
           <div className="flex gap-3 z-10">
             <h2 className="text-4xl font-bold text-black">
-              2200<span className="text-[#000]">+</span>
+              1000<span className="text-[#000]">+</span>
             </h2>
             <p className="text-lg text-black mt-2">Happy Customers</p>
           </div>
@@ -68,7 +68,7 @@ const Cta = () => {
 
         {/* Customer count and avatars */}
         <div className="hidden md:flex flex-wrap items-center justify-center gap-2">
-          <div className="text-3xl font-bold">2200+</div>
+          <div className="text-3xl font-bold">1000+</div>
           <div className="flex flex-col sm:flex-row items-center">
             <span className="text-black text-[12px] max-w-[80px]">
               Happy Customers
