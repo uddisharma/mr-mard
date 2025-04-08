@@ -47,7 +47,7 @@ export default function Sidebar({ role }: { role: string | undefined }) {
   const pathname = usePathname();
   return (
     <div className="w-64 bg-btnblue text-white h-screen flex flex-col fixed left-0">
-      <div className="p-6">
+      {/* <div className="p-6">
         <Link href="/" className="text-xl font-serif font-bold">
           <Image
             src="/logo2.png"
@@ -57,9 +57,9 @@ export default function Sidebar({ role }: { role: string | undefined }) {
             height={50}
           />
         </Link>
-      </div>
+      </div> */}
 
-      <nav className="flex-1 px-4 overflow-y-auto custom-scrollbar">
+      <nav className="flex-1 px-4 overflow-y-auto custom-scrollbar mt-10">
         {navItems.map((item) => (
           <Link
             key={item.label}
