@@ -15,15 +15,20 @@ export function formatDate(date: Date): string {
   }).format(date);
 }
 
-export function formatTime(date: Date): string {
+export function formatTime(date: Date | string): string {
+  const validDate = typeof date === "string" ? new Date(date) : date;
+
+  if (isNaN(validDate.getTime())) {
+    throw new Error("Invalid time value");
+  }
+
   return new Intl.DateTimeFormat("en-US", {
     timeZone: "Asia/Kolkata",
     hour: "numeric",
     minute: "numeric",
     hour12: true,
-  }).format(date);
+  }).format(validDate);
 }
-
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",

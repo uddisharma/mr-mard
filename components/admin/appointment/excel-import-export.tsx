@@ -15,6 +15,7 @@ import { Progress } from "@/components/ui/progress";
 import { Download, ToggleLeft, Upload } from "lucide-react";
 import * as XLSX from "xlsx";
 import { toast } from "sonner";
+import { formatTime } from "@/lib/utils";
 
 export default function ExcelImportExport({
   onImportSuccess,
@@ -182,11 +183,13 @@ export default function ExcelImportExport({
 
       const excelData = timeSlots.map((slot: any) => ({
         date: new Date(slot.date).toISOString().split("T")[0],
-        startTime: new Date(slot.startTime).toISOString(),
-        endTime: new Date(slot.endTime).toISOString(),
+        startTime: formatTime(slot.startTime),
+        endTime: formatTime(slot.endTime),
         totalSeats: slot.totalSeats,
         bookedSeats: slot.bookedSeats,
         price: slot.price,
+        originalPrice: slot.originalPrice,
+        label: slot.label,
         isActive: slot.isActive ?? true,
       }));
 
