@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +15,12 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { ToggleLeft } from "lucide-react";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 interface TimeSlotFormProps {
   onSuccess: () => void;
@@ -41,19 +46,16 @@ export default function TimeSlotForm({
       ? new Date(initialData.date).toISOString().split("T")[0]
       : "",
   );
+
   const [startTime, setStartTime] = useState(
     initialData?.startTime
-      ? new Date(initialData.startTime)
-          .toLocaleString("sv-SE", { timeZone: "Asia/Kolkata" })
-          .slice(0, 16)
+      ? dayjs.utc(initialData?.startTime).format("YYYY-MM-DDTHH:mm")
       : "",
   );
 
   const [endTime, setEndTime] = useState(
     initialData?.endTime
-      ? new Date(initialData.endTime)
-          .toLocaleString("sv-SE", { timeZone: "Asia/Kolkata" })
-          .slice(0, 16)
+      ? dayjs.utc(initialData?.endTime).format("YYYY-MM-DDTHH:mm")
       : "",
   );
 
@@ -94,8 +96,8 @@ export default function TimeSlotForm({
         },
         body: JSON.stringify({
           date,
-          startTime,
-          endTime,
+          startTime: dayjs.tz(startTime, "UTC").toISOString(),
+          endTime: dayjs.tz(endTime, "UTC").toISOString(),
           totalSeats: Number.parseInt(totalSeats),
           price: Number.parseFloat(price),
           originalPrice: Number.parseFloat(OriginalPrice),

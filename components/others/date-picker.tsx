@@ -9,6 +9,10 @@ import { Stepper2 } from "./step-indicator";
 import { cn, formatCurrency, formatTime } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 interface TimeSlot {
   id: string;
@@ -319,7 +323,8 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                             setSelectedTimeSlot(slot.id);
                           }}
                         >
-                          {formatDisplayTime(slot.startTime, slot.endTime)}
+                          {/* {formatDisplayTime(slot.startTime, slot.endTime)} */}
+                          {dayjs.utc(slot.startTime).format("h:mm A")}
                           <ChevronDown className="h-4 w-4" />
                         </Button>
                       </PopoverTrigger>

@@ -13,6 +13,10 @@ import ExcelImportExport from "./excel-import-export";
 import TimeSlotForm from "./time-slot-form";
 import TimeSlotsActions from "../actions/time-slots";
 import CleartButton from "./clear-button";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 const NewSLot = ({
   timeSlots,
@@ -126,8 +130,8 @@ const NewSLot = ({
                     >
                       <div>{format(new Date(timeSlot.date), "dd/MM/yyyy")}</div>
                       <div>
-                        {format(new Date(timeSlot.startTime), "hh:mm a")} -{" "}
-                        {format(new Date(timeSlot.endTime), "hh:mm a")}
+                        {dayjs.utc(timeSlot.startTime).format("h:mm A")} -{" "}
+                        {dayjs.utc(timeSlot.endTime).format("h:mm A")}
                       </div>
                       <div>
                         {timeSlot.bookedSeats} / {timeSlot.totalSeats}

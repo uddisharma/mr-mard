@@ -11,6 +11,10 @@ import AppointmentActions from "@/components/admin/actions/appointments";
 import CleartButton from "@/components/admin/appointment/clear-button";
 import { Badge } from "@/components/ui/badge";
 import { formatAppointmentTime } from "@/lib/utils";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -109,19 +113,11 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
                       )}
                     </div>
                     <div>
-                      {formatAppointmentTime(
-                        appointment.timeSlot.startTime?.toISOString() ?? "",
-                        appointment.timeSlot.endTime?.toISOString() ?? "",
-                      )}
-                      {/* {format(
-                        new Date(appointment.timeSlot.startTime),
-                        "hh:mm a",
-                      )}{" "}
+                      {dayjs
+                        .utc(appointment.timeSlot.startTime)
+                        .format("h:mm A")}{" "}
                       -{" "}
-                      {format(
-                        new Date(appointment.timeSlot.endTime),
-                        "hh:mm a",
-                      )} */}
+                      {dayjs.utc(appointment.timeSlot.endTime).format("h:mm A")}
                     </div>
                     <div>
                       {format(new Date(appointment.createdAt), "dd/MM/yyyy")}

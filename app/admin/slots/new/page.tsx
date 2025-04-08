@@ -14,7 +14,12 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-// import { revalidatePath } from "next/cache";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default function TimeSlotForm({}) {
   const [date, setDate] = useState("");
@@ -50,8 +55,8 @@ export default function TimeSlotForm({}) {
         },
         body: JSON.stringify({
           date,
-          startTime,
-          endTime,
+          startTime: dayjs.tz(startTime, "UTC").toISOString(),
+          endTime: dayjs.tz(endTime, "UTC").toISOString(),
           totalSeats: Number.parseInt(totalSeats),
           price: Number.parseFloat(price),
           OriginalPrice: Number.parseFloat(OriginalPrice),
