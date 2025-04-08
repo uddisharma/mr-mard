@@ -318,12 +318,11 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                           disabled={!isAvailable}
                           onClick={() => {
                             setSelectedSlot(
-                              formatDisplayTime(slot.startTime, slot.endTime),
+                              dayjs.utc(slot.startTime).format("h:mm A"),
                             );
                             setSelectedTimeSlot(slot.id);
                           }}
                         >
-                          {/* {formatDisplayTime(slot.startTime, slot.endTime)} */}
                           {dayjs.utc(slot.startTime).format("h:mm A")}
                           <ChevronDown className="h-4 w-4" />
                         </Button>

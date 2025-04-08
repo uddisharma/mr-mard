@@ -13,6 +13,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
 import { formatDate, formatTime } from "@/lib/utils";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 interface AppointmentDetails {
   id: string;
@@ -88,8 +94,8 @@ export default function Confirmation() {
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Time:</span>
                 <span className="font-medium">
-                  {formatTime(new Date(appointment.timeSlot.startTime))} -{" "}
-                  {formatTime(new Date(appointment.timeSlot.endTime))}
+                  {dayjs.utc(appointment.timeSlot.startTime).format("h:mm A")} -{" "}
+                  {dayjs.utc(appointment.timeSlot.endTime).format("h:mm A")}
                 </span>
               </div>
               <div className="flex justify-between">
