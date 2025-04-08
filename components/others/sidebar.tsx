@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import Image from "next/image";
 
 const navItems = [
   { icon: Home, label: "Dashboard", href: "/admin/dashboard" },

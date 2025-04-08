@@ -2,6 +2,12 @@ import { db } from "@/lib/db";
 import { timeZone } from "@/lib/utils";
 import { toZonedTime } from "date-fns-tz";
 import { type NextRequest, NextResponse } from "next/server";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export async function GET(
   request: NextRequest,
@@ -49,10 +55,8 @@ export async function PUT(
       where: { id: params.id },
       data: {
         date: date ? toZonedTime(new Date(date), timeZone) : undefined,
-        startTime: startTime
-          ? toZonedTime(new Date(startTime), timeZone)
-          : undefined,
-        endTime: endTime ? toZonedTime(new Date(endTime), timeZone) : undefined,
+        startTime: new Date(startTime),
+        endTime: new Date(endTime),
         totalSeats,
         originalPrice,
         price,

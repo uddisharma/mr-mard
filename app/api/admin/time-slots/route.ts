@@ -1,7 +1,11 @@
 import { db } from "@/lib/db";
 import { type NextRequest, NextResponse } from "next/server";
-// import { toZonedTime } from "date-fns-tz";
-// import { timeZone } from "@/lib/utils";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export async function GET() {
   try {
@@ -38,6 +42,8 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       );
     }
+    const parsedStart = dayjs.tz(startTime, "Asia/Kolkata").toDate();
+    const parsedEnd = dayjs.tz(endTime, "Asia/Kolkata").toDate();
 
     const timeSlot = await db.timeSlot.create({
       data: {

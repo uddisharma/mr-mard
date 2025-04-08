@@ -306,7 +306,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                 {timeSlots.map((slot) => {
                   const isAvailable = slot.bookedSeats < slot.totalSeats;
                   const remainingSeats = slot.totalSeats - slot.bookedSeats;
-
+                  console.log("startTime", slot.startTime);
                   return (
                     <Popover key={slot.id}>
                       <PopoverTrigger asChild>

@@ -80,6 +80,11 @@ export default function TimeSlotForm({
       return;
     }
 
+    console.log({
+      startTime: dayjs.tz(startTime, "UTC").toISOString(),
+      endTime: dayjs.tz(endTime, "UTC").toISOString(),
+    });
+
     setIsLoading(true);
 
     try {
