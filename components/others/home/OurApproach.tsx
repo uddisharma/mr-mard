@@ -8,8 +8,8 @@ import {
 
 export default function OurApproach() {
   return (
-    <div className="flex flex-col items-center max-w-5xl mx-auto px-4 md:mb-16 mt-20">
-      <div className="bg-gray-100 text-gray-700 px-6 py-2 rounded-full  mb-5">
+    <div className="flex flex-col items-center max-w-5xl mx-auto px-4 md:mb-20 md:mt-20 mb-20 mt-6">
+      <div className="bg-gray-100 text-gray-700 px-6 py-2 rounded-full mb-5">
         Our Approach
       </div>
 

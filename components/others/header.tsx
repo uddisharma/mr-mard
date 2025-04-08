@@ -17,7 +17,7 @@ const Header = async ({ className }: { className?: string }) => {
           <Image
             src="/logo2.png"
             alt="Milele Health"
-            className="m-auto mt-[-15px]"
+            className="m-auto mt-[-25px]"
             width={105}
             height={50}
           />

@@ -39,13 +39,21 @@ export default function TestingDiagnostics() {
   return (
     <div className="w-full mt-12 mb-20  md:mb-0 rounded-2xl mx-auto px-4 max-w-5xl bg-gray-50 py-10">
       {/* Tabs */}
-      <div className="flex justify-center gap-2  relative overflow-x-auto hide-scrollbar">
+      <div
+        className="flex gap-2 relative overflow-x-auto hide-scrollbar scroll-snap-x px-4"
+        style={{ scrollSnapType: "x mandatory" }}
+      >
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center px-4 py-2 rounded-full text-sm md:font-medium transition-colors
-                        ${activeTab === tab.id ? "bg-btnblue text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+            className={`flex items-center px-4 py-2 rounded-full text-sm md:font-medium transition-colors scroll-snap-align-start
+        ${
+          activeTab === tab.id
+            ? "bg-btnblue text-white"
+            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+        }`}
+            style={{ scrollSnapAlign: "start" }}
           >
             {tab.icon}
             {tab.label}

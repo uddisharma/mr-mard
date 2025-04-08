@@ -39,7 +39,7 @@ const Hero = () => {
       <div
         className="hidden relative md:flex justify-between bg-[#EDDE79]  rounded-[0px_0px_144px_144px] px-10 min-h-[650px]"
         style={{
-          backgroundImage: 'url("/appointment/hero.png")',
+          backgroundImage: 'url("/2.png")',
           backgroundSize: "580px 630px",
           backgroundPosition: "95% bottom",
           backgroundRepeat: "no-repeat",
@@ -169,7 +169,7 @@ const Hero = () => {
         </div>
         <div className="bg-white rounded-[30px] overflow-hidden mx-2 mt-5">
           <Image
-            src="/appointment/hero.png"
+            src="/2.png"
             alt=""
             width={400}
             height={400}
