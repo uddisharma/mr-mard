@@ -19,6 +19,7 @@ import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 
 const navItems = [
+  { icon: Home, label: "Home", href: window.location.origin },
   { icon: Home, label: "Dashboard", href: "/admin/dashboard" },
   { icon: CalendarCheck2, label: "Appointments", href: "/admin/appointments" },
   {

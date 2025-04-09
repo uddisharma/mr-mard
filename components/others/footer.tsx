@@ -20,7 +20,7 @@ const Footer = () => {
                   src="/logo2.png"
                   alt="Milele Health"
                   className="pb-5"
-                  width={120}
+                  width={80}
                   height={50}
                 />
               </Link>
@@ -40,6 +40,9 @@ const Footer = () => {
                 <li>
                   <Link href="/contact-us">Contact Us</Link>
                 </li>
+                <li>
+                  <Link href="/technology">Our Technology</Link>
+                </li>
               </ul>
             </div>
             <div className="m-auto">
@@ -53,6 +56,9 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link href="/privacy-policy">Privacy Policy</Link>
+                </li>
+                <li>
+                  <Link href="/terms-conditions">Terms & Conditions</Link>
                 </li>
               </ul>
             </div>
@@ -97,7 +103,7 @@ const Footer = () => {
                   src="/logo2.png"
                   className="pb-5"
                   alt="Milele Health"
-                  width={120}
+                  width={80}
                   height={50}
                 />
               </Link>
@@ -130,6 +136,9 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link href="/privacy-policy">Privacy Policy</Link>
+                </li>
+                <li>
+                  <Link href="/terms-conditions">Terms & Conditions</Link>
                 </li>
               </ul>
             </div>

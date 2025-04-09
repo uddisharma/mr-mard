@@ -133,6 +133,7 @@ export default function ExcelImportExport({
       "endTime",
       "totalSeats",
       "price",
+      "originalPrice",
     ];
 
     for (const column of requiredColumns) {
@@ -149,6 +150,9 @@ export default function ExcelImportExport({
       endTime: new Date(row.endTime).toISOString(),
       totalSeats: Number.parseInt(row.totalSeats),
       price: Number.parseFloat(row.price),
+      originalPrice: Number.parseFloat(row.originalPrice),
+      label: row.label || "",
+      bookedSeats: row.bookedSeats || 0,
       isActive: row.isActive !== undefined ? row.isActive : true,
     }));
 

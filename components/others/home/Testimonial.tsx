@@ -26,7 +26,7 @@ const testimonials: Testimonial[] = [
     star: 4,
     dayAgo: "26 days ago",
     content:
-      "Using Mard’s treatment for 5 months can feel the change in my hair, definitely",
+      " My hair loss was too much.. I thought i will becomefull bald. Doctor heard everything. He said i am not sleeping and that’s big problem. Told me to sleep early, eat some good food, and gave medicine also. consultation was good, no bakwas..",
     date: "Mr. Mard user, 18/10/2024",
     avatar: "/users/8.png",
   },
@@ -37,7 +37,7 @@ const testimonials: Testimonial[] = [
     star: 5,
     dayAgo: "6 days ago",
     content:
-      "I got Mard's treatment kit after consulting its doctor , the kit was personalized as per my hair issues and after using it I sawx noticeable hair growth. ",
+      "My hair was thinning fast... Papa ka genetic lagta hai! Doctor heard me out... said, ‘Genetics hai thodi... but stress mat add karo.’ Suggested relaxing, some supplements... no bs, just straight talk, and hair fall is started slowing down",
     date: "Mr. Mard user, 01/12/2024",
     avatar: "/users/9.png",
   },
@@ -51,6 +51,17 @@ const testimonials: Testimonial[] = [
       "Mr. Mard's treatment is very effective and I am seeing visible results in my hair growth. The personalized kit is a game changer.",
     date: "Mr. Mard user, 01/12/2024",
     avatar: "/users/3.png",
+  },
+  {
+    id: 4,
+    name: "Mukesh",
+    role: "",
+    star: 4,
+    dayAgo: "18 days ago",
+    content:
+      "Hair fall was giving me tension... i was more tensed and hence more hairfall. Doctor was so calm... listened to my rant and said that “you are taking too much stress... relax karo, sleep well”. Gave me ideas like less phone, more rest... super caring, and it’s working",
+    date: "Mr. Mard user, 01/12/2024",
+    avatar: "/users/4.png",
   },
 ];
 
@@ -87,7 +98,7 @@ export default function Testimonials() {
             {Array.from({ length: totalSlides }).map((_, index) => (
               <div
                 key={index}
-                className="flex w-full flex-shrink-0 px-4 py-5 gap-10"
+                className="grid grid-cols-1 md:grid-cols-3 w-full flex-shrink-0 px-4 py-5 gap-10"
               >
                 {testimonials
                   .slice(

@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import Link from "next/link";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -185,7 +186,9 @@ export default function TimeSlotForm({}) {
             </form>
           </CardContent>
           <CardFooter className="flex justify-end space-x-2">
-            <Button variant="outline">Cancel</Button>
+            <Link href="/admin/slots">
+              <Button variant="outline">Cancel</Button>
+            </Link>
             <Button onClick={handleSubmit} disabled={isLoading}>
               {isLoading ? "Saving..." : "Create"}
             </Button>

@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import HeroButtons from "../HeroButtons";
 
 const data = [
   {
@@ -27,17 +28,8 @@ const Cta = () => {
     <div className="max-w-5xl mx-auto px-4 md:mb-12">
       {/* Top buttons */}
       <div className="pt-10 pb-5 bg-white">
-        <div className=" flex-wrap justify-center gap-4 mb-10 hidden md:flex">
-          <Link href={`/analyze`}>
-            <Button className="bg-btnblue text-white hover:bg-btnblue/80 rounded-[10px] py-5">
-              Get Your Hair Analysis
-            </Button>
-          </Link>
-          <Link href={`/appointment-booking`}>
-            <Button variant="outline" className="py-5 gap-2 rounded-[10px]">
-              Book your Appointment
-            </Button>
-          </Link>
+        <div className="hidden md:flex flex-col items-center justify-center text-center relative py-2 md:pb-12">
+          <HeroButtons />
         </div>
 
         <div className="md:hidden flex flex-col items-center justify-center text-center  relative py-2 md:pb-10 ">
