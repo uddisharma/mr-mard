@@ -229,49 +229,6 @@ export default function PaymentForm() {
     }
   };
 
-  const testing = async () => {
-    try {
-      const res = await fetch("/api/appointments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          timeSlotId,
-          paymentDetails: {
-            method: "razorpay",
-            amount: Number(appointmentPrice),
-            transactionId: "123456789",
-          },
-          ...(params.get("id") && { id: params.get("id") }),
-        }),
-      });
-
-      if (!res.ok) {
-        const errorData = res.headers
-          .get("content-type")
-          ?.includes("application/json")
-          ? await res.json()
-          : { error: "Unknown error occurred" };
-        throw new Error(errorData.error || "Failed to create appointment");
-      }
-
-      const appointmentData = await res.json();
-      sessionStorage.removeItem("selectedDate");
-      sessionStorage.removeItem("selectedTimeSlotId");
-      sessionStorage.removeItem("selectedTimeSlotPrice");
-      sessionStorage.removeItem("selectedTime");
-      sessionStorage.setItem("appointmentId", appointmentData.appointment.id);
-
-      await router.push(
-        `/appointment-booking/confirmation?paymentId=${"123456789"}`,
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   function timeLeftForSlot(date: string, timeSlot: string): string {
     const [startTime] = timeSlot.split(" - ");
     const match = startTime.match(/(\d+):(\d+)\s?(AM|PM)/);
@@ -397,7 +354,7 @@ export default function PaymentForm() {
                 <button
                   style={isLoading ? { cursor: "not-allowed" } : undefined}
                   className={`apple-button`}
-                  onClick={testing}
+                  onClick={handleSubmit}
                   disabled={isLoading}
                 >
                   {isLoading ? "Processing..." : "Confirm & Pay"}

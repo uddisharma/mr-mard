@@ -55,19 +55,19 @@ export async function POST(request: NextRequest) {
 
     if (id) {
       const result = await db.$transaction(async (tx: any) => {
-        await tx.timeSlot.update({
+        const updatedTimeSlot = await tx.timeSlot.update({
           where: { id: timeSlotId },
           data: { bookedSeats: { increment: 1 } },
         });
 
-        await tx.appointment.update({
+        const updatedAppointment = await tx.appointment.update({
           where: { id },
           data: {
-            status: AppointmentStatus.COMPLETED,
+            status: AppointmentStatus.CONFIRMED,
           },
         });
 
-        await tx.transaction.create({
+        const createdTransaction = await tx.transaction.create({
           data: {
             appointmentId: id,
             amount: Float(paymentDetails?.amount || timeSlot.price),
@@ -77,7 +77,14 @@ export async function POST(request: NextRequest) {
               paymentDetails?.transactionId || `mock-${Date.now()}`,
           },
         });
+
+        return {
+          updatedTimeSlot,
+          updatedAppointment,
+          createdTransaction,
+        };
       });
+
       return NextResponse.json(result);
     } else {
       const result = await db.$transaction(async (tx: any) => {
