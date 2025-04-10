@@ -13,6 +13,7 @@ import { useTransition } from "react";
 import { submitContactForm } from "@/actions/contacts";
 import { toast } from "sonner";
 import { IconBrandInstagram, IconBrandYoutube } from "@tabler/icons-react";
+import FAQ from "@/components/others/faq";
 
 export default function ContactPage() {
   const [isPending, startTransition] = useTransition();
@@ -41,7 +42,7 @@ export default function ContactPage() {
   return (
     <div className="md:px-24">
       {/* Main Content */}
-      <main className="mx-auto px-4 py-2 md:py-6 mb-20">
+      <main className="mx-auto px-4 py-2 md:py-6 mb-10">
         <div className="text-center mb-6">
           <h1 className="text-4xl text-btnblue mb-4">Contact Us</h1>
           <p className="text-[#717171]">
@@ -229,6 +230,9 @@ export default function ContactPage() {
           </form>
         </div>
       </main>
+      <div className="mb-20">
+        <FAQ />
+      </div>
     </div>
   );
 }
