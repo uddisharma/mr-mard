@@ -19,7 +19,7 @@ export async function PUT(request: NextRequest) {
     const existingProgress = await db.userProgress.findFirst({
       where: {
         userId,
-        selectedDate: today,
+        createdAt: today,
       },
     });
 

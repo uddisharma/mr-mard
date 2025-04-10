@@ -11,9 +11,13 @@ export async function POST() {
 
       const lastProcessedTime = lastProcessed?.processedAt || new Date(0);
 
-      const cancelledAppointments = await tx.userProgress.findMany({
+      const unprocessedAppointments = await tx.userProgress.findMany({
         where: {
           updatedAt: { gt: lastProcessedTime },
+          OR: [
+            { processedAt: null },
+            { processedAt: { lt: lastProcessedTime } },
+          ],
         },
         include: {
           user: {
@@ -24,14 +28,14 @@ export async function POST() {
         },
       });
 
-      if (cancelledAppointments.length > 0) {
+      if (unprocessedAppointments.length > 0) {
         await tx.userProgress.updateMany({
-          where: { id: { in: cancelledAppointments.map((app) => app.id) } },
+          where: { id: { in: unprocessedAppointments.map((app) => app.id) } },
           data: { processedAt: new Date() },
         });
       }
 
-      return cancelledAppointments;
+      return unprocessedAppointments;
     });
 
     return NextResponse.json(

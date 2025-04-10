@@ -23,11 +23,14 @@ export default function PhoneVerification({
   const [resendTimer, setResendTimer] = useState(0);
 
   useEffect(() => {
-    if (phone && id) {
-      sessionStorage.setItem("userId", id);
-      UpsertUserProgress(id);
-      router.push("/appointment-booking/date");
-    }
+    const fetchData = async () => {
+      if (phone && id) {
+        sessionStorage.setItem("userId", id);
+        await UpsertUserProgress(id);
+        router.push("/appointment-booking/date");
+      }
+    };
+    fetchData();
   }, [phone]);
 
   useEffect(() => {
