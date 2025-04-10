@@ -19,7 +19,7 @@ import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 
 const navItems = [
-  { icon: Home, label: "Home", href: window.location.origin },
+  { icon: Home, label: "Home", href: "/home" },
   { icon: Home, label: "Dashboard", href: "/admin/dashboard" },
   { icon: CalendarCheck2, label: "Appointments", href: "/admin/appointments" },
   {
@@ -63,7 +63,7 @@ export default function Sidebar({ role }: { role: string | undefined }) {
         {navItems.map((item) => (
           <Link
             key={item.label}
-            href={item.href}
+            href={item.href == "/home" ? "/" : item.href}
             className={`flex items-center gap-3 px-4 py-3 rounded-lg mb-1   ${
               pathname.startsWith(item.href)
                 ? "bg-yellow text-btnblue"

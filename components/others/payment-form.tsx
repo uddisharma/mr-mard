@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { createOrder } from "@/actions/payment";
 import { motion } from "framer-motion";
@@ -10,9 +10,10 @@ import { Stepper4 } from "./step-indicator";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { formatCurrency } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-const dayjs = require("dayjs");
-const utc = require("dayjs/plugin/utc");
-const timezone = require("dayjs/plugin/timezone");
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import { getAppointmentDetails } from "@/actions/appointment";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -29,6 +30,8 @@ export default function PaymentForm() {
   });
   const [appointmentPrice, setAppointmentPrice] = useState("");
 
+  const params = useSearchParams();
+
   const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
@@ -40,30 +43,58 @@ export default function PaymentForm() {
   };
 
   useEffect(() => {
-    const storedUserId = sessionStorage.getItem("userId");
-    const storedTimeSlotId = sessionStorage.getItem("selectedTimeSlotId");
-    const storedPrice = sessionStorage.getItem("selectedTimeSlotPrice");
-    const storedDate = sessionStorage.getItem("selectedDate");
-    const storedTime = sessionStorage.getItem("selectedTime");
+    if (params.get("id")) {
+      getAppointmentDetails(params.get("id") as string).then((res) => {
+        if (res.success) {
+          const timeSlot = res.data?.timeSlot;
+          if (!timeSlot) {
+            toast.error("Time slot details are missing.");
+            setIsFetching(false);
+            return;
+          }
+          const date = timeSlot.date;
+          const startTime = timeSlot.startTime;
+          const endTime = timeSlot.endTime;
 
-    setTimeDate({
-      date: storedDate || "",
-      time: storedTime || "",
-    });
+          setTimeDate({
+            date: date.toISOString(),
+            time: `${dayjs.utc(startTime).format("h:mm A")} - ${dayjs
+              .utc(endTime)
+              .format("h:mm A")}`,
+          });
 
-    if (!storedUserId || !storedTimeSlotId) {
-      router.push("/appointment-booking");
-      return;
+          setAppointmentPrice((timeSlot as any).price?.toString() || "0");
+          setUserId(res.data?.user?.id ?? null);
+          setTimeSlotId(timeSlot.id);
+        }
+        setIsFetching(false);
+      });
+    } else {
+      const storedUserId = sessionStorage.getItem("userId");
+      const storedTimeSlotId = sessionStorage.getItem("selectedTimeSlotId");
+      const storedPrice = sessionStorage.getItem("selectedTimeSlotPrice");
+      const storedDate = sessionStorage.getItem("selectedDate");
+      const storedTime = sessionStorage.getItem("selectedTime");
+
+      setTimeDate({
+        date: storedDate || "",
+        time: storedTime || "",
+      });
+
+      if (!storedUserId || !storedTimeSlotId) {
+        router.push("/appointment-booking");
+        return;
+      }
+
+      setUserId(storedUserId);
+      setTimeSlotId(storedTimeSlotId);
+
+      if (storedPrice) {
+        setAppointmentPrice(Number.parseFloat(storedPrice).toString());
+      }
+
+      setIsFetching(false);
     }
-
-    setUserId(storedUserId);
-    setTimeSlotId(storedTimeSlotId);
-
-    if (storedPrice) {
-      setAppointmentPrice(Number.parseFloat(storedPrice).toString());
-    }
-
-    setIsFetching(false);
   }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -162,6 +193,7 @@ export default function PaymentForm() {
               amount: appointmentPrice,
               transactionId: response.razorpay_payment_id,
             },
+            ...(params.get("id") && { id: params.get("id") }),
           }),
         });
 
@@ -194,6 +226,49 @@ export default function PaymentForm() {
           ? error.message
           : "Payment could not be verified",
       );
+    }
+  };
+
+  const testing = async () => {
+    try {
+      const res = await fetch("/api/appointments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          timeSlotId,
+          paymentDetails: {
+            method: "razorpay",
+            amount: Number(appointmentPrice),
+            transactionId: "123456789",
+          },
+          ...(params.get("id") && { id: params.get("id") }),
+        }),
+      });
+
+      if (!res.ok) {
+        const errorData = res.headers
+          .get("content-type")
+          ?.includes("application/json")
+          ? await res.json()
+          : { error: "Unknown error occurred" };
+        throw new Error(errorData.error || "Failed to create appointment");
+      }
+
+      const appointmentData = await res.json();
+      sessionStorage.removeItem("selectedDate");
+      sessionStorage.removeItem("selectedTimeSlotId");
+      sessionStorage.removeItem("selectedTimeSlotPrice");
+      sessionStorage.removeItem("selectedTime");
+      sessionStorage.setItem("appointmentId", appointmentData.appointment.id);
+
+      await router.push(
+        `/appointment-booking/confirmation?paymentId=${"123456789"}`,
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -322,7 +397,7 @@ export default function PaymentForm() {
                 <button
                   style={isLoading ? { cursor: "not-allowed" } : undefined}
                   className={`apple-button`}
-                  onClick={handleSubmit}
+                  onClick={testing}
                   disabled={isLoading}
                 >
                   {isLoading ? "Processing..." : "Confirm & Pay"}

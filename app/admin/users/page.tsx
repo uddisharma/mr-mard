@@ -99,9 +99,10 @@ export default async function UsersPage({ searchParams }: PageProps) {
 
         <div className="bg-white rounded-lg border overflow-x-auto">
           <div className="min-w-[600px]">
-            <div className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+            <div className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
               <div>Name</div>
               <div>Email</div>
+              <div>Phone</div>
               <div>Role</div>
               <div>Created At</div>
               <div>Actions</div>
@@ -116,11 +117,14 @@ export default async function UsersPage({ searchParams }: PageProps) {
                 users.map((user) => (
                   <div
                     key={user.id}
-                    className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
+                    className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
                   >
-                    <div>{user?.name}</div>
+                    <div>{user?.name ?? "N/A"}</div>
 
-                    <div>{user.email}</div>
+                    <div>{user.email ?? "N/A"}</div>
+
+                    <div>{user.phone}</div>
+
                     <div>{user.role}</div>
 
                     <div>{format(new Date(user.createdAt), "dd/MM/yyyy")}</div>

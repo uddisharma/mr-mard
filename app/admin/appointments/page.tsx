@@ -73,7 +73,7 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
 
           <div className="flex items-center gap-4 ml-auto">
             <ExportButton type="appointment" />
-            <Link href={"/appointment-booking"}>
+            <Link href={"/admin/appointments/new"}>
               <Button className="bg-btnblue hover:bg-btnblue/80 text-white">
                 + New Appointment
               </Button>
