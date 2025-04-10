@@ -107,7 +107,7 @@ const Header = async ({ className }: { className?: string }) => {
         </Link>
 
         {/* Profile or Sign In */}
-        <div className="flex items-center gap-2">
+        <div className="md:flex items-center gap-2 hidden">
           {sessions?.name ? (
             <Logout
               image={sessions.image ?? "/user.png"}

@@ -10,6 +10,12 @@ import { Stepper4 } from "./step-indicator";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { formatCurrency } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default function PaymentForm() {
   const router = useRouter();
@@ -214,9 +220,11 @@ export default function PaymentForm() {
     const hoursLeft = Math.floor(
       (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
     );
-    const minutesLeft = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-    return `${daysLeft} days, ${hoursLeft} hours, and ${minutesLeft} minutes`;
+    const minutesLeft = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    return `${daysLeft > 0 ? `${daysLeft} days, ` : ""}${
+      hoursLeft > 0 ? `${hoursLeft} hours, ` : ""
+    }${minutesLeft} minutes`;
   }
 
   return (
@@ -231,7 +239,7 @@ export default function PaymentForm() {
             transition={{ duration: 0.8 }}
           >
             <span style={{ lineHeight: "1.1" }} className="text-gradient ">
-              Checkout your Appointment
+              Confirm your Appointment
             </span>
           </motion.h1>
           <motion.p
@@ -240,7 +248,7 @@ export default function PaymentForm() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Complete your booking by making a payment
+            Block your appointment by completing the payment
           </motion.p>
           {isFetching ? (
             <div className="flex justify-center py-8">
@@ -249,13 +257,17 @@ export default function PaymentForm() {
           ) : (
             <div className="max-w-lg mx-auto p-6 bg-white rounded-2xl shadow-lg mt-5">
               <h2 className="text-lg font-semibold mb-4">
-                Schedule Consultation
+                Appointment Details
               </h2>
               <div className="mb-4">
                 <p className="font-medium mb-2">Time & date</p>
                 <div className="flex items-center gap-3 text-gray-700">
                   <FaCalendarAlt className="text-xl" />
-                  <span>{timeDate?.date?.split("T")[0]}</span>
+                  <span>
+                    {dayjs(timeDate?.date)
+                      .tz("Asia/Kolkata")
+                      .format("ddd, MMMM D, YYYY")}
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 text-gray-700 mt-2">
                   <FaClock className="text-xl" />
@@ -283,7 +295,7 @@ export default function PaymentForm() {
               <div className="border-t pt-4 mb-4">
                 <p className="font-medium mb-2">Payment summary</p>
                 <div className="flex justify-between text-gray-700">
-                  <span>Screening Call</span>
+                  <span>Hair diagnosis call</span>
                   <span>{formatCurrency(Number(appointmentPrice))}</span>
                 </div>
                 <div className="flex justify-between text-gray-900 font-semibold mt-2">
@@ -313,14 +325,14 @@ export default function PaymentForm() {
                   onClick={handleSubmit}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Processing..." : "Pay Now"}
+                  {isLoading ? "Processing..." : "Confirm & Pay"}
                 </button>
               </motion.div>
             </div>
           )}
         </div>
         <motion.div
-          className="mx-auto mt-16 lg:mt-0"
+          className="mx-auto mt-16 lg:mt-0 hidden md:block"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}

@@ -5,6 +5,14 @@ import { FaWhatsapp } from "react-icons/fa";
 
 const WhatsappIcon = () => {
   const pathname = usePathname();
+  const [isPhone, setIsPhone] = React.useState(false);
+
+  React.useEffect(() => {
+    const userAgent = navigator.userAgent || navigator.vendor;
+    if (/android|iphone|ipad|ipod/i.test(userAgent)) {
+      setIsPhone(true);
+    }
+  }, []);
   return (
     <>
       {!pathname.startsWith("/admin") && (

@@ -318,7 +318,9 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                           disabled={!isAvailable}
                           onClick={() => {
                             setSelectedSlot(
-                              dayjs.utc(slot.startTime).format("h:mm A"),
+                              `${dayjs.utc(slot.startTime).format("h:mm A")} - ${dayjs
+                                .utc(slot.endTime)
+                                .format("h:mm A")}`,
                             );
                             setSelectedTimeSlot(slot.id);
                           }}
@@ -385,7 +387,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
           </motion.div>
         </div>
         <motion.div
-          className="mx-auto mt-16 lg:mt-0"
+          className="mx-auto mt-16 lg:mt-0 hidden md:block"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
