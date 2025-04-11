@@ -145,26 +145,35 @@ export default function ExcelImportExport({
   };
 
   const processBatch = async (batch: any[]) => {
-    console.log(batch);
-
     const formattedBatch = batch.map((row) => {
       const dateStr = dayjs(row.date).format("YYYY-MM-DD");
-      const start = `${dateStr} ${row.startTime.trim()}`;
-      const end = `${dateStr} ${row.endTime.trim()}`;
 
-      const parsedDate = dayjs.tz(dateStr, "YYYY-MM-DD", "Asia/Kolkata");
-      const parsedStart = dayjs.tz(start, "YYYY-MM-DD hh:mma", "Asia/Kolkata");
-      const parsedEnd = dayjs.tz(end, "YYYY-MM-DD hh:mma", "Asia/Kolkata");
+      const rawStart = row.startTime?.trim().replace(/\s+/g, "").toUpperCase();
+      const rawEnd = row.endTime?.trim().replace(/\s+/g, "").toUpperCase();
 
-      if (!parsedDate.isValid()) throw new Error(`Invalid date: ${dateStr}`);
-      if (!parsedStart.isValid())
-        throw new Error(`Invalid startTime: ${start}`);
-      if (!parsedEnd.isValid()) throw new Error(`Invalid endTime: ${end}`);
+      const startStr = `${dateStr} ${rawStart}`;
+      const endStr = `${dateStr} ${rawEnd}`;
+
+      let parsedStart = dayjs.tz(startStr, "YYYY-MM-DDhh:mma", "Asia/Kolkata");
+      let parsedEnd = dayjs.tz(endStr, "YYYY-MM-DDhh:mma", "Asia/Kolkata");
+
+      const isStartPM = rawStart.includes("PM");
+      const isEndPM = rawEnd.includes("PM");
+
+      if (isStartPM && parsedStart.hour() < 12) {
+        parsedStart = parsedStart.add(12, "hour");
+      }
+      if (isEndPM && parsedEnd.hour() < 12) {
+        parsedEnd = parsedEnd.add(12, "hour");
+      }
+
+      const formattedStart = parsedStart.format("YYYY-MM-DDTHH:mm");
+      const formattedEnd = parsedEnd.format("YYYY-MM-DDTHH:mm");
 
       return {
-        date: parsedDate.toDate(),
-        startTime: parsedStart.toDate(),
-        endTime: parsedEnd.toDate(),
+        date: row.date,
+        startTime: dayjs.tz(formattedStart, "UTC").toISOString(),
+        endTime: dayjs.tz(formattedEnd, "UTC").toISOString(),
         totalSeats: Number(row.totalSeats),
         price: Number(row.price),
         originalPrice: Number(row.originalPrice),
@@ -172,8 +181,6 @@ export default function ExcelImportExport({
         isActive: row.isActive === "true" || row.isActive === true,
       };
     });
-
-    console.log(formattedBatch);
 
     const response = await fetch("/api/admin/time-slots/batch", {
       method: "POST",
