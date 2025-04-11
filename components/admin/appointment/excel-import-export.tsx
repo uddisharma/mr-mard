@@ -145,36 +145,35 @@ export default function ExcelImportExport({
   };
 
   const processBatch = async (batch: any[]) => {
+    console.log(batch);
+
     const formattedBatch = batch.map((row) => {
-      const date = row.date; // "2025-05-18"
-      const startTimeRaw = `${date} ${row.startTime}`; // "2025-05-18 03:00PM"
-      const endTimeRaw = `${date} ${row.endTime}`; // "2025-05-18 03:30PM"
+      const dateStr = dayjs(row.date).format("YYYY-MM-DD");
+      const start = `${dateStr} ${row.startTime.trim()}`;
+      const end = `${dateStr} ${row.endTime.trim()}`;
 
-      const startTime = dayjs.tz(
-        startTimeRaw,
-        "YYYY-MM-DD hh:mmA",
-        "Asia/Kolkata",
-      );
-      const endTime = dayjs.tz(endTimeRaw, "YYYY-MM-DD hh:mmA", "Asia/Kolkata");
+      const parsedDate = dayjs.tz(dateStr, "YYYY-MM-DD", "Asia/Kolkata");
+      const parsedStart = dayjs.tz(start, "YYYY-MM-DD hh:mma", "Asia/Kolkata");
+      const parsedEnd = dayjs.tz(end, "YYYY-MM-DD hh:mma", "Asia/Kolkata");
 
-      if (!startTime.isValid() || !endTime.isValid()) {
-        throw new Error("Invalid time value in Excel row");
-      }
+      if (!parsedDate.isValid()) throw new Error(`Invalid date: ${dateStr}`);
+      if (!parsedStart.isValid())
+        throw new Error(`Invalid startTime: ${start}`);
+      if (!parsedEnd.isValid()) throw new Error(`Invalid endTime: ${end}`);
 
       return {
-        date: dayjs
-          .tz(row.date, "YYYY-MM-DD", "Asia/Kolkata")
-          .format("YYYY-MM-DD"),
-        startTime: startTime.utc().toISOString(),
-        endTime: endTime.utc().toISOString(),
-        totalSeats: Number.parseInt(row.totalSeats),
-        price: Number.parseFloat(row.price),
-        originalPrice: Number.parseFloat(row.originalPrice),
+        date: parsedDate.toDate(),
+        startTime: parsedStart.toDate(),
+        endTime: parsedEnd.toDate(),
+        totalSeats: Number(row.totalSeats),
+        price: Number(row.price),
+        originalPrice: Number(row.originalPrice),
         label: row.label || "",
-        bookedSeats: row.bookedSeats || 0,
-        isActive: row.isActive !== undefined ? row.isActive : true,
+        isActive: row.isActive === "true" || row.isActive === true,
       };
     });
+
+    console.log(formattedBatch);
 
     const response = await fetch("/api/admin/time-slots/batch", {
       method: "POST",
