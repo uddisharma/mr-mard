@@ -46,7 +46,7 @@ const Footer = () => {
               </ul>
             </div>
             <div className="m-auto">
-              <h3 className=" mb-4">About</h3>
+              <h3 className=" mb-4">Popular links</h3>
               <ul className="space-y-2 text-sm text-white/80">
                 <li>
                   <Link href="/about-us">About Us</Link>
@@ -126,7 +126,7 @@ const Footer = () => {
               </ul>
             </div>
             <div className="">
-              <h3 className=" mb-4">About</h3>
+              <h3 className=" mb-4">Popular links</h3>
               <ul className="space-y-2 text-sm text-white/80">
                 <li>
                   <Link href="/about-us">About Us</Link>

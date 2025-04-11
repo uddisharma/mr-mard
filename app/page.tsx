@@ -14,8 +14,12 @@ import Progress from "@/components/others/home/Progress";
 import Analyze from "@/components/others/home/Analyze";
 import OurApproach from "@/components/others/home/OurApproach";
 import TestingDiagnostics from "@/components/others/home/testing-diagnostics";
-import HealthcareSpecialists from "@/components/others/home/HealthcareSpecialists";
+// import HealthcareSpecialists from "@/components/others/home/HealthcareSpecialists";
 import ConsultationButton from "@/components/others/ConsultationButton";
+import Image from "next/image";
+import HeroButtons from "@/components/others/HeroButtons";
+
+const images = ["/users/4.png", "/users/5.png", "/users/6.png", "/users/7.png"];
 
 const Home = () => {
   return (
@@ -28,10 +32,61 @@ const Home = () => {
       <Progress />
       <Analyze />
       <Testimonials />
+      <div className="md:pt-10 md:mb-12 md:pb-10 bg-white">
+        <div className="md:hidden flex flex-col items-center justify-center text-center  relative py-10 md:pb-10 ">
+          <div className="flex gap-3 z-10">
+            <h2 className="text-4xl font-bold text-black">
+              1000<span className="text-[#000]">+</span>
+            </h2>
+            <p className="text-lg text-black mt-2">Happy Customers</p>
+          </div>
+          <div className="flex -space-x-2 my-5">
+            {images?.map((i) => (
+              <div
+                key={i}
+                className="relative w-14 h-14 rounded-full border-2 border-white overflow-hidden"
+              >
+                <Image
+                  src={i}
+                  alt={`Customer ${i}`}
+                  width={320}
+                  height={320}
+                  className="object-cover h-full w-full"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="hidden md:flex flex-wrap items-center justify-center gap-2 ">
+          <div className="text-3xl font-bold">1000+</div>
+          <div className="flex flex-col sm:flex-row items-center">
+            <span className="text-black text-[12px] max-w-[80px]">
+              Happy Customers
+            </span>
+            <div className="flex -space-x-2">
+              {images?.map((i) => (
+                <div
+                  key={i}
+                  className="relative w-14 h-14 rounded-full border-2 border-white overflow-hidden"
+                >
+                  <Image
+                    src={i}
+                    alt={`Customer ${i}`}
+                    width={64}
+                    height={64}
+                    className="object-cover rounded-full h-full w-full"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
       <TestingDiagnostics />
-      <Chart />
-      <Chart1 />
-      <AIInsightsSection />
+      {/* <Chart />
+      <Chart1 /> */}
+      {/* <AIInsightsSection /> */}
       {/* <HealthcareSpecialists /> */}
       <Blogs />
       <div className="my-8 md:my-16">

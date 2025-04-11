@@ -95,6 +95,10 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
           "selectedTimeSlotPrice",
           selectedSlot.price.toString(),
         );
+        sessionStorage.setItem(
+          "selectedTimeSlotOriginalPrice",
+          selectedSlot.originalPrice.toString(),
+        );
       }
       router.push("/appointment-booking/payment");
     } catch (error) {

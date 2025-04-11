@@ -28,7 +28,13 @@ export const SignupButton1 = () => {
         alt="User Profile"
         className="h-10 w-10 rounded-full object-cover md:hidden"
       /> */}
-      <LogInIcon />
+      {/* <LogInIcon className="" /> */}
+      <Button
+        variant="default"
+        className=" md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px] py-5"
+      >
+        Sign up
+      </Button>
     </Link>
   );
 };

@@ -95,9 +95,10 @@ const Header = async ({ className }: { className?: string }) => {
         {/* Logo */}
         <Link
           href="/"
-          className="text-xl font-bold font-serif tracking-wide text-center flex-1"
+          className="text-xl font-bold font-serif tracking-wide text-center flex-1 "
         >
           <Image
+            style={{ marginLeft: !sessions?.name ? "130px" : "110px" }}
             src="/logo2.png"
             alt="Milele Health"
             className="m-auto mt-[-15px]"
@@ -107,7 +108,7 @@ const Header = async ({ className }: { className?: string }) => {
         </Link>
 
         {/* Profile or Sign In */}
-        <div className="md:flex items-center gap-2 hidden">
+        <div className="md:flex items-center gap-2 ">
           {sessions?.name ? (
             <Logout
               image={sessions.image ?? "/user.png"}

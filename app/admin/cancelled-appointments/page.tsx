@@ -69,10 +69,10 @@ export default async function CancelledAppointmentsPage({
           <div className="min-w-[800px]">
             {/* Table Header */}
             <div className="grid grid-cols-5 gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+              <div className="font-semibold">Started Date</div>
               <div className="font-semibold">ID</div>
               <div className="font-semibold">Phone</div>
               <div className="font-semibold">Last Step</div>
-              <div className="font-semibold">Started At</div>
               <div className="font-semibold">Updated At</div>
             </div>
 
@@ -88,12 +88,12 @@ export default async function CancelledAppointmentsPage({
                     key={progress.id}
                     className="grid grid-cols-5 gap-4 p-4 hover:bg-gray-50 text-left"
                   >
-                    <div>{progress.id.substring(0, 8).toUpperCase()}</div>
-                    <div>{progress.user.phone}</div>
-                    <div>{progress.lastStep}</div>
                     <div>
                       {format(new Date(progress.createdAt), "dd/MM/yyyy")}
                     </div>
+                    <div>{progress.id.substring(0, 8).toUpperCase()}</div>
+                    <div>{progress.user.phone}</div>
+                    <div>{progress.lastStep}</div>
                     <div>
                       {format(
                         new Date(progress.updatedAt),

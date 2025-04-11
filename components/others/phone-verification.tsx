@@ -212,7 +212,7 @@ export default function PhoneVerification({
           )}
         </div>
         <motion.div
-          className="mx-auto mt-16 lg:mt-0"
+          className="mx-auto mt-16 lg:mt-0 hidden md:block"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}

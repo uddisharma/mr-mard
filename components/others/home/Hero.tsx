@@ -38,11 +38,12 @@ const Hero = () => {
   return (
     <div className="bg-white pb-8">
       <div
-        className="hidden relative md:flex justify-between bg-[#EDDE79]  rounded-[0px_0px_144px_144px] px-10 min-h-[620px]"
+        className="hidden relative md:flex justify-between bg-[#EDDE79]  rounded-[0px_0px_144px_144px] px-10 min-h-[500px]"
         style={{
           backgroundImage: 'url("/2.png")',
-          backgroundSize: "580px 630px",
-          backgroundPosition: "95% bottom",
+          backgroundSize: "550px 505px",
+          scale: "1",
+          backgroundPosition: "90% bottom",
           backgroundRepeat: "no-repeat",
         }}
       >
@@ -53,15 +54,25 @@ const Hero = () => {
               REGAIN CONFIDENCE
             </span>{" "}
           </h1>
-          <p className="text-[22px] text-black max-w-xl pr-10">
-            Let’s have a honest conversation about hair regrowth 👇
+          <p className="text-[22px] text-black max-w-xl pr-10 ">
+            Let’s have a honest conversation about hair
+          </p>
+          <p
+            style={{ marginTop: "0px" }}
+            className="text-[22px] text-black max-w-xl pr-10 inline-flex gap-3 items-center"
+          >
+            regrowth
+            <Image
+              src="/hand-down.png"
+              alt="arrow"
+              width={20}
+              height={10}
+              className="h-6 w-6"
+            />
           </p>
           <div className="space-y-7">
             <HeroButtons />
-            <Link
-              className="min-w-[280px] flex justify-left items-center gap-1 m-auto text-gray-700"
-              href="/technology"
-            >
+            <div className="min-w-[280px] flex justify-left items-center gap-3 m-auto text-gray-700 pt-5 pl-7 font-bold text-[20px]">
               <div className="flex -space-x-2 items-center text-[15px]">
                 {images?.map((i) => (
                   <div
@@ -79,7 +90,7 @@ const Hero = () => {
                 ))}
               </div>
               Trusted by 1000+ customers
-            </Link>
+            </div>
           </div>
         </div>
 
@@ -110,9 +121,22 @@ const Hero = () => {
           <br />{" "}
         </h1>
         <p className="text-[16px] text-black w-full text-center ">
-          Let’s have a honest conversation about hair regrowth 👇
+          Let’s have a honest conversation about
         </p>
-        <div className="flex flex-col justify-center items-center space-y-5 w-full pb-5">
+        <p
+          style={{ marginTop: "2px" }}
+          className="text-[16px] text-black max-w-xl pr-10 inline-flex gap-3 items-center justify-center ml-10"
+        >
+          hair regrowth
+          <Image
+            src="/hand-down.png"
+            alt="arrow"
+            width={20}
+            height={10}
+            className="h-6 w-6"
+          />
+        </p>
+        <div className="flex flex-col justify-center items-center space-y-5 w-full">
           <Link href="/appointment-booking">
             <motion.div
               whileHover={{ scale: 1.01 }}
@@ -129,28 +153,22 @@ const Hero = () => {
           </Link>
           <Link href="/analyze">
             <div className={`text-white rounded-[12px]`}>
-              <button
-                className="inline-flex h-12 items-center justify-center rounded-[12px] px-6 font-medium text-black w-full bg-transparent border-black border-[2px]"
-                style={{
-                  boxShadow:
-                    "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
-                }}
-              >
+              <button className="inline-flex h-12 items-center justify-center rounded-[12px] px-6 font-medium text-black w-full bg-transparent border-black border-[2px]">
                 Try AI Hair Analysis
               </button>
             </div>
           </Link>
         </div>
-        <div className="bg-yellow rounded-[30px] overflow-hidden mx-2 mt-5">
+        <div className="bg-yellow rounded-[30px] overflow-hidden mx-2 mt-15">
           <Image
             src="/2.png"
             alt=""
             width={400}
             height={400}
-            className="object-cover w-full h-full border-[5px] border-[#bea500] rounded-[30px]"
+            className="object-cover w-full h-full "
           />
         </div>
-        <div className="h-[1px] w-full"></div>
+        {/* <div className="h-[1px] w-full"></div> */}
       </div>
     </div>
   );

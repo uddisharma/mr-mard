@@ -75,47 +75,29 @@ const faqItems: FAQItem[] = [
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [limit, setLimit] = useState(4);
 
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+
+  const handleShowMore = () => {
+    if (limit >= faqItems.length) {
+      setLimit(4); // Reset to show only 4 items
+    } else {
+      setLimit((prevLimit) => prevLimit + 4); // Show 4 more items
+    }
+  };
+
+  const limitedItems = faqItems.slice(0, limit);
 
   return (
     <section className="mb-16 px-4 md:px-16">
       <h2 className="text-2xl md:text-3xl font-semibold mb-10 text-center">
         FAQs
       </h2>
-      <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 md:hidden">
-        {faqItems.map((item, index) => (
-          <div
-            key={index}
-            className="border border-gray-200 bg-white rounded-lg shadow-sm transition-all h-fit"
-          >
-            <button
-              className="flex justify-between items-center w-full p-4 text-left hover:bg-gray-100 transition"
-              onClick={() => toggleAccordion(index)}
-            >
-              <span className="font-medium text-base md:text-lg">
-                {item.question}
-              </span>
-              <ChevronDown
-                className={`transform transition-transform duration-200 ${
-                  openIndex === index ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ${
-                openIndex === index ? "max-h-[300px] p-4 pt-0 h-fit" : "max-h-0"
-              }`}
-            >
-              <p className="text-gray-600">{item.answer}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="md:grid gap-4 sm:grid-cols-1 md:grid-cols-2 hidden">
-        {faqItems.map((item, index) => {
+      <div className="hidden md:grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+        {limitedItems.map((item, index) => {
           const isOpen = openIndex === index;
           return (
             <div
@@ -149,6 +131,45 @@ export default function FAQ() {
             </div>
           );
         })}
+      </div>
+      <div className="md:hidden grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+        {limitedItems.map((item, index) => (
+          <div
+            key={index}
+            className="border border-gray-200 bg-white rounded-lg shadow-sm transition-all h-fit"
+          >
+            <button
+              className="flex justify-between items-center w-full p-4 text-left hover:bg-gray-100 transition"
+              onClick={() => toggleAccordion(index)}
+            >
+              <span className="font-medium text-base md:text-lg">
+                {item.question}
+              </span>
+              <ChevronDown
+                className={`transform transition-transform duration-200 ${
+                  openIndex === index ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                openIndex === index ? "max-h-[300px] p-4 pt-0 h-fit" : "max-h-0"
+              }`}
+            >
+              <p className="text-gray-600">{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="text-center mt-4">
+        {faqItems.length > 4 && (
+          <p
+            onClick={handleShowMore}
+            className="text-btnblue cursor-pointer font-medium"
+          >
+            {limit >= faqItems.length ? "See Less" : "See More"}
+          </p>
+        )}
       </div>
     </section>
   );

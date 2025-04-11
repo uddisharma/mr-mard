@@ -44,13 +44,7 @@ const HeroButtons = () => {
       </Link>
       <Link href="/analyze">
         <div className={`text-white rounded-[12px]`}>
-          <button
-            className="inline-flex h-12 items-center justify-center rounded-[12px] px-6 font-medium text-black w-full bg-transparent border-black border-[2px]"
-            style={{
-              boxShadow:
-                "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
-            }}
-          >
+          <button className="inline-flex h-12 items-center justify-center rounded-[12px] px-6 font-medium text-black w-full bg-transparent border-black border-[2px]">
             Try AI Hair Analysis
           </button>
         </div>

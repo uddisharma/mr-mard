@@ -10,9 +10,9 @@ import { Stepper4 } from "./step-indicator";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { formatCurrency } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-const dayjs = require("dayjs");
-const utc = require("dayjs/plugin/utc");
-const timezone = require("dayjs/plugin/timezone");
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -28,6 +28,7 @@ export default function PaymentForm() {
     time: "",
   });
   const [appointmentPrice, setAppointmentPrice] = useState("");
+  const [originalPrice, setOriginalPrice] = useState("");
 
   const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
@@ -45,6 +46,10 @@ export default function PaymentForm() {
     const storedPrice = sessionStorage.getItem("selectedTimeSlotPrice");
     const storedDate = sessionStorage.getItem("selectedDate");
     const storedTime = sessionStorage.getItem("selectedTime");
+    const storedOriginalPrice = sessionStorage.getItem(
+      "selectedTimeSlotOriginalPrice",
+    );
+    setOriginalPrice(storedOriginalPrice || "");
 
     setTimeDate({
       date: storedDate || "",
@@ -256,9 +261,11 @@ export default function PaymentForm() {
             </div>
           ) : (
             <div className="max-w-lg mx-auto p-6 bg-white rounded-2xl shadow-lg mt-5">
-              <h2 className="text-lg font-semibold mb-4">
-                Appointment Details
-              </h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold mb-4">
+                  Appointment Details
+                </h2>
+              </div>
               <div className="mb-4">
                 <p className="font-medium mb-2">Time & date</p>
                 <div className="flex items-center gap-3 text-gray-700">
@@ -273,7 +280,7 @@ export default function PaymentForm() {
                   <FaClock className="text-xl" />
                   <span>{timeDate?.time}</span>
                 </div>
-                {timeDate?.date !== "" &&
+                {/* {timeDate?.date !== "" &&
                   timeDate?.time !== "" &&
                   timeLeftForSlot(timeDate?.date, timeDate?.time) !==
                     "Invalid time format" &&
@@ -289,11 +296,16 @@ export default function PaymentForm() {
                         {timeLeftForSlot(timeDate?.date, timeDate?.time)}
                       </strong>
                     </p>
-                  ))}
+                  ))} */}
               </div>
 
               <div className="border-t pt-4 mb-4">
-                <p className="font-medium mb-2">Payment summary</p>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="font-medium mb-2">Payment summary</p>
+                  <del className=" text-gray-500 mb-2">
+                    {formatCurrency(Number(originalPrice))}
+                  </del>
+                </div>
                 <div className="flex justify-between text-gray-700">
                   <span>Hair diagnosis call</span>
                   <span>{formatCurrency(Number(appointmentPrice))}</span>

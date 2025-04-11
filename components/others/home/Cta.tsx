@@ -27,13 +27,12 @@ const Cta = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 md:mb-12">
       {/* Top buttons */}
-      <div className="pt-10 pb-5 bg-white">
+      {/* <div className="pt-10 pb-5 bg-white">
         <div className="hidden md:flex flex-col items-center justify-center text-center relative py-2 md:pb-12">
           <HeroButtons />
         </div>
 
         <div className="md:hidden flex flex-col items-center justify-center text-center  relative py-2 md:pb-10 ">
-          {/* Customer count */}
           <div className="flex gap-3 z-10">
             <h2 className="text-4xl font-bold text-black">
               1000<span className="text-[#000]">+</span>
@@ -58,7 +57,6 @@ const Cta = () => {
           </div>
         </div>
 
-        {/* Customer count and avatars */}
         <div className="hidden md:flex flex-wrap items-center justify-center gap-2">
           <div className="text-3xl font-bold">1000+</div>
           <div className="flex flex-col sm:flex-row items-center">
@@ -83,7 +81,7 @@ const Cta = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="hidden md:flex items-center justify-center w-full my-10">
         <div className="relative flex items-center w-[80%]">
