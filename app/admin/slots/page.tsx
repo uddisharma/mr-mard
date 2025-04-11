@@ -2,6 +2,7 @@ import * as React from "react";
 import { db } from "@/lib/db";
 import { Prisma } from "@prisma/client";
 import NewSLot from "@/components/admin/appointment/new-slot";
+import { subDays } from "date-fns";
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
@@ -12,10 +13,13 @@ export default async function TimeSlotsPage({ searchParams }: PageProps) {
   const search =
     typeof searchParams.search === "string" ? searchParams.search : undefined;
 
+  const sixtyDaysAgo = subDays(new Date(), 60);
+
   const where: Prisma.TimeSlotWhereInput = {
-    ...(search && {
-      OR: [{ date: { equals: new Date(search).toISOString() } }],
-    }),
+    date: {
+      gte: sixtyDaysAgo,
+      ...(search && { equals: new Date(search).toISOString() }),
+    },
   };
 
   const timeSlots = await db.timeSlot.findMany({
