@@ -16,6 +16,14 @@ import { Download, ToggleLeft, Upload } from "lucide-react";
 import * as XLSX from "xlsx";
 import { toast } from "sonner";
 import { formatTime } from "@/lib/utils";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(customParseFormat);
 
 export default function ExcelImportExport({
   onImportSuccess,
@@ -100,16 +108,7 @@ export default function ExcelImportExport({
           const workbook = XLSX.read(data, { type: "binary" });
           const sheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[sheetName];
-          const json = XLSX.utils.sheet_to_json(worksheet, { raw: true });
-
-          json.forEach((row: any) => {
-            if (row.date && typeof row.date === "number") {
-              const parsedDate = XLSX.SSF.parse_date_code(row.date);
-              row.date = new Date(parsedDate.y, parsedDate.m - 1, parsedDate.d)
-                .toISOString()
-                .split("T")[0];
-            }
-          });
+          const json = XLSX.utils.sheet_to_json(worksheet, { raw: false });
 
           resolve(json);
         } catch (error) {
@@ -134,6 +133,8 @@ export default function ExcelImportExport({
       "totalSeats",
       "price",
       "originalPrice",
+      "label",
+      "isActive",
     ];
 
     for (const column of requiredColumns) {
@@ -144,17 +145,36 @@ export default function ExcelImportExport({
   };
 
   const processBatch = async (batch: any[]) => {
-    const formattedBatch = batch.map((row) => ({
-      date: new Date(row.date).toISOString().split("T")[0],
-      startTime: new Date(row.startTime).toISOString(),
-      endTime: new Date(row.endTime).toISOString(),
-      totalSeats: Number.parseInt(row.totalSeats),
-      price: Number.parseFloat(row.price),
-      originalPrice: Number.parseFloat(row.originalPrice),
-      label: row.label || "",
-      bookedSeats: row.bookedSeats || 0,
-      isActive: row.isActive !== undefined ? row.isActive : true,
-    }));
+    const formattedBatch = batch.map((row) => {
+      const date = row.date; // "2025-05-18"
+      const startTimeRaw = `${date} ${row.startTime}`; // "2025-05-18 03:00PM"
+      const endTimeRaw = `${date} ${row.endTime}`; // "2025-05-18 03:30PM"
+
+      const startTime = dayjs.tz(
+        startTimeRaw,
+        "YYYY-MM-DD hh:mmA",
+        "Asia/Kolkata",
+      );
+      const endTime = dayjs.tz(endTimeRaw, "YYYY-MM-DD hh:mmA", "Asia/Kolkata");
+
+      if (!startTime.isValid() || !endTime.isValid()) {
+        throw new Error("Invalid time value in Excel row");
+      }
+
+      return {
+        date: dayjs
+          .tz(row.date, "YYYY-MM-DD", "Asia/Kolkata")
+          .format("YYYY-MM-DD"),
+        startTime: startTime.utc().toISOString(),
+        endTime: endTime.utc().toISOString(),
+        totalSeats: Number.parseInt(row.totalSeats),
+        price: Number.parseFloat(row.price),
+        originalPrice: Number.parseFloat(row.originalPrice),
+        label: row.label || "",
+        bookedSeats: row.bookedSeats || 0,
+        isActive: row.isActive !== undefined ? row.isActive : true,
+      };
+    });
 
     const response = await fetch("/api/admin/time-slots/batch", {
       method: "POST",
