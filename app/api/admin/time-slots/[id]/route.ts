@@ -51,18 +51,35 @@ export async function PUT(
       isActive,
     } = await request.json();
 
+    // const timeSlot = await db.timeSlot.update({
+    //   where: { id: params.id },
+    //   data: {
+    //     date: date ? toZonedTime(new Date(date), timeZone) : undefined,
+    //     startTime: new Date(startTime),
+    //     endTime: new Date(endTime),
+    //     totalSeats,
+    //     originalPrice,
+    //     price,
+    //     label,
+    //     isActive,
+    //   },
+    // });
+
+    const updateData: any = {};
+
+    if (date) updateData.date = toZonedTime(new Date(date), timeZone);
+    if (startTime) updateData.startTime = new Date(startTime);
+    if (endTime) updateData.endTime = new Date(endTime);
+    if (typeof totalSeats === "number") updateData.totalSeats = totalSeats;
+    if (typeof originalPrice === "number")
+      updateData.originalPrice = originalPrice;
+    if (typeof price === "number") updateData.price = price;
+    if (label) updateData.label = label;
+    if (typeof isActive === "boolean") updateData.isActive = isActive;
+
     const timeSlot = await db.timeSlot.update({
       where: { id: params.id },
-      data: {
-        date: date ? toZonedTime(new Date(date), timeZone) : undefined,
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
-        totalSeats,
-        originalPrice,
-        price,
-        label,
-        isActive,
-      },
+      data: updateData,
     });
 
     return NextResponse.json(timeSlot);
