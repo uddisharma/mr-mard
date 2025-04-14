@@ -101,7 +101,7 @@ const Header = async ({ className }: { className?: string }) => {
           className="text-xl font-bold font-serif tracking-wide text-center flex-1"
         >
           <Image
-            style={{ marginLeft: !sessions?.name ? "100px" : "100px" }}
+            style={{ marginLeft: "115px", scale: "1.1" }}
             src="/logo2.png"
             alt="Milele Health"
             className="m-auto mt-[-15px]"
