@@ -97,7 +97,7 @@ export default function PhoneVerification({
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg lg:flex-shrink-0">
           <Stepper1 />
           <motion.h1
-            className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
+            className="mt-5 text-2xl md:text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -107,7 +107,7 @@ export default function PhoneVerification({
             </span>
           </motion.h1>
           <motion.p
-            className="mt-5 text-lg leading-8 text-muted-foreground"
+            className="md:mt-5 mt-2 text-md md:text-lg leading-8 text-muted-foreground"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -147,12 +147,12 @@ export default function PhoneVerification({
                 >
                   {isPending ? "Sending..." : "Send OTP"}
                 </button>
-                <a
+                {/* <a
                   href="/analyze"
                   className="text-sm font-semibold leading-6 text-foreground"
                 >
                   Analyze your hairs <span aria-hidden="true">→</span>
-                </a>
+                </a> */}
               </motion.div>
             </>
           ) : (
@@ -201,12 +201,12 @@ export default function PhoneVerification({
                 >
                   {isPending ? "Verifying..." : "Verify OTP"}
                 </button>
-                <a
+                {/* <a
                   href="/analyze"
                   className="text-sm font-semibold leading-6 text-foreground"
                 >
                   Analyze your hairs <span aria-hidden="true">→</span>
-                </a>
+                </a> */}
               </motion.div>
             </>
           )}

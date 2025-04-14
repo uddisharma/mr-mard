@@ -4,7 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import { ArrowLeft, CalendarIcon, ChevronDown, Loader2 } from "lucide-react";
+import {
+  ArrowLeft,
+  CalendarIcon,
+  ChevronDown,
+  Info,
+  Loader2,
+} from "lucide-react";
 import { Stepper2 } from "./step-indicator";
 import { cn, formatCurrency, formatTime } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -194,7 +200,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg lg:flex-shrink-0">
           <Stepper2 />
           <motion.h1
-            className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
+            className="mt-5 text-2xl md:text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -204,7 +210,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
             </span>
           </motion.h1>
           <motion.p
-            className="mt-5 text-lg leading-8 text-muted-foreground"
+            className="mt-2 md:mt-5 text-md md:text-lg leading-8 text-muted-foreground"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -279,12 +285,12 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
           </motion.div>
 
           <motion.p
-            className="mt-3 md:mt-8 text-sm bg-yellow leading-8 text-btnblue px-5 py-0.5 rounded-lg"
+            className="mt-3 md:mt-8 text-sm bg-yellow leading-8 text-btnblue px-3 py-0.5 rounded-lg flex items-center justify-start gap-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Slots Opens 2 days earlier
+            <Info className="h-5 w-5" /> Slots Opens 3 days earlier
           </motion.p>
 
           <motion.div className="mt-5 md:mt-8">
@@ -310,7 +316,6 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                 {timeSlots.map((slot) => {
                   const isAvailable = slot.bookedSeats < slot.totalSeats;
                   const remainingSeats = slot.totalSeats - slot.bookedSeats;
-                  console.log("startTime", slot.startTime);
                   return (
                     <Popover key={slot.id}>
                       <PopoverTrigger asChild>
@@ -330,7 +335,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
                           }}
                         >
                           {dayjs.utc(slot.startTime).format("h:mm A")}
-                          <ChevronDown className="h-4 w-4" />
+                          <Info className="h-4 w-4" />
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-3">

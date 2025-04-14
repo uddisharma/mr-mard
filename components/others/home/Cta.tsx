@@ -116,6 +116,26 @@ const Cta = () => {
           </React.Fragment>
         ))}
       </div>
+      {/* <div className="relative  flex-col items-center md:gap-6 md:pt-6 md:hidden">
+        {data?.map((step, index) => (
+          <React.Fragment key={index}>
+            {index > 0 && <div className="h-16 w-[2px] bg-black hidden" />}
+            <Card className="relative flex flex-col items-center text-center bg-btnblue text-white p-6 rounded-lg w-full md:h-[200px]">
+              {index == 2 && (
+                <img
+                  src="/coming-soon1.png"
+                  alt="Coming Soon"
+                  className="absolute top-[-25px] right-0 w-28 h-auto"
+                />
+              )}
+              <h3 className="text-2xl pt-4">{step.title}</h3>
+              <p className="text-lg md:text-sm m-4 text-gray-300">
+                {step.content}
+              </p>
+            </Card>
+          </React.Fragment>
+        ))}
+      </div> */}
     </div>
   );
 };

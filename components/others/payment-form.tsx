@@ -234,11 +234,11 @@ export default function PaymentForm() {
 
   return (
     <div className="relative isolate overflow-hidden bg-background">
-      <div className="mx-auto max-w-7xl px-6 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg lg:flex-shrink-0">
           <Stepper4 />
           <motion.h1
-            className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
+            className="mt-5 text-2xl md:text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -248,7 +248,7 @@ export default function PaymentForm() {
             </span>
           </motion.h1>
           <motion.p
-            className="mt-5 text-lg leading-8 text-muted-foreground"
+            className="mt-2 md:mt-5 text-md md:text-lg leading-8 text-muted-foreground"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -299,10 +299,13 @@ export default function PaymentForm() {
                   ))} */}
               </div>
 
-              <div className="border-t pt-4 mb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <p className="font-medium mb-2">Payment summary</p>
-                  <del className=" text-gray-500 mb-2">
+              <div className="border-t pt-4 mb-4 space-y-4">
+                <div className="flex items-center justify-between">
+                  <p className="font-medium">Payment summary</p>
+                </div>
+                <div className="flex justify-between text-gray-700">
+                  <span>Original Price</span>
+                  <del className="text-gray-500">
                     {formatCurrency(Number(originalPrice))}
                   </del>
                 </div>
@@ -310,7 +313,15 @@ export default function PaymentForm() {
                   <span>Hair diagnosis call</span>
                   <span>{formatCurrency(Number(appointmentPrice))}</span>
                 </div>
-                <div className="flex justify-between text-gray-900 font-semibold mt-2">
+                <div className="flex justify-between text-green-600">
+                  <span>Total Savings</span>
+                  <span>
+                    {formatCurrency(
+                      Number(originalPrice) - Number(appointmentPrice),
+                    )}
+                  </span>
+                </div>
+                <div className="flex justify-between text-gray-900 font-semibold">
                   <span>Total</span>
                   <span>{formatCurrency(Number(appointmentPrice))}</span>
                 </div>

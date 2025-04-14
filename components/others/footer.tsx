@@ -31,18 +31,18 @@ const Footer = () => {
             <div className="m-auto">
               <h3 className=" mb-4">Quick Links</h3>
               <ul className="space-y-2 text-sm text-white/80">
-                <li>
+                {/* <li>
                   <Link href="/analyze">Take the test</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link href="/blogs">Blogs</Link>
                 </li>
                 <li>
                   <Link href="/contact-us">Contact Us</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link href="/technology">Our Technology</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="m-auto">
@@ -114,9 +114,9 @@ const Footer = () => {
             <div className="">
               <h3 className=" mb-4">Quick Links</h3>
               <ul className="space-y-2 text-sm text-white/80">
-                <li>
+                {/* <li>
                   <Link href="/report">Report</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link href="/blogs">Blogs</Link>
                 </li>
