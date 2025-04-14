@@ -87,7 +87,7 @@ export default function Testimonials() {
   return (
     <section className="px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl bg-white text-center text-btnblue py-6 mb-2">
+        <h2 className="text-2xl md:text-4xl bg-white text-center text-btnblue py-6 mb-2">
           Real people, real results
         </h2>
         <div className="relative max-w-5xl mx-auto overflow-hidden md:pt-10">

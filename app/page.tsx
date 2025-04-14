@@ -29,16 +29,16 @@ const Home = () => {
       <Cta />
       {/* <Work /> */}
       <OurApproach />
-      <Progress />
-      <Analyze />
+      {/* <Progress /> */}
+      {/* <Analyze /> */}
       <Testimonials />
       <div className="md:pt-10 md:mb-12 md:pb-10 bg-white">
-        <div className="md:hidden flex flex-col items-center justify-center text-center  relative py-10 md:pb-10 ">
-          <div className="flex gap-3 z-10">
-            <h2 className="text-4xl font-bold text-black">
+        <div className="md:hidden flex flex-col items-center justify-center text-center  relative py-7 md:pb-10 ">
+          <div className="flex gap-3 z-10 items-center">
+            <h2 className="text-2xl font-semibold text-black">
               1000<span className="text-[#000]">+</span>
             </h2>
-            <p className="text-lg text-black mt-2">Happy Customers</p>
+            <p className="text-lg text-black">Happy Customers</p>
           </div>
           <div className="flex -space-x-2 my-5">
             {images?.map((i) => (

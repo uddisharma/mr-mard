@@ -23,18 +23,15 @@ const Blogs = async () => {
   });
 
   return (
-    <div className="mt-10 bg-white pb-5 mb-5">
-      <h2 className="text-3xl md:text-4xl text-center text-btnblue py-8 mb-2">
+    <div className="mt-5 bg-white pb-5 mb-5">
+      <h2 className="text-2xl md:text-4xl text-center text-btnblue py-5 ">
         Our Blogs
       </h2>
       <div className="flex justify-center m-auto mb-10">
         <Link href={`/blogs`}>
-          <Button
-            variant="default"
-            className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[6px_30px] text-[14px] rounded-[11px] py-5"
-          >
+          <div className=" bg-btnblue text-white px-6 py-2 rounded-full ">
             View All
-          </Button>
+          </div>
         </Link>
       </div>
       <section className="container mx-auto px-4 md:px-24 ">
@@ -45,16 +42,16 @@ const Blogs = async () => {
             return (
               <Link key={i} href={`/blogs/${blog?.id}`}>
                 <article className="cursor-pointer flex flex-col">
-                  <div className="relative h-[240px] mb-4 border-[1px] border-gray-200 rounded-lg overflow-hidden">
+                  <div className="relative h-[220px] mb-4 border-[1px] border-gray-200 rounded-lg overflow-hidden">
                     <Image
                       src={blog?.image ?? "/blogs2.png"}
                       alt={blog?.title ?? "Blog"}
                       height={240}
                       width={300}
-                      className="w-[90%] rounded-none h-full m-auto"
+                      className="w-full rounded-none h-full m-auto"
                     />
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray1 font-semibold mb-2">
+                  <div className="flex items-center gap-2 text-sm text-gray1  mb-2">
                     <span>{formattedDate}</span>
                     <span>•</span>
                     <span>
@@ -66,13 +63,13 @@ const Blogs = async () => {
                         : ""}
                     </span>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">
+                  <h3 className="text-[16px] md:text-[20px] mb-3 text-btnblue">
                     {blog?.title?.slice(0, 50) ?? ""}
                   </h3>
                   <p
-                    className="text-black text-sm mb-4 flex-grow"
+                    className="text-gray-500  text-[13px] md:text-[15px] mb-4 flex-grow"
                     dangerouslySetInnerHTML={{
-                      __html: blog?.content?.slice(0, 150) ?? "",
+                      __html: blog?.content?.slice(0, 150) + "...",
                     }}
                   />
 

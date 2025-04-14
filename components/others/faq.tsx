@@ -83,9 +83,9 @@ export default function FAQ() {
 
   const handleShowMore = () => {
     if (limit >= faqItems.length) {
-      setLimit(4); // Reset to show only 4 items
+      setLimit(4);
     } else {
-      setLimit((prevLimit) => prevLimit + 4); // Show 4 more items
+      setLimit((prevLimit) => prevLimit + 4);
     }
   };
 
@@ -93,7 +93,7 @@ export default function FAQ() {
 
   return (
     <section className="mb-16 px-4 md:px-16">
-      <h2 className="text-2xl md:text-3xl font-semibold mb-10 text-center">
+      <h2 className="text-2xl md:text-3xl font-semibold mb-10 text-center text-btnblue">
         FAQs
       </h2>
       <div className="hidden md:grid gap-4 sm:grid-cols-1 md:grid-cols-2">
@@ -109,7 +109,7 @@ export default function FAQ() {
                 onClick={() => toggleAccordion(index)}
               >
                 <span
-                  className={`text-base md:text-lg font-medium flex-1 transition-all duration-300 ${
+                  className={`md:text-lg font-medium flex-1 transition-all duration-300 ${
                     isOpen ? "whitespace-normal" : "truncate"
                   }`}
                 >
@@ -132,7 +132,7 @@ export default function FAQ() {
           );
         })}
       </div>
-      <div className="md:hidden grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+      <div className="md:hidden grid gap-4 sm:grid-cols-1 md:grid-cols-2 text-btnblue text-[16px]">
         {limitedItems.map((item, index) => (
           <div
             key={index}
@@ -142,9 +142,7 @@ export default function FAQ() {
               className="flex justify-between items-center w-full p-4 text-left hover:bg-gray-100 transition"
               onClick={() => toggleAccordion(index)}
             >
-              <span className="font-medium text-base md:text-lg">
-                {item.question}
-              </span>
+              <span className="">{item.question}</span>
               <ChevronDown
                 className={`transform transition-transform duration-200 ${
                   openIndex === index ? "rotate-180" : ""
@@ -156,7 +154,7 @@ export default function FAQ() {
                 openIndex === index ? "max-h-[300px] p-4 pt-0 h-fit" : "max-h-0"
               }`}
             >
-              <p className="text-gray-600">{item.answer}</p>
+              <p>{item.answer}</p>
             </div>
           </div>
         ))}

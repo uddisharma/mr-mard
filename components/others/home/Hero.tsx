@@ -114,18 +114,20 @@ const Hero = () => {
         </div> */}
       </div>
 
-      <div className="flex md:hidden flex-col space-y-8 bg-yellow px-5 pt-10 rounded-[0px_0px_48px_48px] overflow-hidden">
-        <h1 className="text-[40px] md:text-[45px] w-full text-btnblue text-center">
-          REGAIN HAIR,{" "}
-          <span className="text-btnblue font-bold">REGAIN CONFIDENCE</span>{" "}
+      <div className="flex md:hidden flex-col space-y-5 bg-yellow px-5 pt-10 rounded-[0px_0px_48px_48px] overflow-hidden">
+        <h1 className="text-[25px] md:text-[45px] w-full text-btnblue text-left">
+          Regain Hair, <br />
+          <span className="text-btnblue">
+            Regain <span className="font-bold">Confidence</span>{" "}
+          </span>{" "}
           <br />{" "}
         </h1>
-        <p className="text-[16px] text-black w-full text-center ">
+        <p className="text-[14px] text-gray-700 w-full text-left ">
           Let’s have a honest conversation about
         </p>
         <p
           style={{ marginTop: "2px" }}
-          className="text-[16px] text-black max-w-xl pr-10 inline-flex gap-3 items-center justify-center ml-10"
+          className="text-[14px] text-gray-700 max-w-xl pr-10 inline-flex gap-3 items-left justify-left "
         >
           hair regrowth
           <Image
@@ -136,14 +138,14 @@ const Hero = () => {
             className="h-6 w-6"
           />
         </p>
-        <div className="flex flex-col justify-center items-center space-y-5 w-full">
+        <div className="flex flex-col justify-left items-left max-w-[200px] space-y-5 w-full">
           <Link href="/appointment-booking">
             <motion.div
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 1.001 }}
-              style={{
-                boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
-              }}
+              // style={{
+              //   boxShadow: "0px -10px 20px rgba(26, 47, 78, 0.75)",
+              // }}
               className={`bg-gradient-to-t to-[#EDDE79] from-[#1b1139] p-[2px] font-semibold text-white rounded-[12px] animate-wiggle ${isShaking ? "animate-shake" : ""}`}
             >
               <button className="inline-flex h-12 animate-shimmer items-center justify-center rounded-[12px] border border-[#1b1139] bg-[linear-gradient(110deg,#0f0f1a,45%,#3a3f56,55%,#0f0f1a)] bg-[length:200%_100%] px-6 font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full ">
@@ -151,13 +153,32 @@ const Hero = () => {
               </button>
             </motion.div>
           </Link>
-          <Link href="/analyze">
+          <div className="min-w-[280px] flex justify-left items-center gap-3 m-auto text-gray-700  text-[12px]">
+            <div className="flex -space-x-2 items-center text-[15px]">
+              {images?.slice(0, 3)?.map((i) => (
+                <div
+                  key={i}
+                  className="relative w-10 h-10 rounded-full border-2 border-white overflow-hidden"
+                >
+                  <Image
+                    src={i}
+                    alt={`Customer ${i}`}
+                    width={320}
+                    height={320}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+              ))}
+            </div>
+            Trusted by 1000+ customers
+          </div>
+          {/* <Link href="/analyze">
             <div className={`text-white rounded-[12px]`}>
               <button className="inline-flex h-12 items-center justify-center rounded-[12px] px-6 font-medium text-black w-full bg-transparent border-black border-[2px]">
                 Try AI Hair Analysis
               </button>
             </div>
-          </Link>
+          </Link> */}
         </div>
         <div className="bg-yellow rounded-[30px] overflow-hidden mx-2 mt-15">
           <Image

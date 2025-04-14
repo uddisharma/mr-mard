@@ -8,18 +8,17 @@ import {
 
 export default function OurApproach() {
   return (
-    <div className="flex flex-col items-center max-w-5xl mx-auto px-4 md:mb-20 md:mt-20 mb-20 mt-6">
+    <div className="flex flex-col items-center max-w-5xl mx-auto px-4 md:mb-20 md:mt-20 mb-8 mt-6">
       <div className=" bg-btnblue text-white px-6 py-2 rounded-full mb-5">
         Our Approach
       </div>
 
-      <h1 className="text-3xl md:text-4xl  text-center text-btnblue mb-8">
+      <h1 className="text-2xl md:text-4xl  text-center text-btnblue mb-4">
         Scientific treatments, that work!
       </h1>
 
-      <p className="text-gray-500 text-center text-[18px] max-w-4xl md:mb-16 mb-8">
-        Expert-led and customer friendly approach to tackle hair challenges for
-        results that are long lasting
+      <p className="text-gray-700 text-center text-[18px] max-w-4xl md:mb-16 mb-8">
+        Expert-led and customer friendly approach
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full ">
@@ -30,7 +29,7 @@ export default function OurApproach() {
           }}
           className="border border-gray-200 bg-white rounded-xl p-8"
         >
-          <div className="flex justify-center items-center gap-3 mb-4">
+          <div className="flex justify-left items-center gap-3 mb-4">
             <div className="bg-purple-100 p-4 rounded-full">
               <FlaskConical className="h-5 w-5 text-btnblue" />
             </div>
@@ -68,7 +67,7 @@ export default function OurApproach() {
           }}
           className="border border-gray-200 bg-white rounded-xl p-8"
         >
-          <div className="flex justify-center items-center gap-3 mb-4">
+          <div className="flex justify-left items-center gap-3 mb-4">
             <div className="bg-purple-100 p-4 rounded-full">
               <Users className="h-5 w-5 text-teal-500" />
             </div>
@@ -102,7 +101,7 @@ export default function OurApproach() {
           }}
           className="border border-gray-200 bg-white rounded-xl p-8"
         >
-          <div className="flex justify-center items-center gap-3 mb-4">
+          <div className="flex justify-left items-center gap-3 mb-4">
             <div className="bg-purple-100 p-4 rounded-full">
               <ChartNoAxesCombined className="h-5 w-5 text-amber-500" />
             </div>
