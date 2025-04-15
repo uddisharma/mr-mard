@@ -1,16 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   MessageSquareIcon,
   PillIcon,
   HeartPulseIcon,
   ShoppingBagIcon,
+  ChevronLeft,
 } from "lucide-react";
 
 export default function TestingDiagnostics() {
   const [activeTab, setActiveTab] = useState("consultations");
+  const [isAtStart, setIsAtStart] = useState(true);
+  const [isAtEnd, setIsAtEnd] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const tabs = [
     {
@@ -35,6 +39,30 @@ export default function TestingDiagnostics() {
     },
   ];
 
+  const handleScroll = () => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      setIsAtStart(container.scrollLeft <= 100);
+      setIsAtEnd(
+        container.scrollLeft + container.clientWidth >=
+          container.scrollWidth - 1,
+      ); // Adjusted for precision issues
+    }
+  };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      handleScroll();
+    }
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+
   return (
     <div className="flex flex-col items-center  mx-auto px-4 md:mb-20 md:mt-16 mt-6">
       <div className=" bg-btnblue text-white px-6 py-2 rounded-full mb-1">
@@ -44,28 +72,59 @@ export default function TestingDiagnostics() {
         Complete Hair Wellness
       </h2>
       <div className="w-full   md:mb-0 rounded-2xl mx-auto px-0 max-w-5xl bg-gray-50 py-10">
-        {/* Tabs */}
+        <div className="flex flex-col items-center mx-auto px-4 md:mb-20 md:mt-16 mt-6">
+          <div className="w-full md:mb-0 rounded-2xl mx-auto px-0 max-w-5xl bg-gray-50 py-10">
+            <div className="relative">
+              {!isAtStart && (
+                <button
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10"
+                  onClick={() => {
+                    const container = scrollContainerRef.current;
+                    container?.scrollBy({ left: -200, behavior: "smooth" });
+                  }}
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+              )}
 
-        <div
-          className="flex md:justify-center gap-2 relative overflow-x-auto hide-scrollbar scroll-snap-x px-4"
-          style={{ scrollSnapType: "x mandatory" }}
-        >
-          {tabs.map((tab, i) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center px-4 py-3 ${i == 3 ? "min-w-[240px]" : ""}  rounded-full text-sm md:font-medium transition-colors scroll-snap-align-start
-        ${
-          activeTab === tab.id
-            ? "bg-btnblue text-white"
-            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-        }`}
-              style={{ scrollSnapAlign: "start" }}
-            >
-              {tab.icon}
-              {tab.label}
-            </button>
-          ))}
+              <div
+                ref={scrollContainerRef}
+                className="flex md:justify-center gap-2 relative overflow-x-auto hide-scrollbar scrollable-tabs scroll-snap-x px-4"
+                style={{ scrollSnapType: "x mandatory" }}
+              >
+                {tabs.map((tab, i) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center px-4 py-3 ${
+                      i === 3 ? "min-w-[240px]" : ""
+                    } rounded-full text-sm md:font-medium transition-colors scroll-snap-align-start ${
+                      activeTab === tab.id
+                        ? "bg-btnblue text-white"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    }`}
+                    style={{ scrollSnapAlign: "start" }}
+                  >
+                    {tab.icon}
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Right Scroll Button */}
+              {!isAtEnd && (
+                <button
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md z-10"
+                  onClick={() => {
+                    const container = scrollContainerRef.current;
+                    container?.scrollBy({ left: 200, behavior: "smooth" });
+                  }}
+                >
+                  <ChevronLeft className="w-6 h-6 transform rotate-180" />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Content */}

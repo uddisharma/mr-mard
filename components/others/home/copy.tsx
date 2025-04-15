@@ -10,32 +10,19 @@ import OurApproach from "@/components/others/home/OurApproach";
 import TestingDiagnostics from "@/components/others/home/testing-diagnostics";
 import ConsultationButton from "@/components/others/ConsultationButton";
 import Image from "next/image";
-import { db } from "@/lib/db";
 
 const images = ["/users/4.png", "/users/5.png", "/users/6.png", "/users/7.png"];
 
-const Home = async () => {
-  const blogs = await db.blog.findMany({
-    where: {
-      published: true,
-    },
-    take: 6,
-    orderBy: { createdAt: "desc" },
-    select: {
-      id: true,
-      title: true,
-      content: true,
-      createdAt: true,
-      image: true,
-    },
-  });
-
+const Home = () => {
   return (
     <div className="min-h-screen container m-auto bg-white dark:md:bg-dot-black/[0.2] md:bg-dot-white/[0.2] relative">
       <Header className="bg-yellow md:pb-20" />
       <Hero />
       <Cta />
+      {/* <Work /> */}
       <OurApproach />
+      {/* <Progress /> */}
+      {/* <Analyze /> */}
       <Testimonials />
       <div className="md:pt-10 md:mb-12 md:pb-10 bg-white">
         <div className="md:hidden flex flex-col items-center justify-center text-center  relative py-7 md:pb-10 ">
@@ -89,7 +76,11 @@ const Home = async () => {
         </div>
       </div>
       <TestingDiagnostics />
-      <Blogs blogs={blogs} />
+      {/* <Chart />
+      <Chart1 /> */}
+      {/* <AIInsightsSection /> */}
+      {/* <HealthcareSpecialists /> */}
+      <Blogs />
       <div className="my-8 md:my-16">
         <FAQ />
       </div>
