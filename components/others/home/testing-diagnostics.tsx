@@ -68,12 +68,12 @@ export default function TestingDiagnostics() {
       <div className=" bg-btnblue text-white px-6 py-2 rounded-full mb-1">
         360 Degree Coverage
       </div>
-      <h2 className="text-2xl md:text-4xl w-full text-center text-btnblue py-6 mb-4">
+      <h2 className="text-2xl md:text-4xl w-full text-center text-btnblue py-6 mb-0">
         Complete Hair Wellness
       </h2>
-      <div className="w-full   md:mb-0 rounded-2xl mx-auto px-0 max-w-5xl bg-gray-50 py-10">
-        <div className="flex flex-col items-center mx-auto px-4 md:mb-20 md:mt-16 mt-6">
-          <div className="w-full md:mb-0 rounded-2xl mx-auto px-0 max-w-5xl bg-gray-50 py-10">
+      <div className="w-full md:mb-0 rounded-2xl mx-auto px-0 max-w-5xl bg-gray-50 py-1">
+        <div className="flex flex-col items-center mx-auto px-4 mt-6">
+          <div className="w-full md:mb-0 rounded-2xl mx-auto px-0 max-w-5xl bg-gray-50 py-1">
             <div className="relative">
               {!isAtStart && (
                 <button
@@ -128,7 +128,7 @@ export default function TestingDiagnostics() {
         </div>
 
         {/* Content */}
-        <div className="max-w-5xl mx-auto px-4 md:mb-5 mt-12">
+        <div className="max-w-5xl mx-auto px-4 md:mb-5 mt-7 pb-7">
           {activeTab === "consultations" && (
             <div className="md:flex grid grid-cols-1 gap-8">
               <div

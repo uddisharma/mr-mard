@@ -111,3 +111,29 @@ export const sendCancelledAppointments = async (results: any) => {
     return { success: false, message: "Failed to send Email" };
   }
 };
+
+export const sendAppointmentBookings = async (
+  email: string,
+  name: string,
+  phone: string,
+  date: string,
+  time: string,
+) => {
+  try {
+    await resend.emails
+      .send({
+        from: "tech@mrmard.com",
+        to: email,
+        subject: "New Appointment Booking",
+        html: `<p>New appointment booked by ${name} with phone number ${phone} for ${date} at ${time}</p>`,
+      })
+      .then(() => {
+        return { success: true, message: "sent successfully" };
+      })
+      .catch((error) => {
+        return { success: false, message: "Failed to send" };
+      });
+  } catch (error) {
+    return { success: false, message: "Failed to send" };
+  }
+};

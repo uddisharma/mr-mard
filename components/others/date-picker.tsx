@@ -118,7 +118,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
     const today = new Date();
     const dateOptions: DateOption[] = [];
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 5; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
 
@@ -290,7 +290,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <Info className="h-5 w-5" /> Slots Opens 3 days earlier
+            <Info className="h-5 w-5" /> Slots Opens 5 days earlier
           </motion.p>
 
           <motion.div className="mt-5 md:mt-8">

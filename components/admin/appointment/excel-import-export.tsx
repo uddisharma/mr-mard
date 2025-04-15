@@ -12,14 +12,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { Download, ToggleLeft, Upload } from "lucide-react";
+import { CalendarIcon, Download, ToggleLeft, Upload } from "lucide-react";
 import * as XLSX from "xlsx";
 import { toast } from "sonner";
-import { formatTime } from "@/lib/utils";
+import { cn, formatTime } from "@/lib/utils";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -36,6 +43,14 @@ export default function ExcelImportExport({
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [dateRange, setDateRange] = useState<{
+    from: Date | undefined;
+    to: Date | undefined;
+  }>({
+    from: undefined,
+    to: undefined,
+  });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -133,7 +148,6 @@ export default function ExcelImportExport({
       "totalSeats",
       "price",
       "originalPrice",
-      "label",
       "isActive",
     ];
 
@@ -199,11 +213,13 @@ export default function ExcelImportExport({
   };
 
   const handleExport = async () => {
+    if (!dateRange.from || !dateRange.to) return;
     setIsExporting(true);
 
     try {
-      // Fetch all time slots
-      const response = await fetch("/api/admin/time-slots");
+      const response = await fetch(
+        `/api/admin/time-slots?from=${dateRange.from.toISOString()}&to=${dateRange.to.toISOString()}`,
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch time slots");
@@ -213,14 +229,14 @@ export default function ExcelImportExport({
 
       const excelData = timeSlots.map((slot: any) => ({
         date: new Date(slot.date).toISOString().split("T")[0],
-        startTime: formatTime(slot.startTime),
-        endTime: formatTime(slot.endTime),
+        startTime: formatTime(slot.startTime)?.replaceAll(" ", "").trim(),
+        endTime: formatTime(slot.endTime)?.replaceAll(" ", "").trim(),
         totalSeats: slot.totalSeats,
-        bookedSeats: slot.bookedSeats,
+        // bookedSeats: slot.bookedSeats,
         price: slot.price,
         originalPrice: slot.originalPrice,
         label: slot.label,
-        isActive: slot.isActive ?? true,
+        isActive: slot.isActive ? "true" : "false",
       }));
 
       const worksheet = XLSX.utils.json_to_sheet(excelData);
@@ -314,15 +330,63 @@ export default function ExcelImportExport({
           )}
 
           <div className="pt-4 border-t">
-            <Button
-              onClick={handleExport}
-              disabled={isExporting}
-              variant="outline"
-              className="w-full bg-btnblue  text-white"
-            >
-              <Download className="mr-2 h-4 w-4" />
-              Export All Time Slots to Excel
-            </Button>
+            <div className="flex flex-col items-center space-y-4">
+              <Popover open={isOpen} onOpenChange={setIsOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-[300px] justify-start text-left font-normal",
+                      !dateRange.from && "text-white bg-btnblue",
+                    )}
+                  >
+                    <CalendarIcon className=" h-4 w-4" />
+                    {dateRange.from ? (
+                      dateRange.to ? (
+                        <>
+                          {format(dateRange.from, "LLL dd, y")} -{" "}
+                          {format(dateRange.to, "LLL dd, y")}
+                        </>
+                      ) : (
+                        format(dateRange.from, "LLL dd, y")
+                      )
+                    ) : (
+                      "Select date range to export"
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0 mr-14" align="start">
+                  <div className="p-3 border-b">
+                    <h3 className="font-medium">Select date range</h3>
+                  </div>
+                  <Calendar
+                    mode="range"
+                    selected={dateRange}
+                    //@ts-ignore
+                    onSelect={setDateRange}
+                    numberOfMonths={2}
+                    defaultMonth={new Date()}
+                    initialFocus
+                  />
+                  <div className="flex items-center justify-end gap-2 p-3 border-t">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={handleExport}
+                      disabled={isExporting || !dateRange.from || !dateRange.to}
+                    >
+                      {isExporting ? "Exporting..." : "Export Data"}
+                    </Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
         </CardContent>
       </Card>

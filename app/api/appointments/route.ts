@@ -1,4 +1,6 @@
 import { db } from "@/lib/db";
+import { sendAppointmentBookings } from "@/lib/mail";
+import { isProduction } from "@/lib/utils";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -76,6 +78,24 @@ export async function POST(request: NextRequest) {
 
       return { appointment, transaction };
     });
+
+    if (isProduction) {
+      await sendAppointmentBookings(
+        "naveen@mrmard.com",
+        user.name ?? "",
+        user.phone ?? "",
+        timeSlot.date.toISOString(),
+        `${timeSlot.startTime.toISOString()} - ${timeSlot.endTime.toISOString()}`,
+      );
+
+      await sendAppointmentBookings(
+        "santhosh.k@mrmard.com",
+        user.name ?? "",
+        user.phone ?? "",
+        timeSlot.date.toISOString(),
+        `${timeSlot.startTime.toISOString()} - ${timeSlot.endTime.toISOString()}`,
+      );
+    }
 
     return NextResponse.json(result);
   } catch (error) {

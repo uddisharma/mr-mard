@@ -86,8 +86,9 @@ const Cta = () => {
             {data?.map((step, index) => (
               <Card
                 key={index}
-                className="flex-shrink-0 w-full text-center bg-btnblue text-white p-3 rounded-2xl"
+                className="relative flex-shrink-0 w-full text-center bg-btnblue text-white p-3 rounded-2xl"
               >
+                {/* Ensure the batch is added only to the 2nd index (index === 2) */}
                 {index === 2 && (
                   <img
                     src="/coming-soon1.png"
@@ -95,7 +96,7 @@ const Cta = () => {
                     className="absolute top-[-25px] right-0 w-28 h-auto"
                   />
                 )}
-                <h3 className="text-2xl pt-4">{step.title}</h3>
+                <h3 className="text-xl pt-4">{step.title}</h3>
                 <p className="text-lg md:text-sm m-4 text-gray-300">
                   {step.content}
                 </p>

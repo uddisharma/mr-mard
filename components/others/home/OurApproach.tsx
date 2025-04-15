@@ -17,7 +17,7 @@ export default function OurApproach() {
         Scientific treatments, that work!
       </h1>
 
-      <p className="text-gray-700 text-center text-[18px] max-w-4xl md:mb-16 mb-8">
+      <p className="text-gray-500 text-center text-[14px] max-w-4xl md:mb-16 mb-8">
         Expert-led and customer friendly approach
       </p>
 

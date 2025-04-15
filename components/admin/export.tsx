@@ -84,7 +84,7 @@ const ExportButton = ({ type }: { type: ExportType }) => {
               !dateRange.from && "text-muted-foreground",
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <CalendarIcon className=" h-4 w-4" />
             {dateRange.from ? (
               dateRange.to ? (
                 <>
@@ -99,7 +99,7 @@ const ExportButton = ({ type }: { type: ExportType }) => {
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent className="w-auto p-0 mr-8" align="start">
           <div className="p-3 border-b">
             <h3 className="font-medium">Select date range</h3>
           </div>
