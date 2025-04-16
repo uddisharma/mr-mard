@@ -93,20 +93,20 @@ export async function POST(request: NextRequest) {
 
     if (isProduction) {
       await sendAppointmentBookings(
-        "naveen@mrmard.com",
+        "uddibhardwaj08@gmail.com",
         user.name ?? "",
         user.phone ?? "",
         timeSlot.date.toISOString(),
         `${timeSlot.startTime.toISOString()} - ${timeSlot.endTime.toISOString()}`,
       );
 
-      await sendAppointmentBookings(
-        "santhosh.k@mrmard.com",
-        user.name ?? "",
-        user.phone ?? "",
-        timeSlot.date.toISOString(),
-        `${timeSlot.startTime.toISOString()} - ${timeSlot.endTime.toISOString()}`,
-      );
+      // await sendAppointmentBookings(
+      //   "santhosh.k@mrmard.com",
+      //   user.name ?? "",
+      //   user.phone ?? "",
+      //   timeSlot.date.toISOString(),
+      //   `${timeSlot.startTime.toISOString()} - ${timeSlot.endTime.toISOString()}`,
+      // );
     }
 
     return NextResponse.json(result);
