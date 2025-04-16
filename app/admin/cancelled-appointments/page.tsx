@@ -95,12 +95,10 @@ export default async function CancelledAppointmentsPage({
                     <div>{progress.user.phone}</div>
                     <div>{progress.lastStep}</div>
                     <div>
-                      {/* {format(
-                        new Date(progress.updatedAt),
-                        "dd/MM/yyyy hh:mm a",
-                      )} */}
-                      {format(new Date(progress.updatedAt), "dd/MM/yyyy")}{" "}
-                      {dayjs(progress.updatedAt).format("hh:mm A")}
+                      {dayjs
+                        .utc(progress.updatedAt)
+                        .tz("Asia/Kolkata")
+                        .format("DD/MM/YYYY hh:mm A")}
                     </div>
                   </div>
                 ))
