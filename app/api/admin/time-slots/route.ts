@@ -80,7 +80,7 @@ export async function DELETE(request: NextRequest) {
   const from = searchParams.get("from");
   const to = searchParams.get("to");
   try {
-    await db.timeSlot.deleteMany({
+    const data = await db.timeSlot.deleteMany({
       where: {
         createdAt: {
           gte: from ? new Date(from) : undefined,
@@ -92,7 +92,7 @@ export async function DELETE(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, data: data });
   } catch (error) {
     console.error("Error delete time slots:", error);
     return NextResponse.json(

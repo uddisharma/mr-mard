@@ -8,7 +8,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
   const resetLink = `${domain}/auth/new-password?token=${token}`;
 
   await resend.emails.send({
-    from: "tech@mrmard.com",
+    from: "info@milele.health",
     to: email,
     subject: "Reset your password",
     html: `<p>Click <a href="${resetLink}">here</a> to reset password.</p>`,
@@ -19,7 +19,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/new-verification?token=${token}`;
 
   await resend.emails.send({
-    from: "tech@mrmard.com",
+    from: "info@milele.health",
     to: email,
     subject: "Confirm your email",
     html: `<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`,
@@ -28,7 +28,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   await resend.emails.send({
-    from: "tech@mrmard.com",
+    from: "info@milele.health",
     to: email,
     subject: "2FA Code",
     html: `<p>Your 2FA code: ${token}</p>`,
@@ -39,7 +39,7 @@ export const sendVerificationOTP = async (email: string, otp: number) => {
   try {
     await resend.emails
       .send({
-        from: "tech@mrmard.com",
+        from: "info@milele.health",
         to: email,
         subject: "2FA Code",
         html: `<p>Your verification code: ${otp} and expires in 10 minutes</p>`,
@@ -80,8 +80,8 @@ export const sendCancelledAppointments = async (results: any) => {
   try {
     await resend.emails
       .send({
-        from: "tech@mrmard.com",
-        to: "tech@mrmard.com",
+        from: "info@milele.health",
+        to: "info@milele.health",
         subject: "2FA Code",
         html: `<table border="1" width="100%" cellspacing="0" cellpadding="5" style="border-collapse: collapse; font-family: Arial, sans-serif;">
         <thead>
@@ -122,7 +122,7 @@ export const sendAppointmentBookings = async (
   try {
     await resend.emails
       .send({
-        from: "tech@mrmard.com",
+        from: "info@milele.health",
         to: email,
         subject: "New Appointment Booking",
         html: `<p>New appointment booked by ${name} with phone number ${phone} for ${date} at ${time}</p>`,

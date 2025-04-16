@@ -153,13 +153,19 @@ export const OtpVerification = async (values: LoginWithPhoneSchemaData) => {
 
 export const UpsertUserProgress = async (id: string) => {
   try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
 
     const existingProgress = await db.userProgress.findFirst({
       where: {
         userId: id,
-        createdAt: today,
+        createdAt: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
       },
     });
 

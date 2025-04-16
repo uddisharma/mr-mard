@@ -32,7 +32,7 @@ export default function SubscriptionPopup() {
               Mr. Mard
             </h1> */}
             <Image
-              src="/logo2.png"
+              src="/m_logo1.png"
               alt="Milele Health"
               className="m-auto"
               width={150}

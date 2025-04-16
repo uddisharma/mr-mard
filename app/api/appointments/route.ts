@@ -72,8 +72,20 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      await tx.userProgress.delete({
-        where: { userId },
+      const startOfDay = new Date();
+      startOfDay.setHours(0, 0, 0, 0);
+
+      const endOfDay = new Date();
+      endOfDay.setHours(23, 59, 59, 999);
+
+      await tx.userProgress.deleteMany({
+        where: {
+          userId,
+          createdAt: {
+            gte: startOfDay,
+            lte: endOfDay,
+          },
+        },
       });
 
       return { appointment, transaction };

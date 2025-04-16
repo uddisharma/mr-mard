@@ -1,17 +1,17 @@
 import * as React from "react";
 import { format } from "date-fns";
-import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { FormError } from "@/components/others/form-error";
 import Pagination from "@/components/admin/pagination";
 import { Prisma } from "@prisma/client";
 import SearchInput from "@/components/others/SearchInput";
 import ExportButton from "@/components/admin/export";
-import Link from "next/link";
 import CleartButton from "@/components/admin/appointment/clear-button";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
@@ -95,10 +95,12 @@ export default async function CancelledAppointmentsPage({
                     <div>{progress.user.phone}</div>
                     <div>{progress.lastStep}</div>
                     <div>
-                      {format(
+                      {/* {format(
                         new Date(progress.updatedAt),
                         "dd/MM/yyyy hh:mm a",
-                      )}
+                      )} */}
+                      {format(new Date(progress.updatedAt), "dd/MM/yyyy")}{" "}
+                      {dayjs(progress.updatedAt).format("hh:mm A")}
                     </div>
                   </div>
                 ))

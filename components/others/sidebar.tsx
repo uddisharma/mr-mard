@@ -50,7 +50,7 @@ export default function Sidebar({ role }: { role: string | undefined }) {
       {/* <div className="p-6">
         <Link href="/" className="text-xl font-serif font-bold">
           <Image
-            src="/logo2.png"
+            src="/m_logo1.png"
             alt="Milele Health"
             className="ml-3"
             width={120}

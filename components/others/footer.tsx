@@ -17,7 +17,7 @@ const Footer = () => {
             <div className="m-auto">
               <Link href="/" className="text-xl font-bold">
                 <Image
-                  src="/logo2.png"
+                  src="/m_logo1.png"
                   alt="Milele Health"
                   className="pb-5"
                   width={80}
@@ -100,7 +100,7 @@ const Footer = () => {
             <div className="">
               <Link href="/" className="text-xl font-bold">
                 <Image
-                  src="/logo2.png"
+                  src="/m_logo1.png"
                   className="pb-5"
                   alt="Milele Health"
                   width={80}

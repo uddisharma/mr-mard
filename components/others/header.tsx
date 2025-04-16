@@ -15,10 +15,10 @@ const Header = async ({ className }: { className?: string }) => {
       <div className="container mx-auto px-10 items-center justify-between hidden md:flex">
         <Link href="/" className="text-xl font-bold">
           <Image
-            src="/logo2.png"
+            src="/m_logo1.png"
             alt="Milele Health"
-            className="m-auto mt-[-25px]"
-            width={105}
+            className="m-auto"
+            width={110}
             height={50}
           />
         </Link>
@@ -101,8 +101,8 @@ const Header = async ({ className }: { className?: string }) => {
           className="text-xl font-bold font-serif tracking-wide text-center flex-1"
         >
           <Image
-            style={{ marginLeft: "115px", scale: "1.1" }}
-            src="/logo2.png"
+            style={{ marginLeft: "100px", scale: "1.1" }}
+            src="/m_logo1.png"
             alt="Milele Health"
             className="m-auto mt-[-15px]"
             width={80}

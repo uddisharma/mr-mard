@@ -273,6 +273,7 @@ export default function ExcelImportExport({
       );
     } finally {
       setIsExporting(false);
+      setShowImportExport(false);
     }
   };
 
@@ -297,12 +298,17 @@ export default function ExcelImportExport({
       }
 
       if (data.success) {
-        toast.success("Time slots deleted successfully");
+        if (data?.data?.count === 0) {
+          toast.error("No time slots found to delete in the selected range");
+        } else {
+          toast.success(`${data?.data?.count} time slots deleted successfully`);
+        }
       }
     } catch (err) {
       console.error(err);
     } finally {
       setIsDeleting(false);
+      setShowImportExport(false);
     }
   };
 
@@ -382,7 +388,7 @@ export default function ExcelImportExport({
                         format(dateRange.from, "LLL dd, y")
                       )
                     ) : (
-                      "Select date range to export"
+                      "Select date range to export and delete"
                     )}
                   </Button>
                 </PopoverTrigger>

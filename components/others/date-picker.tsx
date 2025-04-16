@@ -4,13 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
-import {
-  ArrowLeft,
-  CalendarIcon,
-  ChevronDown,
-  Info,
-  Loader2,
-} from "lucide-react";
+import { ArrowLeft, CalendarIcon, Info, Loader2 } from "lucide-react";
 import { Stepper2 } from "./step-indicator";
 import { cn, formatCurrency, formatTime } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -156,7 +150,11 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
       }
 
       const data = await response.json();
-      setTimeSlots(data);
+      const now = new Date();
+      const upcomingSlots = data.filter(
+        (item: any) => new Date(item.startTime) > now,
+      );
+      setTimeSlots(upcomingSlots);
     } catch (error) {
       toast.error("Failed to load available time slots");
     } finally {

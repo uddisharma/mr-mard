@@ -34,7 +34,7 @@ export const SignupButton1 = () => {
       {/* <LogInIcon className="" /> */}
       <Button
         variant="default"
-        className=" md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px] py-5"
+        className="md:inline-flex bg-btnblue text-white rounded-[12px] p-[12px_20px] py-5"
       >
         Sign up
       </Button>

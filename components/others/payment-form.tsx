@@ -317,8 +317,8 @@ export default function PaymentForm() {
                   <span>Total</span>
                   <span>{formatCurrency(Number(appointmentPrice))}</span>
                 </div>
-                <div className="flex justify-between text-green-600">
-                  <span>Total Savings</span>
+                <div className="text-[#1c5f2a] bg-green-50 p-1 pl-2 rounded-md">
+                  <span>Total Savings </span>
                   <span>
                     {formatCurrency(
                       Number(originalPrice) - Number(appointmentPrice),
@@ -336,11 +336,11 @@ export default function PaymentForm() {
                     </p>
                   </div>
                   <div className="flex items-center justify-center w-12 h-12 rounded-md bg-yellow-100">
-                    <IndianRupee className="text-btnblue" />
+                    <IndianRupee className="text-btnblue font-bold" />
                   </div>
                 </div>
               </div>
-              <div className="bg-green-600 mt-8 text-white px-4 py-2 rounded-md flex items-center space-x-2 w-full max-w-md">
+              <div className="bg-[#1c5f2a] mt-8 text-white px-4 py-2 rounded-md flex items-center space-x-2 w-full max-w-md">
                 <ReceiptIndianRupee className="w-4 h-4" />
                 <span className="text-sm font-normal">
                   Total savings{" "}
