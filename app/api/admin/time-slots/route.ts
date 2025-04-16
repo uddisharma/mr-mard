@@ -74,3 +74,30 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const from = searchParams.get("from");
+  const to = searchParams.get("to");
+  try {
+    await db.timeSlot.deleteMany({
+      where: {
+        createdAt: {
+          gte: from ? new Date(from) : undefined,
+          lte: to ? new Date(to) : undefined,
+        },
+        appointments: {
+          none: {},
+        },
+      },
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error delete time slots:", error);
+    return NextResponse.json(
+      { error: "Failed to delete time slots" },
+      { status: 500 },
+    );
+  }
+}

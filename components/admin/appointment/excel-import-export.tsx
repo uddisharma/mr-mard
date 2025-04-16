@@ -43,6 +43,7 @@ export default function ExcelImportExport({
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [dateRange, setDateRange] = useState<{
     from: Date | undefined;
@@ -275,6 +276,36 @@ export default function ExcelImportExport({
     }
   };
 
+  const handleDelete = async () => {
+    if (!dateRange.from || !dateRange.to) return;
+
+    try {
+      setIsDeleting(true);
+      const res = await fetch(
+        `/api/admin/time-slots?from=${dateRange.from.toISOString()}&to=${dateRange.to.toISOString()}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(` API failed with status ${res.status}`);
+      }
+
+      if (data.success) {
+        toast.success("Time slots deleted successfully");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <main className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-6 gap-4">
@@ -375,6 +406,13 @@ export default function ExcelImportExport({
                       onClick={() => setIsOpen(false)}
                     >
                       Cancel
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={handleDelete}
+                      disabled={isDeleting || !dateRange.from || !dateRange.to}
+                    >
+                      {isExporting ? "Deleting..." : "Delete Data"}
                     </Button>
                     <Button
                       size="sm"
