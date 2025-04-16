@@ -30,27 +30,29 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   await resend.emails.send({
     from: "info@milele.health",
     to: email,
-    subject: "2FA Code",
-    html: `<p>Your 2FA code: ${token}</p>`,
+    subject: "2FA Code | Milele Health",
+    html: `<p>Your 2FA code for login: ${token}</p>`,
   });
 };
 
-export const sendVerificationOTP = async (email: string, otp: number) => {
+export const sendVerificationOTP = async (
+  recipientEmail: string,
+  authCode: Number,
+) => {
   try {
-    await resend.emails
-      .send({
-        from: "info@milele.health",
-        to: email,
-        subject: "2FA Code",
-        html: `<p>Your verification code: ${otp} and expires in 10 minutes</p>`,
-      })
-      .then(() => {
-        return { success: true, message: "OTP sent successfully" };
-      })
-      .catch((error) => {
-        return { success: false, message: "Failed to send OTP" };
-      });
+    await resend.emails.send({
+      from: "info@milele.health",
+      to: recipientEmail,
+      subject: "Your Milele Health 2FA Verification Code",
+      html: `<p>Hello,</p>
+      <p>Your one‑time verification code is:</p>
+      <h2 style="margin: 0;">${authCode}</h2>
+      <p>This code will expire in 10 minutes. If you did not request it, please ignore this email.</p>
+    `,
+    });
+    return { success: true, message: "OTP sent successfully" };
   } catch (error) {
+    console.log("error sending email ", error);
     return { success: false, message: "Failed to send OTP" };
   }
 };
