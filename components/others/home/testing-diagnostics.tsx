@@ -270,7 +270,7 @@ export default function TestingDiagnostics() {
                 <div className="flex items-center gap-4">
                   <div className="bg-yellow p-2 rounded-full font-bold">
                     <Image
-                      src="/icons/Medication.png"
+                      src="/icons/medication.png"
                       alt="Medical testing procedure"
                       width={20}
                       height={20}

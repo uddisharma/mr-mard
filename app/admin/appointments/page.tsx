@@ -86,10 +86,10 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
             <div className="grid grid-cols-[1fr_0.8fr_0.8fr_1fr_1fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
               <div>ID</div>
               <div>Phone</div>
-              <div>Date</div>
+              <div>Scheduled Date</div>
               <div>Time</div>
               <div>Date</div>
-              <div>Status</div>
+              <div>Booked on</div>
               <div>Actions</div>
             </div>
 

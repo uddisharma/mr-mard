@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createOrder } from "@/actions/payment";
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, IndianRupee, ReceiptIndianRupee } from "lucide-react";
 import { Stepper4 } from "./step-indicator";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { formatCurrency } from "@/lib/utils";
@@ -313,6 +313,10 @@ export default function PaymentForm() {
                   <span>Hair diagnosis call</span>
                   <span>{formatCurrency(Number(appointmentPrice))}</span>
                 </div>
+                <div className="flex justify-between text-gray-900 font-semibold">
+                  <span>Total</span>
+                  <span>{formatCurrency(Number(appointmentPrice))}</span>
+                </div>
                 <div className="flex justify-between text-green-600">
                   <span>Total Savings</span>
                   <span>
@@ -321,14 +325,34 @@ export default function PaymentForm() {
                     )}
                   </span>
                 </div>
-                <div className="flex justify-between text-gray-900 font-semibold">
-                  <span>Total</span>
-                  <span>{formatCurrency(Number(appointmentPrice))}</span>
+                <div className="flex items-center justify-between bg-yellow border border-yellow-100 rounded-xl p-4 shadow-sm w-full max-w-md">
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-900">
+                      Refund policy
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      If you're not fully satisfied, we’ll give you a 100%
+                      refund.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-center w-12 h-12 rounded-md bg-yellow-100">
+                    <IndianRupee className="text-btnblue" />
+                  </div>
                 </div>
               </div>
-
+              <div className="bg-green-600 mt-8 text-white px-4 py-2 rounded-md flex items-center space-x-2 w-full max-w-md">
+                <ReceiptIndianRupee className="w-4 h-4" />
+                <span className="text-sm font-normal">
+                  Total savings{" "}
+                  <span className="font-semibold">
+                    {formatCurrency(
+                      Number(originalPrice) - Number(appointmentPrice),
+                    )}
+                  </span>
+                </span>
+              </div>
               <motion.div
-                className="mt-8 flex items-center justify-between gap-x-6"
+                className="mt-3 flex items-center justify-between gap-x-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
