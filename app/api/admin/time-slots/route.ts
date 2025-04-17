@@ -79,12 +79,25 @@ export async function DELETE(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const from = searchParams.get("from");
   const to = searchParams.get("to");
+
+  if (
+    !from ||
+    !to ||
+    isNaN(new Date(from).getTime()) ||
+    isNaN(new Date(to).getTime())
+  ) {
+    return NextResponse.json(
+      { error: "Invalid 'from' or 'to' date provided" },
+      { status: 400 },
+    );
+  }
+
   try {
     const data = await db.timeSlot.deleteMany({
       where: {
-        createdAt: {
-          gte: from ? new Date(from) : undefined,
-          lte: to ? new Date(to) : undefined,
+        date: {
+          gte: new Date(from),
+          lte: new Date(to),
         },
         appointments: {
           none: {},
@@ -92,9 +105,13 @@ export async function DELETE(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ success: true, data: data });
+    return NextResponse.json({
+      success: true,
+      message: `${data.count} time slots deleted successfully`,
+      data,
+    });
   } catch (error) {
-    console.error("Error delete time slots:", error);
+    console.error("Error deleting time slots:", error);
     return NextResponse.json(
       { error: "Failed to delete time slots" },
       { status: 500 },

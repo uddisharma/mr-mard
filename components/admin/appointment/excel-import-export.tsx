@@ -218,6 +218,7 @@ export default function ExcelImportExport({
 
   const handleExport = async () => {
     if (!dateRange.from || !dateRange.to) return;
+
     setIsExporting(true);
 
     try {
@@ -283,10 +284,16 @@ export default function ExcelImportExport({
   const handleDelete = async () => {
     if (!dateRange.from || !dateRange.to) return;
 
+    const updatedTo = new Date(dateRange.to);
+    updatedTo.setDate(updatedTo.getDate() + 1);
+
+    const updatedFrom = new Date(dateRange.from);
+    updatedFrom.setDate(updatedFrom.getDate() + 1);
+
     try {
       setIsDeleting(true);
       const res = await fetch(
-        `/api/admin/time-slots?from=${dateRange.from.toISOString()}&to=${dateRange.to.toISOString()}`,
+        `/api/admin/time-slots?from=${updatedFrom.toISOString()}&to=${updatedTo.toISOString()}`,
         {
           method: "DELETE",
           headers: {
