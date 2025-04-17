@@ -2,6 +2,12 @@ import { db } from "@/lib/db";
 import { sendAppointmentBookings } from "@/lib/mail";
 import { isProduction } from "@/lib/utils";
 import { type NextRequest, NextResponse } from "next/server";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export async function POST(request: NextRequest) {
   try {
@@ -96,8 +102,8 @@ export async function POST(request: NextRequest) {
         "uddibhardwaj08@gmail.com",
         user.name ?? "",
         user.phone ?? "",
-        timeSlot.date.toISOString(),
-        `${timeSlot.startTime.toISOString()} - ${timeSlot.endTime.toISOString()}`,
+        dayjs(timeSlot.date).tz("Asia/Kolkata").format("DD/MM/YYYY"),
+        `${dayjs(timeSlot.startTime).utc().tz("Asia/Kolkata").format("hh:mm A")} - ${dayjs(timeSlot.endTime).utc().tz("Asia/Kolkata").format("hh:mm A")}`,
       );
 
       // await sendAppointmentBookings(

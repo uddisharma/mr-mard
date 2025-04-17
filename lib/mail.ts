@@ -122,19 +122,22 @@ export const sendAppointmentBookings = async (
   time: string,
 ) => {
   try {
-    await resend.emails
-      .send({
-        from: "info@milele.health",
-        to: email,
-        subject: "New Appointment Booking",
-        html: `<p>New appointment booked by ${name} with phone number ${phone} for ${date} at ${time}</p>`,
-      })
-      .then(() => {
-        return { success: true, message: "sent successfully" };
-      })
-      .catch((error) => {
-        return { success: false, message: "Failed to send" };
-      });
+    await resend.emails.send({
+      from: "info@milele.health",
+      to: email,
+      subject: "New Appointment Booking",
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333; padding: 20px; background-color: #f9f9f9;">
+          <h2 style="color: #2E86C1;">📅 New Appointment Booking</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Phone Number:</strong> ${phone}</p>
+          <p><strong>Date:</strong> ${date}</p>
+          <p><strong>Time:</strong> ${time}</p>
+        </div>
+      `,
+    });
+
+    return { success: true, message: "sent successfully" };
   } catch (error) {
     return { success: false, message: "Failed to send" };
   }
