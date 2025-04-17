@@ -193,7 +193,10 @@ export default function ExcelImportExport({
         price: Number(row.price),
         originalPrice: Number(row.originalPrice),
         label: row.label || "",
-        isActive: row.isActive === "true" || row.isActive === true,
+        isActive:
+          row.isActive === "true" ||
+          row.isActive == "TRUE" ||
+          row.isActive === true,
       };
     });
 

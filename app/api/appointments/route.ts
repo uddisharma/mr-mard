@@ -103,8 +103,8 @@ export async function POST(request: NextRequest) {
         user.name ?? "",
         user.phone ?? "",
         dayjs(timeSlot.date).tz("Asia/Kolkata").format("DD/MM/YYYY"),
-        `${dayjs.utc(result.appointment.timeSlot.startTime).format("h:mm A")} - ${dayjs
-          .utc(result.appointment.timeSlot.endTime)
+        `${dayjs.utc(timeSlot.startTime).format("h:mm A")} - ${dayjs
+          .utc(timeSlot.endTime)
           .format("h:mm A")}`,
       );
 
