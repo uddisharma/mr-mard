@@ -103,10 +103,9 @@ export async function POST(request: NextRequest) {
         user.name ?? "",
         user.phone ?? "",
         dayjs(timeSlot.date).tz("Asia/Kolkata").format("DD/MM/YYYY"),
-        `${dayjs.utc(timeSlot.startTime).tz("Asia/Kolkata").format("hh:mm A")} - ${dayjs
-          .utc(timeSlot.endTime)
-          .tz("Asia/Kolkata")
-          .format("hh:mm A")}`,
+        `${dayjs.utc(result.appointment.timeSlot.startTime).format("h:mm A")} - ${dayjs
+          .utc(result.appointment.timeSlot.endTime)
+          .format("h:mm A")}`,
       );
 
       // await sendAppointmentBookings(
