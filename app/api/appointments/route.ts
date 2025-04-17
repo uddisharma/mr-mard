@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
 
     if (isProduction) {
       await sendAppointmentBookings(
-        "uddibhardwaj08@gmail.com",
+        "naveen@mrmard.com",
         user.name ?? "",
         user.phone ?? "",
         dayjs(timeSlot.date).tz("Asia/Kolkata").format("DD/MM/YYYY"),
@@ -108,13 +108,15 @@ export async function POST(request: NextRequest) {
           .format("h:mm A")}`,
       );
 
-      // await sendAppointmentBookings(
-      //   "santhosh.k@mrmard.com",
-      //   user.name ?? "",
-      //   user.phone ?? "",
-      //   timeSlot.date.toISOString(),
-      //   `${timeSlot.startTime.toISOString()} - ${timeSlot.endTime.toISOString()}`,
-      // );
+      await sendAppointmentBookings(
+        "santhosh.k@mrmard.com",
+        user.name ?? "",
+        user.phone ?? "",
+        dayjs(timeSlot.date).tz("Asia/Kolkata").format("DD/MM/YYYY"),
+        `${dayjs.utc(timeSlot.startTime).format("h:mm A")} - ${dayjs
+          .utc(timeSlot.endTime)
+          .format("h:mm A")}`,
+      );
     }
 
     return NextResponse.json(result);
