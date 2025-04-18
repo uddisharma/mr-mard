@@ -29,7 +29,7 @@ export default function SubscriptionPopup() {
           <div className="space-y-8">
             {/* Title */}
             {/* <h1 className="text-yellow text-4xl md:text-5xl text-center font-serif">
-              Mr. Mard
+              Milele Health
             </h1> */}
             <Image
               src="/m_logo1.png"

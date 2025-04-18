@@ -7,7 +7,7 @@ const OpenHeader = () => {
     <header className="py-5">
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="  text-xl">
-          Mr. Mard
+          Milele Health
         </Link>
       </div>
     </header>

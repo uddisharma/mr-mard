@@ -5,44 +5,44 @@ export default function AboutUs() {
     <div className="text-black md:mx-24">
       <main className="container mx-auto px-4 py-2 md:py-6">
         <h2 className="text-[35px] md:text-[40px] text-center mb-8">
-          The Mr. Mard Story
+          About Us
         </h2>
-        <h2 className="text-[28px] mb-8">Who is Mr. Mard?</h2>
 
-        {/* First Section */}
+        {/* Introduction Section */}
         <section className="mb-12">
+          <h2 className="text-[28px] mb-4">What Milele Means</h2>
           <p className="mb-4">
-            The world is not Hogwarts for transformation to happen the next
-            moment under one magic spell. Grooming requires persistent efforts
-            and current knowledge awareness.
+            Milele means forever — and that’s the kind of health we’re
+            envisioning for every Indian.
           </p>
           <p className="mb-4">
-            Mr. Mard offers you deep-rooted knowledge that addresses hair care
-            and skin care and simplifies wellness for men amidst other
-            exaggerating counterparts. We do not sugarcoat to promote products
-            but reveal the truth about how they serve you well. We ensure
-            fairness and look for a 1% improvement to meet your demands.
-            <br />
-            Grooming is not a sprint. It's a marathon. Stamina to sustain.
-          </p>
-
-          <p className="mb-8">
-            To feel confident in their own skin. Yes, it's not easy. But it's
-            not impossible either. With personalized recommendations powered by
-            an expertly designed chatbot, exclusive guidance from medical
-            experts, and a curated selection of accurate products, we will help
-            you fix your hair and skin issues.
-          </p>
-
-          <p>
-            When your father and uncles start balding, you think it's old age.
-            But when your cousins and friends start balding, you start sweating
-            and brace for the worst. That’s what happened with us, too. Except,
-            as the mards at Mr. Mard, we did something about it.
+            At Milele Health, we believe real transformation isn’t magic—it’s a
+            process grounded in patience, consistency, and knowledge. We’re here
+            to redefine hair wellness by making hair care less confusing and
+            more effective.
           </p>
         </section>
 
-        {/* Founders Section */}
+        {/* Who We Are */}
+        <section className="mb-12">
+          <h2 className="text-[28px] mb-4">What We Stand For</h2>
+          <p className="mb-4">
+            We exist to fill the gaps in a system that has long overlooked
+            deeply personal yet critical health concerns like hair loss.
+          </p>
+          <p className="mb-4">
+            By combining medical expertise, smart technology, and patient-first
+            care, we’ve envisioned building India’s top trusted healthcare
+            ecosystem for hair wellness—breaking through the noise, stigma, and
+            misinformation.
+          </p>
+          <p>
+            At Milele Health, every recommendation is rooted in science and
+            designed to empower you with clarity, not confusion.
+          </p>
+        </section>
+
+        {/* Founders Section with Image */}
         <section className="mb-12">
           <div className="flex flex-col md:flex-row gap-8 align-middle justify-center items-center">
             <div className="md:w-1/2">
@@ -53,54 +53,61 @@ export default function AboutUs() {
                 height={300}
                 className="rounded-lg"
               />
-              {/* <h3 className="text-center w-full mt-4 bg-yellow py-2">Santhosh and Naveen</h3> */}
             </div>
             <div className="md:w-1/2">
-              <h2 className="text-[28px] mb-8">Who is Mr. Mard?</h2>
+              <h2 className="text-[28px] mb-4">Who We Are</h2>
               <p className="mb-4">
-                We (Naveen and Santhosh) met when we were colleagues at Swiggy
-                in 2019.
+                Founded by Santhosh and Naveen, former colleagues at Swiggy,
+                Milele Health began as a shared mission to solve a problem we
+                faced ourselves: lack of clarity and support in hair wellness.
               </p>
               <p className="mb-4">
-                Naveen's love for food met his passion for program management
-                when he joined Swiggy. Santhosh found his way to Swiggy at the
-                same time, too, with a background in Business Analytics.
-              </p>
-              <p>
-                Over time, we found common ground in our discussions about men's
-                grooming and hair health.
+                With Naveen’s background in program management and Santhosh’s
+                expertise in business analytics, we combine data, empathy, and
+                real-world experience to fill the gap.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Additional Sections */}
+        {/* Why We Started */}
         <section className="mb-12">
-          <p className="mb-8">
-            We knew men's grooming and wellness was still an underground topic
-            in India. Our conversations led us to realize that, right now, men
-            are spending more than they get in return. There isn’t a space where
-            they can be honest about their wellness. We wanted to create a space
-            where they will not be judged for their deficiencies. And together,
-            we birthed Mr. Mard—a brand that would help Indian men focus on
-            their hair, skin, and overall wellness.
+          <h2 className="text-[28px] mb-4">Why We Started</h2>
+          <p className="mb-4">
+            Grooming is more than skin deep—it impacts confidence, self-image,
+            and mental well-being.
           </p>
+          <p className="mb-4">
+            We saw friends and peers silently struggle with issues like hair
+            loss, unsure of what to do or who to trust. Milele Health was
+            created to change that.
+          </p>
+          <p>
+            We’re building a safe, supportive space for men to talk openly,
+            learn, and take charge of their wellness journey.
+          </p>
+        </section>
 
+        {/* Vision Section */}
+        <section className="mb-12">
+          <h2 className="text-[28px] mb-4">Our Vision</h2>
           <p className="mb-4">
-            It’s straightforward, really. But we know it’s easier said than
-            done. We know that men's wellness goes beyond their physical health.
-            Hair care or skin care are just two pieces of the puzzle. The real
-            success lies in instilling a sense of confidence that will impact
-            the mental and emotional well-being of men.
+            We want to normalize conversations around men’s health and grooming.
+            Our vision is a world where a cap is worn for style—not to hide hair
+            loss.
           </p>
-          <p className="mb-4">
-            Yes, appearance matters in today’s world. And feeling good about
-            your appearance will only make you confident about yourself.
+          <p>
+            By offering the right tools, knowledge, and support, we help turn
+            everyday grooming into an act of self-care.
           </p>
-          <p className="pb-16">
-            We want to foster a community where men can come together and invest
-            in their well-being. So that, one day, men will wear caps as a cover
-            against sunlight, and not against insecurity.
+        </section>
+
+        {/* Join Us */}
+        <section className="mb-12 pb-16">
+          <h2 className="text-[28px] mb-4">Join the Movement</h2>
+          <p>
+            Join us in changing the way men approach wellness. Step by step,
+            choice by choice, we’re in this together.
           </p>
         </section>
       </main>

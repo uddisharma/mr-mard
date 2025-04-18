@@ -180,9 +180,9 @@ export default function TermsAndConditions() {
             For queries, contact us at{" "}
             <a
               className="text-blue-600 underline"
-              href="mailto:contactus@mrmard.com"
+              href="mailto:info@milele.health"
             >
-              contactus@mrmard.com
+              info@milele.health
             </a>{" "}
             or +91 8861452659.
           </p>

@@ -27,7 +27,7 @@ const testimonials: Testimonial[] = [
     dayAgo: "26 days ago",
     content:
       " My hair loss was too much.. I thought i will becomefull bald. Doctor heard everything. He said i am not sleeping and that’s big problem. Told me to sleep early, eat some good food, and gave medicine also. consultation was good, no bakwas..",
-    date: "Mr. Mard user, 18/10/2024",
+    date: "Milele Health user, 18/10/2024",
     avatar: "/users/8.png",
   },
   {
@@ -38,7 +38,7 @@ const testimonials: Testimonial[] = [
     dayAgo: "6 days ago",
     content:
       "My hair was thinning fast... Papa ka genetic lagta hai! Doctor heard me out... said, ‘Genetics hai thodi... but stress mat add karo.’ Suggested relaxing, some supplements... no bs, just straight talk, and hair fall is started slowing down",
-    date: "Mr. Mard user, 01/12/2024",
+    date: "Milele Health user, 01/12/2024",
     avatar: "/users/9.png",
   },
   {
@@ -48,8 +48,8 @@ const testimonials: Testimonial[] = [
     star: 5,
     dayAgo: "10 days ago",
     content:
-      "Mr. Mard's treatment is very effective and I am seeing visible results in my hair growth. The personalized kit is a game changer.",
-    date: "Mr. Mard user, 01/12/2024",
+      "Milele Health's treatment is very effective and I am seeing visible results in my hair growth. The personalized kit is a game changer.",
+    date: "Milele Health user, 01/12/2024",
     avatar: "/users/3.png",
   },
   {
@@ -60,7 +60,7 @@ const testimonials: Testimonial[] = [
     dayAgo: "18 days ago",
     content:
       "Hair fall was giving me tension... i was more tensed and hence more hairfall. Doctor was so calm... listened to my rant and said that “you are taking too much stress... relax karo, sleep well”. Gave me ideas like less phone, more rest... super caring, and it’s working",
-    date: "Mr. Mard user, 01/12/2024",
+    date: "Milele Health user, 01/12/2024",
     avatar: "/users/4.png",
   },
 ];

@@ -73,7 +73,7 @@ export default function ContactPage() {
               </div>
               <div className="flex items-center gap-4">
                 <Mail className="h-5 w-5" />
-                <span>contactus@mrmard.com</span>
+                <span>info@milele.health</span>
               </div>
               <div className="flex items-center gap-4">
                 <MapPin className="h-9 w-9" />
