@@ -143,8 +143,8 @@ export default function PrivacyPolicy() {
           </ul>
           <p className="mt-2">
             To exercise your rights, please contact us at:{" "}
-            <a href="mailto:info@milele.health" className="text-blue-600">
-              info@milele.health
+            <a href="mailto:contactus@milele.health" className="text-blue-600">
+              contactus@milele.health
             </a>
           </p>
         </section>
@@ -204,8 +204,11 @@ export default function PrivacyPolicy() {
             </li>
             <li>
               <strong>Email:</strong>{" "}
-              <a href="mailto:info@milele.health" className="text-blue-600">
-                info@milele.health
+              <a
+                href="mailto:contactus@milele.health"
+                className="text-blue-600"
+              >
+                contactus@milele.health
               </a>
             </li>
             <li>

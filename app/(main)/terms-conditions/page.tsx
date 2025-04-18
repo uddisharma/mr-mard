@@ -9,13 +9,12 @@ export default function TermsAndConditions() {
         <section className="mb-8">
           <h3 className="text-[22px] mb-3">1. Introduction</h3>
           <p>
-            Welcome to Univora Wellness Private Limited ("Univora," "we," "us,"
-            "our"). These Terms and Conditions ("Terms") govern your use of our
-            website (www.milele.health) and the services we provide, including
-            but not limited to haircare consultation services ("Services"). By
-            accessing or using our Services, you agree to be bound by these
-            Terms. If you do not agree to these Terms, please do not use our
-            Services.
+            Welcome to S N Group Technologies ("S N," "we," "us," "our"). These
+            Terms and Conditions ("Terms") govern your use of our website
+            (www.milele.health) and the services we provide, including but not
+            limited to haircare consultation services ("Services"). By accessing
+            or using our Services, you agree to be bound by these Terms. If you
+            do not agree to these Terms, please do not use our Services.
           </p>
         </section>
 
@@ -110,9 +109,9 @@ export default function TermsAndConditions() {
         <section className="mb-8">
           <h3 className="text-[22px] mb-3">9. Intellectual Property</h3>
           <p>
-            All Platform content is owned by Univora or its licensors.
-            Unauthorized use, reproduction, or distribution is prohibited
-            without written permission.
+            All Platform content is owned by S N Group Technologies or its
+            licensors. Unauthorized use, reproduction, or distribution is
+            prohibited without written permission.
           </p>
         </section>
 
@@ -122,8 +121,9 @@ export default function TermsAndConditions() {
           </h3>
           <p>
             Services are provided "as is." Consultations do not replace
-            professional medical care. Univora is not responsible for damages,
-            losses, or consequences resulting from the use of the Services.
+            professional medical care. S N Group Technologies is not responsible
+            for damages, losses, or consequences resulting from the use of the
+            Services.
           </p>
         </section>
 
@@ -142,8 +142,8 @@ export default function TermsAndConditions() {
         <section className="mb-8">
           <h3 className="text-[22px] mb-3">12. Termination</h3>
           <p>
-            Univora reserves the right to suspend or terminate access for any
-            reason, especially in cases of Terms violations.
+            S N Group Technologies reserves the right to suspend or terminate
+            access for any reason, especially in cases of Terms violations.
           </p>
         </section>
 
@@ -169,8 +169,8 @@ export default function TermsAndConditions() {
         <section className="mb-8">
           <h3 className="text-[22px] mb-3">15. Changes to Terms</h3>
           <p>
-            Univora may update Terms periodically. Continued use implies
-            acceptance of any revised Terms.
+            S N Group Technologies may update Terms periodically. Continued use
+            implies acceptance of any revised Terms.
           </p>
         </section>
 
@@ -180,9 +180,9 @@ export default function TermsAndConditions() {
             For queries, contact us at{" "}
             <a
               className="text-blue-600 underline"
-              href="mailto:info@milele.health"
+              href="mailto:contactus@milele.health"
             >
-              info@milele.health
+              contactus@milele.health
             </a>{" "}
             or +91 8861452659.
           </p>
@@ -191,8 +191,9 @@ export default function TermsAndConditions() {
         <section className="mb-8">
           <h3 className="text-[22px] mb-3">17. Force Majeure</h3>
           <p>
-            Univora is not liable for delays or failures caused by events beyond
-            our control, including natural disasters, wars, or labor shortages.
+            S N Group Technologies is not liable for delays or failures caused
+            by events beyond our control, including natural disasters, wars, or
+            labor shortages.
           </p>
         </section>
 

@@ -24,8 +24,8 @@ const Footer = () => {
                   height={50}
                 />
               </Link>
-              <p className="text-sm text-white/80 w-20">
-                Your go to place for all wellness needs
+              <p className="text-sm text-white/80 w-32">
+                Your most trusted haircare solution brand
               </p>
             </div>
             <div className="m-auto">
@@ -108,7 +108,7 @@ const Footer = () => {
                 />
               </Link>
               <p className="text-sm text-white/80 ">
-                Your go to place for all wellness needs
+                Your most trusted haircare solution brand
               </p>
             </div>
             <div className="">

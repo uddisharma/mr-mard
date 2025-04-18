@@ -152,7 +152,9 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
       const data = await response.json();
       const now = new Date();
       const upcomingSlots = data.filter(
-        (item: any) => new Date(item.startTime) > now,
+        (item: any) =>
+          new Date(item.startTime) > now &&
+          item?.totalSeats > item?.bookedSeats,
       );
       setTimeSlots(upcomingSlots);
     } catch (error) {
