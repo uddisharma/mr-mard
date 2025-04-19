@@ -9,8 +9,8 @@ import NextTopLoader from "nextjs-toploader";
 import SubscriptionPopup from "@/components/others/leads/Popup";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { usePathname } from "next/navigation";
 import WhatsappIcon from "@/components/others/WhatsappIcon";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +36,7 @@ export default async function RootLayout({
           <div className="w-full bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2]">
             <Analytics />
             <SpeedInsights />
+            <GoogleAnalytics gaId="G-J16YPPS188" />
             <Toaster />
             <NextTopLoader
               color="#1A2F4E"
