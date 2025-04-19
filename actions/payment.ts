@@ -3,6 +3,10 @@
 import { orderSchema } from "@/schemas";
 import crypto from "crypto";
 import { z } from "zod";
+//@ts-ignore
+import { createOrder } from "@/lib/razorpay";
+import { generateQRCode } from "@/lib/qrcode";
+import { v4 as uuidv4 } from "uuid";
 
 type OrderResponse = {
   success: boolean;
@@ -79,5 +83,46 @@ export async function verifyPaymentSignature(
   } catch (error) {
     console.error("Signature verification error:", error);
     return false;
+  }
+}
+
+export async function createPaymentOrder(formData: FormData) {
+  try {
+    const amountStr = formData.get("amount") as string;
+    const amount = Number.parseFloat(amountStr);
+
+    if (isNaN(amount) || amount <= 0) {
+      return { success: false, error: "Invalid amount" };
+    }
+
+    const receipt = `receipt_${uuidv4()}`;
+
+    const orderResponse = await createOrder({
+      amount,
+      currency: "INR",
+      receipt,
+    });
+
+    if (!orderResponse.success) {
+      return orderResponse;
+    }
+
+    const paymentUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/payment/${orderResponse.orderId}`;
+
+    const qrCodeDataUrl = await generateQRCode(paymentUrl);
+
+    return {
+      success: true,
+      data: {
+        order: orderResponse.orderId,
+        qrCode: qrCodeDataUrl,
+        paymentUrl,
+      },
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error occurred",
+    };
   }
 }
