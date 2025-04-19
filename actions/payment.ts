@@ -3,8 +3,7 @@
 import { orderSchema } from "@/schemas";
 import crypto from "crypto";
 import { z } from "zod";
-//@ts-ignore
-import { createOrder } from "@/lib/razorpay";
+import { createOrder as createRazorpayOrder } from "@/lib/razorpay";
 import { generateQRCode } from "@/lib/qrcode";
 import { v4 as uuidv4 } from "uuid";
 
@@ -97,24 +96,20 @@ export async function createPaymentOrder(formData: FormData) {
 
     const receipt = `receipt_${uuidv4()}`;
 
-    const orderResponse = await createOrder({
-      amount,
-      currency: "INR",
-      receipt,
-    });
+    const orderResponse = await createRazorpayOrder(amount, "INR", receipt);
 
     if (!orderResponse.success) {
       return orderResponse;
     }
 
-    const paymentUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/payment/${orderResponse.orderId}`;
+    const paymentUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/payment/${orderResponse.data?.id}`;
 
     const qrCodeDataUrl = await generateQRCode(paymentUrl);
 
     return {
       success: true,
       data: {
-        order: orderResponse.orderId,
+        order: orderResponse.data?.id,
         qrCode: qrCodeDataUrl,
         paymentUrl,
       },

@@ -41,13 +41,17 @@ export function CreatePaymentForm() {
       }
 
       if ("data" in response) {
-        setPaymentData({
-          ...response.data,
-          order:
-            response.data.order && typeof response.data.order === "string"
-              ? JSON.parse(response.data.order)
-              : response.data.order,
-        });
+        if (response.data && "order" in response.data) {
+          setPaymentData({
+            ...response.data,
+            order:
+              response.data.order && typeof response.data.order === "string"
+                ? JSON.parse(response.data.order)
+                : response.data.order,
+          });
+        } else {
+          setError("Invalid response data");
+        }
       } else {
         setError(response.error || "Failed to create payment order");
       }
