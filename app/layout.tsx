@@ -36,7 +36,8 @@ export default async function RootLayout({
           <div className="w-full bg-white dark:bg-dot-black/[0.2] bg-dot-white/[0.2]">
             <Analytics />
             <SpeedInsights />
-            <GoogleAnalytics gaId="G-J16YPPS188" />
+            {/* J16YPPS188 Mr mard*/}
+            <GoogleAnalytics gaId="G-D4C7T6R67B" />
             <Toaster />
             <NextTopLoader
               color="#1A2F4E"
