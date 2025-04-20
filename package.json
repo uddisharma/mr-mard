@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port $PORT",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start --port $PORT",
+    "start": "next start",
     "lint": "npx prettier . --write",
     "postinstall": "prisma generate",
     "prepare": "husky"
