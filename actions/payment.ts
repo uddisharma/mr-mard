@@ -22,7 +22,7 @@ export async function createOrder(
 
     const url = "https://api.razorpay.com/v1/orders";
 
-    const keyId = process.env.RAZORPAY_KEY_ID;
+    const keyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
     const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
     if (!keyId || !keySecret) {
