@@ -12,7 +12,7 @@ jobs:
       NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL_QA }}
       RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
       NEXT_PUBLIC_RAZORPAY_KEY_ID: ${{ secrets.NEXT_PUBLIC_RAZORPAY_KEY_ID_QA }}
-      RAZORPAY_KEY_SECRET: ${{ secrets.RAZORPAY_KEY_SECRET }}
+      RAZORPAY_KEY_SECRET: ${{ secrets.RAZORPAY_KEY_SECRET_QA }}
 
     strategy:
       matrix:
