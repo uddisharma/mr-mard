@@ -316,7 +316,7 @@ export default function FaceDetection() {
                 "Capture Image"
               )}
             </Button>
-            <Button onClick={switchCamera}>Switch Camera</Button>
+            {/* <Button onClick={switchCamera}>Switch Camera</Button> */}
           </div>
         </div>
       )}
