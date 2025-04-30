@@ -26,7 +26,8 @@ export default function PhoneVerification({
     const fetchData = async () => {
       if (phone && id) {
         sessionStorage.setItem("userId", id);
-        await UpsertUserProgress(id);
+        sessionStorage.setItem("phone", phone);
+        await UpsertUserProgress(id, phone);
         router.push("/appointment-booking/date");
       }
     };
@@ -51,6 +52,7 @@ export default function PhoneVerification({
       startTransition(async () => {
         const response = await registerWithOTP({ phone: phoneNumber });
         if (response.success) {
+          sessionStorage.setItem("phone", phoneNumber);
           toast.success(response.message);
           setIsOtpSent(true);
           setResendTimer(30);
