@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {
   try {
-    const { userId, lastStep, selectedDate, selectedTimeSlotId } =
+    const { userId, lastStep, selectedDate, selectedTimeSlotId, phone } =
       await request.json();
 
     if (!userId || !lastStep) {
@@ -45,6 +45,7 @@ export async function PUT(request: NextRequest) {
         data: {
           userId,
           lastStep,
+          phoneNumber: phone ?? "",
           selectedDate: selectedDate ? new Date(selectedDate) : undefined,
           selectedTimeSlotId,
         },

@@ -250,6 +250,7 @@ model UserProgress {
   id                 String      @id @default(cuid())
   user               User        @relation(fields: [userId], references: [id])
   userId             String
+  phoneNumber        String
   lastStep           BookingStep
   selectedDate       DateTime?
   selectedTimeSlotId String?
@@ -257,7 +258,21 @@ model UserProgress {
   createdAt          DateTime    @default(now())
   processedAt        DateTime?
 
-  @@index([userId]) 
+  @@index([userId])
+}
+
+model UserwithScore {
+  id             String   @id @default(uuid())
+  Score          Int
+  updatedAt      DateTime @updatedAt
+  scheduled_call DateTime
+  call_attempts  Int
+  call_note      String?
+  lastStep       String
+  Status         String
+
+  @@map("UserwithScore")
+  @@ignore
 }
 
 model ContactSubmission {

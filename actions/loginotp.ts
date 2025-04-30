@@ -143,7 +143,7 @@ export const OtpVerification = async (values: LoginWithPhoneSchemaData) => {
       };
     }
 
-    await UpsertUserProgress(user?.id);
+    await UpsertUserProgress(user?.id, String(user?.phone));
 
     return { success: true, message: "OTP verified!", id: user.id };
   } catch (error) {
@@ -151,7 +151,7 @@ export const OtpVerification = async (values: LoginWithPhoneSchemaData) => {
   }
 };
 
-export const UpsertUserProgress = async (id: string) => {
+export const UpsertUserProgress = async (id: string, phone?: string) => {
   try {
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
@@ -162,6 +162,7 @@ export const UpsertUserProgress = async (id: string) => {
     const existingProgress = await db.userProgress.findFirst({
       where: {
         userId: id,
+        phoneNumber: phone,
         createdAt: {
           gte: startOfDay,
           lte: endOfDay,
@@ -182,6 +183,7 @@ export const UpsertUserProgress = async (id: string) => {
       userProgress = await db.userProgress.create({
         data: {
           userId: id,
+          phoneNumber: phone ?? "",
           lastStep: "DATE_SELECTION",
         },
       });

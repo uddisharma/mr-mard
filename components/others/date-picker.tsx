@@ -69,7 +69,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
     }
 
     setIsProcessing(true);
-
+    const phone = sessionStorage.getItem("phone");
     try {
       await fetch("/api/user-progress", {
         method: "PUT",
@@ -81,6 +81,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
           lastStep: "PAYMENT",
           selectedDate: selectedDate,
           selectedTimeSlotId: selectedTimeSlot,
+          phone,
         }),
       });
       sessionStorage.setItem("selectedDate", selectedDate || "");
