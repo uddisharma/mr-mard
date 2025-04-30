@@ -315,7 +315,7 @@ export default async function BlogPage({ params }: PageProps) {
                   <p className="text-[22px] text-black mb-10">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   </p>
-                  <Link href="/analyze">
+                  <Link href="/appointment-booking">
                     <Button className="px-6 py-2  bg-btnblue text-white hover:bg-btnblue/80">
                       Get Started
                     </Button>

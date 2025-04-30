@@ -102,7 +102,7 @@ export default function VerificationPage() {
     if (status?.signupSuccess && status?.verifySuccess) {
       setTimeout(() => {
         router.push(
-          `${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")}` : "/analyze"}`,
+          `${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")}` : "/appointment-booking"}`,
         );
       }, 2000);
     }

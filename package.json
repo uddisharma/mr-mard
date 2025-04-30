@@ -57,6 +57,7 @@
     "date-fns-tz": "^3.2.0",
     "dayjs": "^1.11.13",
     "export-to-csv": "^1.4.0",
+    "face-api.js": "^0.22.2",
     "framer-motion": "^11.18.0",
     "highlight.js": "^11.11.1",
     "lowlight": "^3.3.0",
