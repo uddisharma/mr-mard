@@ -58,7 +58,7 @@ export const isPublicRoute = (route: string): boolean => {
   }
   // Check for dynamic routes
   if (
-    route.startsWith("/blog/") ||
+    route.startsWith("/blog") ||
     route.startsWith("/appointment-booking/") ||
     route.startsWith("/api/")
   ) {
