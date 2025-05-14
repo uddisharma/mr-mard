@@ -165,7 +165,7 @@ export default function FaceDetection() {
     setFacingMode((prevMode) => (prevMode === "user" ? "environment" : "user"));
   };
 
-  const captureImage = () => {
+  const captureImage = async () => {
     if (!videoRef.current || !overlayRef.current || !faceDetected) return;
     setProcessing(true);
 
@@ -209,8 +209,31 @@ export default function FaceDetection() {
       );
 
       const imageData = canvas.toDataURL("image/png");
+      console.log(imageData);
       setCapturedImage(imageData);
       setMessage("Image captured, cropped, and mirrored successfully!");
+
+      const blob = await fetch(imageData).then((res) => res.blob());
+
+      const formData = new FormData();
+      formData.append("image", blob, "captured-image.png");
+
+      const response = await fetch("/api/face-detect", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("API response:", result);
+        setMessage("Image validated successfully!");
+      } else {
+        console.error("API error:", response.statusText);
+        setMessage("Error validating image. Please try again.");
+      }
     } catch (error) {
       console.error("Error capturing image:", error);
       setMessage("Error capturing image. Please try again.");
@@ -220,18 +243,19 @@ export default function FaceDetection() {
   };
 
   const resetCapture = () => {
-    setCapturedImage(null);
-    setFacingMode("user");
-    setMessage("Please position your face within the oval");
+    return window.location.reload();
+    // setCapturedImage(null);
+    // setFacingMode("user");
+    // setMessage("Please position your face within the oval");
 
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-      setStream(null);
-    }
+    // if (stream) {
+    //   stream.getTracks().forEach((track) => track.stop());
+    //   setStream(null);
+    // }
 
-    setTimeout(() => {
-      startCamera();
-    }, 100);
+    // setTimeout(() => {
+    //   startCamera();
+    // }, 100);
   };
 
   return (
