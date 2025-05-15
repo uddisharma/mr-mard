@@ -30,7 +30,6 @@ export default function FaceDetection() {
           faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
         ]);
         setModelsLoaded(true);
-        console.log("Models loaded successfully");
       } catch (error) {
         console.error("Error loading models:", error);
       }
@@ -209,7 +208,22 @@ export default function FaceDetection() {
         return setIssues(data?.issues);
       }
 
-      console.log("Response from API:", data);
+      const response1 = await fetch(
+        "https://api.milele.health/validate-image",
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "accept-language": "en-US,en;q=0.9",
+          },
+          body: formData,
+        },
+      );
+
+      const data1 = await response1.json();
+
+      console.log("Response from API:", data1);
+      setMessage(JSON.stringify(data1));
     } catch (error) {
       console.error("Error capturing image:", error);
       setMessage("Error capturing image. Please try again.");
@@ -242,23 +256,43 @@ export default function FaceDetection() {
           <p className="text-gray-600">Loading face detection models...</p>
         </div>
       ) : capturedImage ? (
-        <div className="flex flex-col items-center">
-          <div className="relative h-[480px] w-[640px] bg-black rounded-lg overflow-hidden">
-            <img
-              src={capturedImage || "/placeholder.svg"}
-              alt="Captured face"
-              className="h-full w-full object-contain"
-            />
+        <>
+          <div className="flex flex-col items-center">
+            <div className="relative h-[480px] w-[640px] bg-black rounded-lg overflow-hidden">
+              <img
+                src={capturedImage || "/placeholder.svg"}
+                alt="Captured face"
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="flex gap-4 mt-4">
+              <Button onClick={resetCapture} variant="outline">
+                Try Again
+              </Button>
+              <Button onClick={() => alert("Processing image...")}>
+                Process Image
+              </Button>
+            </div>
           </div>
-          <div className="flex gap-4 mt-4">
-            <Button onClick={resetCapture} variant="outline">
-              Try Again
-            </Button>
-            <Button onClick={() => alert("Processing image...")}>
-              Process Image
-            </Button>
-          </div>
-        </div>
+          {message && (
+            <Alert className="mt-4" variant="default">
+              <AlertDescription className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4" />
+                {message}
+              </AlertDescription>
+            </Alert>
+          )}
+          {issues.length > 0 && (
+            <Alert className="mt-4" variant="destructive">
+              <AlertDescription className="flex items-center gap-2">
+                <XCircle className="h-4 w-4" />
+                {issues.map((issue, index) => (
+                  <p key={index}>{issue}</p>
+                ))}
+              </AlertDescription>
+            </Alert>
+          )}
+        </>
       ) : (
         <div className="flex flex-col items-center">
           <div className="relative h-[480px] w-[640px] bg-black rounded-lg overflow-hidden">
@@ -285,32 +319,22 @@ export default function FaceDetection() {
               }}
             />
           </div>
-          {issues?.length > 0 ? (
-            <Alert className="mt-4" variant="destructive">
-              <AlertDescription className="flex items-center gap-2">
+
+          <Alert
+            className="mt-4"
+            variant={faceDetected ? "default" : "destructive"}
+          >
+            <AlertDescription className="flex items-center gap-2">
+              {faceDetected === null ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : faceDetected ? (
+                <CheckCircle className="h-4 w-4" />
+              ) : (
                 <XCircle className="h-4 w-4" />
-                {issues.map((issue, index) => (
-                  <p key={index}>{issue}</p>
-                ))}
-              </AlertDescription>
-            </Alert>
-          ) : (
-            <Alert
-              className="mt-4"
-              variant={faceDetected ? "default" : "destructive"}
-            >
-              <AlertDescription className="flex items-center gap-2">
-                {faceDetected === null ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : faceDetected ? (
-                  <CheckCircle className="h-4 w-4" />
-                ) : (
-                  <XCircle className="h-4 w-4" />
-                )}
-                {message}
-              </AlertDescription>
-            </Alert>
-          )}
+              )}
+              {message}
+            </AlertDescription>
+          </Alert>
 
           <div className="flex gap-4 mt-4">
             <Button
