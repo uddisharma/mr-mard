@@ -152,11 +152,13 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
 
       const data = await response.json();
       const now = new Date();
-      const upcomingSlots = data.filter(
-        (item: any) =>
-          new Date(item.startTime) > now &&
-          item?.totalSeats > item?.bookedSeats,
-      );
+      // filter upcoming slots that are 6 hours ahead of the current time
+      const upcomingSlots = data.filter((slot: TimeSlot) => {
+        const startTime = new Date(slot.startTime);
+        const sixHoursFromNow = new Date(now.getTime() + 6 * 60 * 60 * 1000);
+        return startTime > sixHoursFromNow;
+      });
+
       setTimeSlots(upcomingSlots);
     } catch (error) {
       toast.error("Failed to load available time slots");
