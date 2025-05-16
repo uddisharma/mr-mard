@@ -14,11 +14,13 @@ export default function FaceDetection() {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [faceDetected, setFaceDetected] = useState<boolean | null>(null);
   const [processing, setProcessing] = useState(false);
+  const [issues, setIssues] = useState<string[]>([]);
   const [message, setMessage] = useState(
     "Please position your face within the oval",
   );
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
+  const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     const loadModels = async () => {
@@ -29,7 +31,6 @@ export default function FaceDetection() {
           faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
         ]);
         setModelsLoaded(true);
-        console.log("Models loaded successfully");
       } catch (error) {
         console.error("Error loading models:", error);
       }
@@ -165,52 +166,62 @@ export default function FaceDetection() {
     setFacingMode((prevMode) => (prevMode === "user" ? "environment" : "user"));
   };
 
-  const captureImage = () => {
-    if (!videoRef.current || !overlayRef.current || !faceDetected) return;
+  const captureImage = async () => {
+    if (!videoRef.current) return;
     setProcessing(true);
 
     try {
       const video = videoRef.current;
-      const overlay = overlayRef.current;
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
-      const overlayRect = overlay.getBoundingClientRect();
-      const videoRect = video.getBoundingClientRect();
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
-      const scaleX = video.videoWidth / videoRect.width;
-      const scaleY = video.videoHeight / videoRect.height;
-
-      const x = (overlayRect.left - videoRect.left) * scaleX;
-      const y = (overlayRect.top - videoRect.top) * scaleY;
-      const width = overlayRect.width * scaleX;
-      const height = overlayRect.height * scaleY;
-
-      const cropAmount = height * 0.15;
-      const croppedHeight = height - 2 * cropAmount;
-
-      canvas.width = width;
-      canvas.height = croppedHeight;
-
-      ctx.translate(width, 0);
+      ctx.translate(canvas.width, 0);
       ctx.scale(-1, 1);
-
-      ctx.drawImage(
-        video,
-        x,
-        y + cropAmount,
-        width,
-        croppedHeight,
-        0,
-        0,
-        width,
-        croppedHeight,
-      );
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
       const imageData = canvas.toDataURL("image/png");
       setCapturedImage(imageData);
-      setMessage("Image captured, cropped, and mirrored successfully!");
+
+      const blob = await fetch(imageData).then((res) => res.blob());
+      const file = new File([blob], "captured-image.png", {
+        type: "image/png",
+      });
+
+      const formData = new FormData();
+      formData.append("image", file, "captured-image.png");
+      formData.append("file", file);
+
+      const response = await fetch("https://api.milele.health/validate-image", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "accept-language": "en-US,en;q=0.9",
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+      if (!data?.valid) {
+        return setIssues(data?.issues);
+      }
+
+      const response1 = await fetch("https://api.milele.health/analyze-hair/", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "accept-language": "en-US,en;q=0.9",
+        },
+        body: formData,
+      });
+
+      const data1 = await response1.json();
+
+      setData(data1);
+      console.log("Response from API:", data1);
     } catch (error) {
       console.error("Error capturing image:", error);
       setMessage("Error capturing image. Please try again.");
@@ -220,18 +231,19 @@ export default function FaceDetection() {
   };
 
   const resetCapture = () => {
-    setCapturedImage(null);
-    setFacingMode("user");
-    setMessage("Please position your face within the oval");
+    return window.location.reload();
+    // setCapturedImage(null);
+    // setFacingMode("user");
+    // setMessage("Please position your face within the oval");
 
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-      setStream(null);
-    }
+    // if (stream) {
+    //   stream.getTracks().forEach((track) => track.stop());
+    //   setStream(null);
+    // }
 
-    setTimeout(() => {
-      startCamera();
-    }, 100);
+    // setTimeout(() => {
+    //   startCamera();
+    // }, 100);
   };
 
   return (
@@ -242,23 +254,47 @@ export default function FaceDetection() {
           <p className="text-gray-600">Loading face detection models...</p>
         </div>
       ) : capturedImage ? (
-        <div className="flex flex-col items-center">
-          <div className="relative h-[480px] w-[640px] bg-black rounded-lg overflow-hidden">
-            <img
-              src={capturedImage || "/placeholder.svg"}
-              alt="Captured face"
-              className="h-full w-full object-contain"
-            />
+        <>
+          <div className="flex flex-col items-center">
+            <div className="relative h-[480px] w-[640px] bg-black rounded-lg overflow-hidden">
+              <img
+                src={capturedImage || "/placeholder.svg"}
+                alt="Captured face"
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="flex gap-4 mt-4">
+              <Button onClick={resetCapture} variant="outline">
+                Try Again
+              </Button>
+            </div>
           </div>
-          <div className="flex gap-4 mt-4">
-            <Button onClick={resetCapture} variant="outline">
-              Try Again
-            </Button>
-            <Button onClick={() => alert("Processing image...")}>
-              Process Image
-            </Button>
-          </div>
-        </div>
+          {issues.length > 0 ? (
+            <Alert className="mt-4" variant="destructive">
+              <AlertDescription className="flex items-center gap-2">
+                <XCircle className="h-4 w-4" />
+                {issues.map((issue, index) => (
+                  <p key={index}>{issue}</p>
+                ))}
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <>
+              <Alert className="mt-4" variant="default">
+                <AlertDescription className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4" />
+                  {message}
+                </AlertDescription>
+              </Alert>
+              <div className="mt-4">
+                <h2 className="text-lg font-semibold">Analysis Result:</h2>
+                <pre className="whitespace-pre-wrap">
+                  {JSON.stringify(data, null, 2)}
+                </pre>
+              </div>
+            </>
+          )}
+        </>
       ) : (
         <div className="flex flex-col items-center">
           <div className="relative h-[480px] w-[640px] bg-black rounded-lg overflow-hidden">
