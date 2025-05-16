@@ -35,12 +35,13 @@ model User {
   timeZone                String?
   pinCode                 Int?
   source                  String?
+  emails                  Json[]
   accounts                Account[]
   reports                 Report[]
-  emails                  Json[]
   appointments            Appointment[]
   userProgress            UserProgress[]
   blogs                   Blog[]
+  analysis                Analysis[]
   createdAt               DateTime               @default(now())
   updatedAt               DateTime               @updatedAt
 
@@ -152,11 +153,27 @@ model Report {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
+  Analysis  Analysis[]
+
+  @@index([userId])
+  @@map("reports")
+}
+
+model Analysis {
+  id       String  @id @default(cuid())
+  userId   String
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  analysis Json
+  report   Report? @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId Int?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
   @@index([userId])
-  @@map("reports")
+  @@map("analysis")
 }
 
 model Question {
@@ -217,6 +234,7 @@ model Appointment {
   status      AppointmentStatus @default(CONFIRMED)
   user        User              @relation(fields: [userId], references: [id])
   timeSlot    TimeSlot          @relation(fields: [timeSlotId], references: [id])
+  funnel      Funnel?           @default(BOOK_APPOINTMENT)
   transaction Transaction?
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
@@ -358,4 +376,9 @@ enum BookingStep {
   DATE_SELECTION
   TIME_SELECTION
   PAYMENT
+}
+
+enum Funnel {
+  HAIR_ANALYSIS
+  BOOK_APPOINTMENT
 }

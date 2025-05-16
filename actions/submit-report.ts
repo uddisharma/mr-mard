@@ -8,35 +8,22 @@ import { redirect } from "next/navigation";
 import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
 
-export async function submitReport(reportData: ReportFormData) {
+export async function submitReport(
+  reportData: ReportFormData,
+  startTimeStr: string,
+) {
   const session = await currentUser();
 
   if (!session) {
     return redirect("/auth");
   }
 
-  // const hasPermission = await checkPermission(
-  //   session?.role,
-  //   Resource.REPORTS,
-  //   "create",
-  // );
-
-  // if (!hasPermission) {
-  //   return {
-  //     success: false,
-  //     message: "You don't have permission to submit a report",
-  //   };
-  // }
-
   const validatedData = reportSchema.parse(reportData);
-
   let { questions } = validatedData;
-
-  const startTime = new Date();
-  const endTime = new Date(startTime.getTime() + 1 * 60 * 1000);
-  const createdAt = new Date();
-  createdAt.setHours(createdAt.getHours() + 5);
-  createdAt.setMinutes(createdAt.getMinutes() + 30);
+  const startTime = startTimeStr
+    ? new Date(JSON.parse(startTimeStr))
+    : new Date();
+  const endTime = new Date();
 
   try {
     await db.report.create({

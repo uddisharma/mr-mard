@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import AnalyticsIllustration from "@/components/others/analytics-illustrations";
 import ProgressDots from "@/components/others/progress-dots";
 import { Button } from "@/components/ui/button";
 import { Input } from "../ui/input";
 import { submitReport } from "@/actions/submit-report";
 import { toast } from "sonner";
+import FaceDetection from "./face-detection";
 
 interface Option {
   id: number;
@@ -32,6 +33,11 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
   );
   const [errors, setErrors] = useState<string>("");
   const [isPending, startTransition] = useTransition();
+  const [step, setStep] = useState<number>(0);
+
+  useEffect(() => {
+    localStorage.setItem("startTime", JSON.stringify(new Date().toISOString()));
+  }, []);
 
   const handleOptionChange = (
     questionId: number,
@@ -75,11 +81,15 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
       })),
     };
     startTransition(async () => {
-      const res = await submitReport(questions);
+      const startTimeStr =
+        localStorage.getItem("startTime") ?? new Date().toISOString();
+      const res = await submitReport(questions, startTimeStr);
       if (res?.success) {
-        toast.success(res.message);
+        // toast.success(res.message);
         setResponses({});
         setCurrentStep(0);
+        setStep(1);
+        localStorage.removeItem("startTime");
       } else {
         toast.error(res.message);
       }
@@ -95,124 +105,132 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
           <div>
             <AnalyticsIllustration />
           </div>
-          <div>
-            <ProgressDots total={data.length} current={currentStep} />
-            <div className="space-y-10 mt-16">
-              <div className="space-y-6">
-                <h1 className="text-2xl font-bold text-gray-900">
-                  {currentQuestion.text}
-                </h1>
-                {/* <p className="mt-4 text-btnblue font-normal">
+          {step == 0 ? (
+            <div>
+              <ProgressDots total={data.length} current={currentStep} />
+              <div className="space-y-10 mt-16">
+                <div className="space-y-6">
+                  <h1 className="text-2xl font-bold text-gray-900">
+                    {currentQuestion.text}
+                  </h1>
+                  {/* <p className="mt-4 text-btnblue font-normal">
                   To get started, let us know your gender to provide insights
                   tailored to your unique hair profile.
                 </p> */}
-              </div>
+                </div>
 
-              <div>
-                <div className="grid grid-cols-4 sm:flex-row gap-4">
-                  {currentQuestion.questionType === "SINGLE_SELECT" &&
-                    currentQuestion.options.map((option) => (
-                      <Button
-                        key={option.id}
-                        variant={
-                          responses[currentQuestion.id] === option.text
-                            ? "default"
-                            : "outline"
-                        }
-                        className={`flex-1 border-[1px] border-black text-black bg-white ${
-                          responses[currentQuestion.id] === option.text
-                            ? "bg-btnblue text-white"
-                            : ""
-                        }`}
-                        onClick={() =>
+                <div>
+                  <div
+                    className={`grid ${currentQuestion.questionType == "TEXT" ? "grid-cols-1" : "grid-cols-4"} sm:flex-row gap-4`}
+                  >
+                    {currentQuestion.questionType === "SINGLE_SELECT" &&
+                      currentQuestion.options.map((option) => (
+                        <Button
+                          key={option.id}
+                          variant={
+                            responses[currentQuestion.id] === option.text
+                              ? "default"
+                              : "outline"
+                          }
+                          className={`flex-1 border-[1px] border-black text-black bg-white ${
+                            responses[currentQuestion.id] === option.text
+                              ? "bg-btnblue text-white"
+                              : ""
+                          }`}
+                          onClick={() =>
+                            handleOptionChange(
+                              currentQuestion.id,
+                              option.text,
+                              false,
+                            )
+                          }
+                        >
+                          {option.text}
+                        </Button>
+                      ))}
+                    {currentQuestion.questionType === "MULTIPLE_SELECT" &&
+                      currentQuestion.options.map((option) => (
+                        <Button
+                          key={option.id}
+                          variant={
+                            (
+                              responses[currentQuestion.id] as string[]
+                            )?.includes(option.text)
+                              ? "default"
+                              : "outline"
+                          }
+                          className={`flex-1 border-[1px] border-black text-black bg-white ${
+                            (
+                              responses[currentQuestion.id] as string[]
+                            )?.includes(option.text)
+                              ? "bg-btnblue text-white"
+                              : ""
+                          }`}
+                          onClick={() =>
+                            handleOptionChange(
+                              currentQuestion.id,
+                              option.text,
+                              true,
+                            )
+                          }
+                        >
+                          {option.text}
+                        </Button>
+                      ))}
+                    {currentQuestion.questionType === "TEXT" && (
+                      <Input
+                        type="text"
+                        className="border-[1px] border-black text-black bg-white"
+                        placeholder="Enter your answer"
+                        value={responses[currentQuestion.id] as string}
+                        onChange={(e) =>
                           handleOptionChange(
                             currentQuestion.id,
-                            option.text,
+                            e.target.value,
                             false,
                           )
                         }
-                      >
-                        {option.text}
-                      </Button>
-                    ))}
-                  {currentQuestion.questionType === "MULTIPLE_SELECT" &&
-                    currentQuestion.options.map((option) => (
-                      <Button
-                        key={option.id}
-                        variant={
-                          (responses[currentQuestion.id] as string[])?.includes(
-                            option.text,
-                          )
-                            ? "default"
-                            : "outline"
-                        }
-                        className={`flex-1 border-[1px] border-black text-black bg-white ${
-                          (responses[currentQuestion.id] as string[])?.includes(
-                            option.text,
-                          )
-                            ? "bg-btnblue text-white"
-                            : ""
-                        }`}
-                        onClick={() =>
-                          handleOptionChange(
-                            currentQuestion.id,
-                            option.text,
-                            true,
-                          )
-                        }
-                      >
-                        {option.text}
-                      </Button>
-                    ))}
-                  {currentQuestion.questionType === "TEXT" && (
-                    <Input
-                      type="text"
-                      className="border-[1px] border-black text-black bg-white"
-                      placeholder="Enter your answer"
-                      value={responses[currentQuestion.id] as string}
-                      onChange={(e) =>
-                        handleOptionChange(
-                          currentQuestion.id,
-                          e.target.value,
-                          false,
-                        )
-                      }
-                    />
+                      />
+                    )}
+                  </div>
+                  {errors && (
+                    <p className="text-red-500 text-xs mt-3">{errors}</p>
                   )}
                 </div>
-                {errors && (
-                  <p className="text-red-500 text-xs mt-3">{errors}</p>
+              </div>
+              <div className="flex justify-end gap-5 mt-10">
+                {currentStep > 0 && (
+                  <Button
+                    variant="outline"
+                    onClick={handlePrevious}
+                    className="px-14"
+                  >
+                    Previous
+                  </Button>
+                )}
+                {currentStep < data.length - 1 ? (
+                  <Button
+                    onClick={handleNext}
+                    className="bg-btnblue text-white px-14"
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <Button
+                    disabled={isPending}
+                    onClick={handleSubmit}
+                    className="bg-btnblue text-white px-14"
+                  >
+                    {isPending ? "Loading..." : "Next"}
+                  </Button>
                 )}
               </div>
             </div>
-            <div className="flex justify-end gap-5 mt-10">
-              {currentStep > 0 && (
-                <Button
-                  variant="outline"
-                  onClick={handlePrevious}
-                  className="px-14"
-                >
-                  Previous
-                </Button>
-              )}
-              {currentStep < data.length - 1 ? (
-                <Button
-                  onClick={handleNext}
-                  className="bg-btnblue text-white px-14"
-                >
-                  Next
-                </Button>
-              ) : (
-                <Button
-                  disabled={isPending}
-                  onClick={handleSubmit}
-                  className="bg-btnblue text-white px-14"
-                >
-                  {isPending ? "Submitting..." : "Submit"}
-                </Button>
-              )}
+          ) : (
+            <div>
+              <FaceDetection />
             </div>
-          </div>
+          )}
         </div>
       </main>
     </div>

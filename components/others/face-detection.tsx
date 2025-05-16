@@ -249,14 +249,14 @@ export default function FaceDetection() {
   return (
     <div className="flex flex-col items-center">
       {!modelsLoaded ? (
-        <div className="flex flex-col items-center justify-center h-[480px] w-[640px] bg-gray-100 rounded-lg">
+        <div className="flex flex-col items-center justify-center h-[480px] w-full bg-gray-100 rounded-lg">
           <Loader2 className="h-12 w-12 animate-spin text-gray-500 mb-4" />
           <p className="text-gray-600">Loading face detection models...</p>
         </div>
       ) : capturedImage ? (
         <>
           <div className="flex flex-col items-center">
-            <div className="relative h-[480px] w-[640px] bg-black rounded-lg overflow-hidden">
+            <div className="relative h-[480px] w-full bg-black rounded-lg overflow-hidden">
               <img
                 src={capturedImage || "/placeholder.svg"}
                 alt="Captured face"
@@ -297,7 +297,7 @@ export default function FaceDetection() {
         </>
       ) : (
         <div className="flex flex-col items-center">
-          <div className="relative h-[480px] w-[640px] bg-black rounded-lg overflow-hidden">
+          <div className="relative h-[480px] w-full bg-black rounded-lg overflow-hidden">
             <video
               ref={videoRef}
               autoPlay
@@ -323,7 +323,7 @@ export default function FaceDetection() {
           </div>
 
           <Alert
-            className="mt-4"
+            className="mt-4 bg-white"
             variant={faceDetected ? "default" : "destructive"}
           >
             <AlertDescription className="flex items-center gap-2">
