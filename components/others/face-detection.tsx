@@ -20,6 +20,7 @@ export default function FaceDetection() {
   );
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
+  const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     const loadModels = async () => {
@@ -208,22 +209,19 @@ export default function FaceDetection() {
         return setIssues(data?.issues);
       }
 
-      const response1 = await fetch(
-        "https://api.milele.health/validate-image",
-        {
-          method: "POST",
-          headers: {
-            accept: "application/json",
-            "accept-language": "en-US,en;q=0.9",
-          },
-          body: formData,
+      const response1 = await fetch("https://api.milele.health/analyze-hair/", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "accept-language": "en-US,en;q=0.9",
         },
-      );
+        body: formData,
+      });
 
       const data1 = await response1.json();
 
+      setData(data1);
       console.log("Response from API:", data1);
-      setMessage(JSON.stringify(data1));
     } catch (error) {
       console.error("Error capturing image:", error);
       setMessage("Error capturing image. Please try again.");
@@ -269,20 +267,9 @@ export default function FaceDetection() {
               <Button onClick={resetCapture} variant="outline">
                 Try Again
               </Button>
-              <Button onClick={() => alert("Processing image...")}>
-                Process Image
-              </Button>
             </div>
           </div>
-          {message && (
-            <Alert className="mt-4" variant="default">
-              <AlertDescription className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4" />
-                {message}
-              </AlertDescription>
-            </Alert>
-          )}
-          {issues.length > 0 && (
+          {issues.length > 0 ? (
             <Alert className="mt-4" variant="destructive">
               <AlertDescription className="flex items-center gap-2">
                 <XCircle className="h-4 w-4" />
@@ -291,6 +278,21 @@ export default function FaceDetection() {
                 ))}
               </AlertDescription>
             </Alert>
+          ) : (
+            <>
+              <Alert className="mt-4" variant="default">
+                <AlertDescription className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4" />
+                  {message}
+                </AlertDescription>
+              </Alert>
+              <div className="mt-4">
+                <h2 className="text-lg font-semibold">Analysis Result:</h2>
+                <pre className="whitespace-pre-wrap">
+                  {JSON.stringify(data, null, 2)}
+                </pre>
+              </div>
+            </>
           )}
         </>
       ) : (
