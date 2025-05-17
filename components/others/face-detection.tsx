@@ -233,7 +233,7 @@ export default function FaceDetection() {
         localStorage.removeItem("reportId");
         localStorage.removeItem("startTime");
         const { reportId } = JSON.parse(reportData);
-        router.push(`/analyze/${reportId}`);
+        router.push(`/profile/my-reports/${reportId}`);
       }
     } catch (error) {
       console.error("Error capturing image:", error);

@@ -18,6 +18,7 @@ const Logout = ({
   hidden?: boolean;
 }) => {
   const pathName = usePathname();
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -34,7 +35,7 @@ const Logout = ({
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-56 p-4 mt-3 mr-5 md:mt-0 md:mr-6 rounded-lg shadow-md border border-gray-200 bg-white">
-        <div className="flex items-center gap-4">
+        {/* <div className="flex items-center gap-4">
           <Image
             src={image || "/user.png"}
             alt="Profile"
@@ -43,13 +44,13 @@ const Logout = ({
             className="rounded-full w-[50px] h-[50px]"
           />
           <div>
-            <p className="font-bold text-md text-gray-900">{name ?? ""}</p>
+            <p className="font-bold text-md text-gray-900">{name || "Guest"}</p>
             <p className="text-sm text-gray-500">
-              {email?.split("@")[0] ?? ""}
+              {email ? email.split("@")[0] : ""}
             </p>
           </div>
-        </div>
-        <div className="mt-6 space-y-4">
+        </div> */}
+        <div className="mt-0 space-y-4">
           {pathName.startsWith("/profile") && (
             <Link
               href="/"
@@ -70,27 +71,15 @@ const Logout = ({
           >
             My Reports
           </Link>
-          {/* <Link
-            href="/plans"
-            className="block text-gray-800 text-sm font-medium hover:text-gray-900"
-          >
-            My Plans
-          </Link>
           <Link
-            href="/change-password"
+            href="/profile/my-appointments"
             className="block text-gray-800 text-sm font-medium hover:text-gray-900"
           >
-            Change Password
+            My Appointments
           </Link>
-          <Link
-            href="/past-analysis"
-            className="block text-gray-800 text-sm font-medium hover:text-gray-900"
-          >
-            Past Analysis
-          </Link> */}
           <p
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="block text-gray-800 text-sm font-medium cursor-pointer"
+            className="block text-gray-800 text-sm font-medium cursor-pointer hover:text-gray-900"
           >
             Logout
           </p>
