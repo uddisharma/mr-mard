@@ -12,22 +12,19 @@ import { currentUser } from "@/lib/auth";
 import { checkPermission } from "@/lib/checkPermission";
 import { Resource } from "@prisma/client";
 import { FormError } from "@/components/others/form-error";
-import { Button } from "@/components/ui/button";
 import {
-  ArrowLeft,
   User,
   Mail,
   Calendar,
   Clock,
   HelpCircle,
-  CheckCircle,
   Brain,
   Ruler,
   Droplet,
   Gauge,
+  BellRing,
 } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 
 interface PageProps {
   params: { id: string };
@@ -63,6 +60,11 @@ export default async function ViewReportPage({ params }: PageProps) {
     notFound();
   }
 
+  const time = (
+    (report.endTime.getTime() - report.startTime.getTime()) /
+    (1000 * 60)
+  ).toFixed(0);
+
   const hairAnalysis = {
     density: 2.9889322916666665,
     scaled_density: 22.849085334616657,
@@ -87,6 +89,7 @@ export default async function ViewReportPage({ params }: PageProps) {
   return (
     <div className="mx-auto md:max-w-5xl pb-20 px-4 py-8 space-y-8">
       {/* User Details Card */}
+      <h3 className="text-2xl font-bold text-center">Hair analysis report</h3>
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -119,13 +122,11 @@ export default async function ViewReportPage({ params }: PageProps) {
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 opacity-70" />
               <span className="font-medium">Duration:</span>
-              <span>
-                {(
-                  (report.endTime.getTime() - report.startTime.getTime()) /
-                  (1000 * 60)
-                ).toFixed(0)}{" "}
-                minutes
-              </span>
+              {Number(time) <= 0 ? (
+                <span>Less then 1 minute</span>
+              ) : (
+                <span>{time} minutes</span>
+              )}
             </div>
           </div>
         </CardContent>
@@ -187,12 +188,26 @@ export default async function ViewReportPage({ params }: PageProps) {
                     {hairAnalysis.overall_score.toFixed(2)}
                   </span>
                 </div>
-                <div className="flex justify-between">
+                <div className="justify-between hidden md:flex">
                   <span>Hair Type:</span>
+                  <div className="md:flex items-center justify-end gap-2">
+                    <span className="font-medium">
+                      {hairAnalysis.hair_type}
+                    </span>
+                    <span className="text-xs text-muted-foreground hidden md:block">
+                      ({(hairAnalysis.hair_type_confidence * 100).toFixed(1)}%
+                      Confidence)
+                    </span>
+                  </div>
+                </div>
+                <div className="flex justify-between md:hidden">
+                  <span>Hair Type:</span>
+                  <span className="font-medium">{hairAnalysis.hair_type}</span>
+                </div>
+                <div className="flex justify-between md:hidden">
+                  <span>Hair Type Confidence:</span>
                   <span className="font-medium">
-                    {hairAnalysis.hair_type} (
                     {(hairAnalysis.hair_type_confidence * 100).toFixed(1)}%
-                    confidence)
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -273,6 +288,47 @@ export default async function ViewReportPage({ params }: PageProps) {
             </div>
           </div>
         </CardContent>
+      </Card>
+
+      {/* Future Prediction Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Brain className="h-5 w-5" />
+            Future Prediction
+          </CardTitle>
+          <CardDescription>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius
+            commodi veniam sapiente culpa eaque explicabo id officia, provident
+            cum quas corrupti fugit voluptate, unde incidunt voluptatum?
+            Sapiente nisi libero ipsam sint saepe veniam cupiditate quibusdam,
+            quae eligendi, numquam animi laudantium? Consequuntur eos nisi
+            tempore eius enim, ad laboriosam sit harum.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      {/* Hair Care Recommendations Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BellRing className="h-5 w-5" />
+            Hair Care Recommendations
+          </CardTitle>
+          <CardDescription>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque,
+            fugit. Ratione explicabo natus nulla tempore hic porro dolore
+            placeat quo! Lorem ipsum dolor sit amet consectetur, adipisicing
+            elit. Modi et praesentium odit, facilis dolore voluptatum quo
+            reiciendis placeat nam inventore magni debitis iure assumenda ea
+            quia totam, ullam animi rem!
+            <Link href="/appointment-booking">
+              <div className="mt-5 mx-auto w-max bg-black text-white px-20 py-3 rounded-full shadow-lg cursor-pointer hover:bg-gray-800 transition duration-300">
+                Book Consultation
+              </div>
+            </Link>
+          </CardDescription>
+        </CardHeader>
       </Card>
     </div>
   );

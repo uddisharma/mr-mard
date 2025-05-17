@@ -26,7 +26,7 @@ export async function submitReport(
   const endTime = new Date();
 
   try {
-    await db.report.create({
+    const report = await db.report.create({
       data: {
         userId: session?.id,
         startTime,
@@ -40,7 +40,11 @@ export async function submitReport(
 
     revalidatePath("/dashboard");
     revalidatePath("/admin/reports");
-    return { success: true, message: "Report submitted successfully" };
+    return {
+      success: true,
+      reportId: report.id,
+      message: "Report submitted successfully",
+    };
   } catch (error) {
     console.error("Error submitting report:", error);
     return { success: false, message: "Error submitting report" };

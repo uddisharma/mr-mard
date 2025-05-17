@@ -5,6 +5,7 @@ import * as faceapi from "face-api.js";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function FaceDetection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -21,6 +22,9 @@ export default function FaceDetection() {
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
   const [data, setData] = useState<any>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const loadModels = async () => {
@@ -169,6 +173,9 @@ export default function FaceDetection() {
   const captureImage = async () => {
     if (!videoRef.current) return;
     setProcessing(true);
+    setApiError(null);
+    setIsAnalyzing(false);
+    setData(null);
 
     try {
       const video = videoRef.current;
@@ -195,6 +202,7 @@ export default function FaceDetection() {
       formData.append("image", file, "captured-image.png");
       formData.append("file", file);
 
+      setIsAnalyzing(true);
       const response = await fetch("https://api.milele.health/validate-image", {
         method: "POST",
         headers: {
@@ -219,31 +227,28 @@ export default function FaceDetection() {
       });
 
       const data1 = await response1.json();
-
       setData(data1);
-      console.log("Response from API:", data1);
+      const reportData = localStorage.getItem("reportId");
+      if (reportData) {
+        localStorage.removeItem("reportId");
+        localStorage.removeItem("startTime");
+        const { reportId } = JSON.parse(reportData);
+        router.push(`/analyze/${reportId}`);
+      }
     } catch (error) {
       console.error("Error capturing image:", error);
+      setApiError(
+        "An error occurred while processing your image. Please try again.",
+      );
       setMessage("Error capturing image. Please try again.");
     } finally {
       setProcessing(false);
+      setIsAnalyzing(false);
     }
   };
 
   const resetCapture = () => {
     return window.location.reload();
-    // setCapturedImage(null);
-    // setFacingMode("user");
-    // setMessage("Please position your face within the oval");
-
-    // if (stream) {
-    //   stream.getTracks().forEach((track) => track.stop());
-    //   setStream(null);
-    // }
-
-    // setTimeout(() => {
-    //   startCamera();
-    // }, 100);
   };
 
   return (
@@ -251,7 +256,7 @@ export default function FaceDetection() {
       {!modelsLoaded ? (
         <div className="flex flex-col items-center justify-center h-[480px] w-full bg-gray-100 rounded-lg">
           <Loader2 className="h-12 w-12 animate-spin text-gray-500 mb-4" />
-          <p className="text-gray-600">Loading face detection models...</p>
+          <p className="text-gray-600">Loading...</p>
         </div>
       ) : capturedImage ? (
         <>
@@ -278,22 +283,47 @@ export default function FaceDetection() {
                 ))}
               </AlertDescription>
             </Alert>
-          ) : (
+          ) : apiError ? (
+            <Alert className="mt-4" variant="destructive">
+              <AlertDescription className="flex items-center gap-2">
+                <XCircle className="h-4 w-4" />
+                {apiError}
+              </AlertDescription>
+            </Alert>
+          ) : isAnalyzing ? (
+            <div className="mt-4 flex flex-col items-center gap-4">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <p className="text-center text-muted-foreground">
+                Analyzing your hair... This may take a few moments.
+              </p>
+            </div>
+          ) : data ? (
             <>
               <Alert className="mt-4" variant="default">
                 <AlertDescription className="flex items-center gap-2">
                   <CheckCircle className="h-4 w-4" />
-                  {message}
+                  Analysis completed successfully!
                 </AlertDescription>
               </Alert>
-              <div className="mt-4">
-                <h2 className="text-lg font-semibold">Analysis Result:</h2>
-                <pre className="whitespace-pre-wrap">
-                  {JSON.stringify(data, null, 2)}
-                </pre>
+              <div className="mt-4 w-full max-w-2xl">
+                <h2 className="text-xl font-semibold mb-4">Analysis Results</h2>
+                <div className="bg-gray-50 rounded-lg p-4 space-y-4">
+                  {Object.entries(data).map(([key, value]) => (
+                    <div key={key} className="flex flex-col gap-1">
+                      <h3 className="text-sm font-medium capitalize">
+                        {key.replace(/_/g, " ")}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {typeof value === "object"
+                          ? JSON.stringify(value, null, 2)
+                          : String(value)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </>
-          )}
+          ) : null}
         </>
       ) : (
         <div className="flex flex-col items-center">

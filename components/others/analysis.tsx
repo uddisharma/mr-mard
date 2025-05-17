@@ -37,6 +37,11 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
 
   useEffect(() => {
     localStorage.setItem("startTime", JSON.stringify(new Date().toISOString()));
+    const reportData = localStorage.getItem("reportId");
+    if (reportData) {
+      const { step } = JSON.parse(reportData);
+      setStep(step);
+    }
   }, []);
 
   const handleOptionChange = (
@@ -84,11 +89,15 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
       const startTimeStr =
         localStorage.getItem("startTime") ?? new Date().toISOString();
       const res = await submitReport(questions, startTimeStr);
-      if (res?.success) {
-        // toast.success(res.message);
+      if (res?.success && res?.reportId) {
         setResponses({});
         setCurrentStep(0);
         setStep(1);
+        const data = {
+          step: 1,
+          reportId: String(res.reportId),
+        };
+        localStorage.setItem("reportId", JSON.stringify(data));
         localStorage.removeItem("startTime");
       } else {
         toast.error(res.message);
@@ -121,7 +130,7 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
 
                 <div>
                   <div
-                    className={`grid ${currentQuestion.questionType == "TEXT" ? "grid-cols-1" : "grid-cols-4"} sm:flex-row gap-4`}
+                    className={`grid ${currentQuestion.questionType == "TEXT" ? "grid-cols-1" : "md:grid-cols-4 grid-cols-2"} sm:flex-row gap-4`}
                   >
                     {currentQuestion.questionType === "SINGLE_SELECT" &&
                       currentQuestion.options.map((option) => (
