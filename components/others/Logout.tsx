@@ -65,18 +65,18 @@ const Logout = ({
           >
             My Profile
           </Link>
-          <Link
+          {/* <Link
             href="/profile/my-reports"
             className="block text-gray-800 text-sm font-medium hover:text-gray-900"
           >
             My Reports
-          </Link>
-          <Link
+          </Link> */}
+          {/* <Link
             href="/profile/my-appointments"
             className="block text-gray-800 text-sm font-medium hover:text-gray-900"
           >
             My Appointments
-          </Link>
+          </Link> */}
           <p
             onClick={() => signOut({ callbackUrl: "/" })}
             className="block text-gray-800 text-sm font-medium cursor-pointer hover:text-gray-900"

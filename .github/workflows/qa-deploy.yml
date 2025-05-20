@@ -36,9 +36,19 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.USER }}
-          TARGET: ${{ secrets.LIVE_PATH_QA }}
+          TARGET: ${{ secrets.LIVE_PATH }}
           SOURCE: "."
           EXCLUDE: "/.git/, .env"
+
+      - name: Run Prisma Migrations
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_DEPLOY_KEY }}
+          script: |
+            cd ${{ secrets.LIVE_PATH }}
+            npx prisma migrate deploy
 
       - name: Restart App via PM2
         uses: appleboy/ssh-action@master
@@ -47,6 +57,6 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_DEPLOY_KEY }}
           script: |
-            cd ${{ secrets.LIVE_PATH_QA }}
+            cd ${{ secrets.LIVE_PATH }}
             npm install
             pm2 restart mr-mard || pm2 start npm --name "mr-mard" -- start

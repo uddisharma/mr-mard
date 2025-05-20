@@ -80,9 +80,9 @@ const Header = async ({ className }: { className?: string }) => {
               <Link href="/technology" className="text-lg font-medium">
                 Our Technology
               </Link>
-              <Link href="/analyze" className="text-lg font-medium">
+              {/* <Link href="/analyze" className="text-lg font-medium">
                 Analyze
-              </Link>
+              </Link> */}
               <Link href="/about-us" className="text-lg font-medium">
                 About us
               </Link>
