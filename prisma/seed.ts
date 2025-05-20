@@ -6,6 +6,7 @@ async function main() {
   const users = await Promise.all([
     db.user.create({
       data: {
+        id: crypto.randomUUID(),
         name: "Deepak Sharma",
         firstName: "Deepak",
         lastName: "Sharma",
@@ -36,6 +37,7 @@ async function main() {
     }),
     db.user.create({
       data: {
+        id: crypto.randomUUID(),
         name: "Naveen S",
         firstName: "Naveen",
         lastName: "S",
@@ -66,6 +68,7 @@ async function main() {
     }),
     db.user.create({
       data: {
+        id: crypto.randomUUID(),
         name: "Santhosh Kumar",
         firstName: "Santhosh",
         lastName: "Kumar",
@@ -96,6 +99,7 @@ async function main() {
     }),
     db.user.create({
       data: {
+        id: crypto.randomUUID(),
         name: "Bob Brown",
         firstName: "Bob",
         lastName: "Brown",
@@ -119,6 +123,7 @@ async function main() {
   await Promise.all([
     db.account.create({
       data: {
+        id: crypto.randomUUID(),
         userId: users[0].id,
         type: "oauth",
         provider: "google",
@@ -134,6 +139,7 @@ async function main() {
     }),
     db.account.create({
       data: {
+        id: crypto.randomUUID(),
         userId: users[1].id,
         type: "oauth",
         provider: "google",
@@ -149,6 +155,7 @@ async function main() {
     }),
     db.account.create({
       data: {
+        id: crypto.randomUUID(),
         userId: users[2].id,
         type: "oauth",
         provider: "facebook",

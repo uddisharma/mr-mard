@@ -22,6 +22,7 @@ export const generatePasswordResetToken = async (email: string) => {
 
   const passwordResetToken = await db.passwordResetToken.create({
     data: {
+      id: crypto.randomUUID(),
       email,
       token,
       expires,
@@ -47,6 +48,7 @@ export const generateVerificationToken = async (email: string) => {
 
   const verificationToken = await db.verificationToken.create({
     data: {
+      id: crypto.randomUUID(),
       email,
       token,
       expires,
@@ -71,6 +73,7 @@ export const generateTwoFactorToken = async (email: string) => {
 
   const twoFactorToken = await db.twoFactorToken.create({
     data: {
+      id: crypto.randomUUID(),
       email,
       token,
       expires,

@@ -102,6 +102,7 @@ export const login = async (
 
       await db.twoFactorConfirmation.create({
         data: {
+          id: crypto.randomUUID(),
           userId: existingUser.id,
         },
       });
