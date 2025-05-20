@@ -13,6 +13,7 @@ jobs:
       RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
       NEXT_PUBLIC_RAZORPAY_KEY_ID: ${{ secrets.NEXT_PUBLIC_RAZORPAY_KEY_ID }}
       RAZORPAY_KEY_SECRET: ${{ secrets.RAZORPAY_KEY_SECRET }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     strategy:
       matrix:
@@ -48,7 +49,19 @@ jobs:
           key: ${{ secrets.SSH_DEPLOY_KEY }}
           script: |
             cd ${{ secrets.LIVE_PATH }}
+            export DATABASE_URL=${{ secrets.DATABASE_URL }}
             npx prisma migrate deploy
+
+      - name: Verify Prisma Migrations
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_DEPLOY_KEY }}
+          script: |
+            cd ${{ secrets.LIVE_PATH }}
+            export DATABASE_URL=${{ secrets.DATABASE_URL }}
+            npx prisma migrate status
 
       - name: Restart App via PM2
         uses: appleboy/ssh-action@master
