@@ -7,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     env:
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL_QA }}
@@ -28,8 +29,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      - run: npm ci --legacy-peer-deps
-      - run: npm run build
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build project
+        run: npm run build
 
       - name: Upload to VPS
         uses: easingthemes/ssh-deploy@main
@@ -41,7 +45,7 @@ jobs:
           SOURCE: "."
           EXCLUDE: "/.git/, .env"
 
-      - name: Push Prisma Schema (db push)
+      - name: Run Prisma Migrations
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -50,7 +54,7 @@ jobs:
           script: |
             cd ${{ secrets.LIVE_PATH }}
             export DATABASE_URL=${{ secrets.DATABASE_URL_QA }}
-            npx prisma db push --force-reset
+            npx prisma migrate deploy
 
       - name: Restart App via PM2
         uses: appleboy/ssh-action@master
