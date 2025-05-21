@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Resource" AS ENUM ('BLOGS', 'REPORTS', 'QUESTIONS', 'USERS', 'CONTACT_SUBMISSIONS', 'NEWSLETTER', 'LEADS', 'APPOINTMENTS', 'TIME_SLOTS', 'USER_PROGRESS');
+CREATE TYPE "Resource" AS ENUM ('BLOGS', 'REPORTS', 'QUESTIONS', 'USERS', 'CONTACT_SUBMISSIONS', 'NEWSLETTER', 'LEADS');
 
 -- CreateEnum
 CREATE TYPE "UserRole" AS ENUM ('SUPER_ADMIN', 'ADMIN', 'USER', 'EDITOR');
@@ -14,16 +14,13 @@ CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE', 'OTHER');
 CREATE TYPE "LoginType" AS ENUM ('GOOGLE', 'PHONE', 'EMAIL');
 
 -- CreateEnum
-CREATE TYPE "AppointmentStatus" AS ENUM ('CONFIRMED', 'COMPLETED', 'NO_SHOW', 'CANCELLED');
+CREATE TYPE "AppointmentStatus" AS ENUM ('CONFIRMED', 'COMPLETED', 'NO_SHOW');
 
 -- CreateEnum
 CREATE TYPE "PaymentStatus" AS ENUM ('PENDING', 'COMPLETED', 'FAILED', 'REFUNDED');
 
 -- CreateEnum
 CREATE TYPE "BookingStep" AS ENUM ('PHONE_VERIFICATION', 'DATE_SELECTION', 'TIME_SELECTION', 'PAYMENT');
-
--- CreateEnum
-CREATE TYPE "Funnel" AS ENUM ('HAIR_ANALYSIS', 'BOOK_APPOINTMENT');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -165,18 +162,6 @@ CREATE TABLE "reports" (
 );
 
 -- CreateTable
-CREATE TABLE "analysis" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "analysis" JSONB NOT NULL,
-    "reportId" INTEGER,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "analysis_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "questions" (
     "id" SERIAL NOT NULL,
     "text" TEXT NOT NULL,
@@ -213,9 +198,7 @@ CREATE TABLE "TimeSlot" (
     "endTime" TIMESTAMP(3) NOT NULL,
     "totalSeats" INTEGER NOT NULL,
     "bookedSeats" INTEGER NOT NULL DEFAULT 0,
-    "originalPrice" DOUBLE PRECISION NOT NULL DEFAULT 600,
-    "price" DOUBLE PRECISION NOT NULL DEFAULT 500,
-    "label" TEXT,
+    "price" DOUBLE PRECISION NOT NULL DEFAULT 50.00,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -229,7 +212,6 @@ CREATE TABLE "Appointment" (
     "userId" TEXT NOT NULL,
     "timeSlotId" TEXT NOT NULL,
     "status" "AppointmentStatus" NOT NULL DEFAULT 'CONFIRMED',
-    "funnel" "Funnel" DEFAULT 'BOOK_APPOINTMENT',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -267,30 +249,12 @@ CREATE TABLE "Transaction" (
 CREATE TABLE "UserProgress" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "phoneNumber" TEXT NOT NULL,
     "lastStep" "BookingStep" NOT NULL,
     "selectedDate" TIMESTAMP(3),
     "selectedTimeSlotId" TEXT,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "processedAt" TIMESTAMP(3),
 
     CONSTRAINT "UserProgress_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "UserwithScore" (
-    "id" TEXT NOT NULL,
-    "Score" INTEGER NOT NULL,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "scheduled_call" TIMESTAMP(3),
-    "call_attempts" INTEGER NOT NULL,
-    "call_note" TEXT,
-    "lastStep" TEXT NOT NULL,
-    "Status" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "UserwithScore_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -368,9 +332,6 @@ CREATE INDEX "blogs_authorId_idx" ON "blogs"("authorId");
 CREATE INDEX "reports_userId_idx" ON "reports"("userId");
 
 -- CreateIndex
-CREATE INDEX "analysis_userId_idx" ON "analysis"("userId");
-
--- CreateIndex
 CREATE INDEX "questions_questionType_idx" ON "questions"("questionType");
 
 -- CreateIndex
@@ -386,7 +347,7 @@ CREATE UNIQUE INDEX "Transaction_appointmentId_key" ON "Transaction"("appointmen
 CREATE UNIQUE INDEX "Transaction_transactionId_key" ON "Transaction"("transactionId");
 
 -- CreateIndex
-CREATE INDEX "UserProgress_userId_idx" ON "UserProgress"("userId");
+CREATE UNIQUE INDEX "UserProgress_userId_key" ON "UserProgress"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "NewsLetter_email_key" ON "NewsLetter"("email");
@@ -405,12 +366,6 @@ ALTER TABLE "blogs" ADD CONSTRAINT "blogs_authorId_fkey" FOREIGN KEY ("authorId"
 
 -- AddForeignKey
 ALTER TABLE "reports" ADD CONSTRAINT "reports_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "analysis" ADD CONSTRAINT "analysis_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "analysis" ADD CONSTRAINT "analysis_reportId_fkey" FOREIGN KEY ("reportId") REFERENCES "reports"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "options" ADD CONSTRAINT "options_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "questions"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "TimeSlot" ADD COLUMN     "label" TEXT,
+ADD COLUMN     "originalPrice" DOUBLE PRECISION NOT NULL DEFAULT 600,
+ALTER COLUMN "price" SET DEFAULT 500;
