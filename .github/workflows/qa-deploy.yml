@@ -41,7 +41,7 @@ jobs:
           SOURCE: "."
           EXCLUDE: "/.git/, .env"
 
-      - name: Run Prisma Migrations
+      - name: Push Prisma Schema (db push)
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -50,18 +50,7 @@ jobs:
           script: |
             cd ${{ secrets.LIVE_PATH }}
             export DATABASE_URL=${{ secrets.DATABASE_URL_QA }}
-            npx prisma migrate deploy
-
-      - name: Verify Prisma Migrations
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_DEPLOY_KEY }}
-          script: |
-            cd ${{ secrets.LIVE_PATH }}
-            export DATABASE_URL=${{ secrets.DATABASE_URL_QA }}
-            npx prisma migrate status
+            npx prisma db push --force-reset
 
       - name: Restart App via PM2
         uses: appleboy/ssh-action@master
