@@ -45,16 +45,16 @@ jobs:
           SOURCE: "."
           EXCLUDE: "/.git/, .env"
 
-      # - name: Run Prisma Migrations
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USER }}
-      #     key: ${{ secrets.SSH_DEPLOY_KEY }}
-      #     script: |
-      #       cd ${{ secrets.LIVE_PATH }}
-      #       export DATABASE_URL=${{ secrets.DATABASE_URL_QA }}
-      #       npx prisma migrate deploy
+      - name: Run Prisma Migrations
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_DEPLOY_KEY }}
+          script: |
+            cd ${{ secrets.LIVE_PATH }}
+            export DATABASE_URL=${{ secrets.DATABASE_URL_QA }}
+            npx prisma migrate deploy
 
       - name: Restart App via PM2
         uses: appleboy/ssh-action@master
