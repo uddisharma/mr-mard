@@ -81,6 +81,7 @@ export default function TimeSlotPicker() {
     }
 
     setIsSubmitting(true);
+    const phone = sessionStorage.getItem("phone");
 
     try {
       await fetch("/api/user-progress", {
@@ -92,6 +93,8 @@ export default function TimeSlotPicker() {
           userId,
           lastStep: "PAYMENT",
           selectedTimeSlotId: selectedTimeSlot,
+          selectedDate: sessionStorage.getItem("selectedDate"),
+          phone,
         }),
       });
       sessionStorage.setItem("selectedTime", selectedSlot1 || "");

@@ -310,14 +310,15 @@ export default async function BlogPage({ params }: PageProps) {
 
                 <div className="bg-yellow p-6 rounded-lg text-center">
                   <h2 className=" mb-2 text-[24px]">
-                    Get More Done Together With Us
+                    Get expert advice for your hair
                   </h2>
                   <p className="text-[22px] text-black mb-10">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    get a 20 min in depth consultation with our doctors to
+                    address your hair problems
                   </p>
-                  <Link href="/analyze">
+                  <Link href="/appointment-booking">
                     <Button className="px-6 py-2  bg-btnblue text-white hover:bg-btnblue/80">
-                      Get Started
+                      Get consultation
                     </Button>
                   </Link>
                 </div>

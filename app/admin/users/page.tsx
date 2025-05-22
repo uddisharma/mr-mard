@@ -119,12 +119,9 @@ export default async function UsersPage({ searchParams }: PageProps) {
                     key={user.id}
                     className="grid grid-cols-[1.5fr_1.5fr_1.5fr_1.5fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
                   >
-                    <div>{user?.name ?? "N/A"}</div>
+                    <div>{user?.name ?? "NA"}</div>
 
-                    <div>{user.email ?? "N/A"}</div>
-
-                    <div>{user.phone}</div>
-
+                    <div>{user.email ?? "NA"}</div>
                     <div>{user.role}</div>
 
                     <div>{format(new Date(user.createdAt), "dd/MM/yyyy")}</div>

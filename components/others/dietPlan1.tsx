@@ -60,7 +60,7 @@ export default function MealPlan1(data: pageProps) {
               variant="default"
               className="self-start bg-btnblue text-white hover:bg-btnblue/80 p-[6px_30px] text-[14px] rounded-[11px] w-full sm:w-auto hidden sm:block"
             >
-              View advanced hair care products with Mr. Mard
+              View advanced hair care products with Milele Health
             </Button>
             <Button
               variant="default"

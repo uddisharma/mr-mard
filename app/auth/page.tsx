@@ -133,7 +133,9 @@ export default function SignUpPage() {
           </div>
 
           <div className="absolute left-0 right-0 top-[75%] bottom-32 text-left w-full px-10">
-            <h2 className="text-[35px] text-btnblue">Sign up to Mr. Mard</h2>
+            <h2 className="text-[35px] text-btnblue">
+              Sign up to Milele Health
+            </h2>
             <p className="text-btnblue text-lg">Get started with us</p>
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-[40%] -translate-y-[60%] w-[400px] h-[400px]">

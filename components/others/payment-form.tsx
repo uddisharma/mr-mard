@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { createOrder } from "@/actions/payment";
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, IndianRupee, ReceiptIndianRupee } from "lucide-react";
 import { Stepper4 } from "./step-indicator";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { formatCurrency } from "@/lib/utils";
@@ -13,7 +13,6 @@ import { Loader2 } from "lucide-react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import { getAppointmentDetails } from "@/actions/appointment";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -29,7 +28,7 @@ export default function PaymentForm() {
     time: "",
   });
   const [appointmentPrice, setAppointmentPrice] = useState("");
-
+  const [originalPrice, setOriginalPrice] = useState("");
   const params = useSearchParams();
 
   const loadRazorpayScript = () => {
@@ -43,58 +42,34 @@ export default function PaymentForm() {
   };
 
   useEffect(() => {
-    if (params.get("id")) {
-      getAppointmentDetails(params.get("id") as string).then((res) => {
-        if (res.success) {
-          const timeSlot = res.data?.timeSlot;
-          if (!timeSlot) {
-            toast.error("Time slot details are missing.");
-            setIsFetching(false);
-            return;
-          }
-          const date = timeSlot.date;
-          const startTime = timeSlot.startTime;
-          const endTime = timeSlot.endTime;
+    const storedUserId = sessionStorage.getItem("userId");
+    const storedTimeSlotId = sessionStorage.getItem("selectedTimeSlotId");
+    const storedPrice = sessionStorage.getItem("selectedTimeSlotPrice");
+    const storedDate = sessionStorage.getItem("selectedDate");
+    const storedTime = sessionStorage.getItem("selectedTime");
+    const storedOriginalPrice = sessionStorage.getItem(
+      "selectedTimeSlotOriginalPrice",
+    );
+    setOriginalPrice(storedOriginalPrice || "");
 
-          setTimeDate({
-            date: date.toISOString(),
-            time: `${dayjs.utc(startTime).format("h:mm A")} - ${dayjs
-              .utc(endTime)
-              .format("h:mm A")}`,
-          });
+    setTimeDate({
+      date: storedDate || "",
+      time: storedTime || "",
+    });
 
-          setAppointmentPrice((timeSlot as any).price?.toString() || "0");
-          setUserId(res.data?.user?.id ?? null);
-          setTimeSlotId(timeSlot.id);
-        }
-        setIsFetching(false);
-      });
-    } else {
-      const storedUserId = sessionStorage.getItem("userId");
-      const storedTimeSlotId = sessionStorage.getItem("selectedTimeSlotId");
-      const storedPrice = sessionStorage.getItem("selectedTimeSlotPrice");
-      const storedDate = sessionStorage.getItem("selectedDate");
-      const storedTime = sessionStorage.getItem("selectedTime");
-
-      setTimeDate({
-        date: storedDate || "",
-        time: storedTime || "",
-      });
-
-      if (!storedUserId || !storedTimeSlotId) {
-        router.push("/appointment-booking");
-        return;
-      }
-
-      setUserId(storedUserId);
-      setTimeSlotId(storedTimeSlotId);
-
-      if (storedPrice) {
-        setAppointmentPrice(Number.parseFloat(storedPrice).toString());
-      }
-
-      setIsFetching(false);
+    if (!storedUserId || !storedTimeSlotId) {
+      router.push("/appointment-booking");
+      return;
     }
+
+    setUserId(storedUserId);
+    setTimeSlotId(storedTimeSlotId);
+
+    if (storedPrice) {
+      setAppointmentPrice(Number.parseFloat(storedPrice).toString());
+    }
+
+    setIsFetching(false);
   }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -261,11 +236,11 @@ export default function PaymentForm() {
 
   return (
     <div className="relative isolate overflow-hidden bg-background">
-      <div className="mx-auto max-w-7xl px-6 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg lg:flex-shrink-0">
           <Stepper4 />
           <motion.h1
-            className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
+            className="mt-5 text-2xl md:text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -275,7 +250,7 @@ export default function PaymentForm() {
             </span>
           </motion.h1>
           <motion.p
-            className="mt-5 text-lg leading-8 text-muted-foreground"
+            className="mt-2 md:mt-5 text-md md:text-lg leading-8 text-muted-foreground"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -288,9 +263,11 @@ export default function PaymentForm() {
             </div>
           ) : (
             <div className="max-w-lg mx-auto p-6 bg-white rounded-2xl shadow-lg mt-5">
-              <h2 className="text-lg font-semibold mb-4">
-                Appointment Details
-              </h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold mb-4">
+                  Appointment Details
+                </h2>
+              </div>
               <div className="mb-4">
                 <p className="font-medium mb-2">Time & date</p>
                 <div className="flex items-center gap-3 text-gray-700">
@@ -305,7 +282,7 @@ export default function PaymentForm() {
                   <FaClock className="text-xl" />
                   <span>{timeDate?.time}</span>
                 </div>
-                {timeDate?.date !== "" &&
+                {/* {timeDate?.date !== "" &&
                   timeDate?.time !== "" &&
                   timeLeftForSlot(timeDate?.date, timeDate?.time) !==
                     "Invalid time format" &&
@@ -321,23 +298,63 @@ export default function PaymentForm() {
                         {timeLeftForSlot(timeDate?.date, timeDate?.time)}
                       </strong>
                     </p>
-                  ))}
+                  ))} */}
               </div>
 
-              <div className="border-t pt-4 mb-4">
-                <p className="font-medium mb-2">Payment summary</p>
+              <div className="border-t pt-4 mb-4 space-y-4">
+                <div className="flex items-center justify-between">
+                  <p className="font-medium">Payment summary</p>
+                </div>
+                <div className="flex justify-between text-gray-700">
+                  <span>Original Price</span>
+                  <del className="text-gray-500">
+                    {formatCurrency(Number(originalPrice))}
+                  </del>
+                </div>
                 <div className="flex justify-between text-gray-700">
                   <span>Hair diagnosis call</span>
                   <span>{formatCurrency(Number(appointmentPrice))}</span>
                 </div>
-                <div className="flex justify-between text-gray-900 font-semibold mt-2">
+                <div className="flex justify-between text-gray-900 font-semibold">
                   <span>Total</span>
                   <span>{formatCurrency(Number(appointmentPrice))}</span>
                 </div>
+                <div className="text-[#1c5f2a] bg-green-50 p-1 pl-2 rounded-md">
+                  <span>Total Savings </span>
+                  <span>
+                    {formatCurrency(
+                      Number(originalPrice) - Number(appointmentPrice),
+                    )}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between bg-yellow border border-yellow-100 rounded-xl p-4 shadow-sm w-full max-w-md">
+                  <div>
+                    <h3 className="text-sm font-semibold text-gray-900">
+                      Refund policy
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      If you're not fully satisfied, we’ll give you a 100%
+                      refund.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-center w-12 h-12 rounded-md bg-yellow-100">
+                    <IndianRupee className="text-btnblue font-bold" />
+                  </div>
+                </div>
               </div>
-
+              <div className="bg-[#1c5f2a] mt-8 text-white px-4 py-2 rounded-md flex items-center space-x-2 w-full max-w-md">
+                <ReceiptIndianRupee className="w-4 h-4" />
+                <span className="text-sm font-normal">
+                  Total savings{" "}
+                  <span className="font-semibold">
+                    {formatCurrency(
+                      Number(originalPrice) - Number(appointmentPrice),
+                    )}
+                  </span>
+                </span>
+              </div>
               <motion.div
-                className="mt-8 flex items-center justify-between gap-x-6"
+                className="mt-3 flex items-center justify-between gap-x-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}

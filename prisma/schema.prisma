@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id                      String                 @id @default(uuid())
+  id                      String                 @id
   firstName               String?                @db.VarChar(100)
   lastName                String?                @db.VarChar(100)
   name                    String?
@@ -35,12 +35,13 @@ model User {
   timeZone                String?
   pinCode                 Int?
   source                  String?
+  emails                  Json[]
   accounts                Account[]
   reports                 Report[]
-  emails                  Json[]
   appointments            Appointment[]
   userProgress            UserProgress[]
   blogs                   Blog[]
+  analysis                Analysis[]
   createdAt               DateTime               @default(now())
   updatedAt               DateTime               @updatedAt
 
@@ -48,7 +49,7 @@ model User {
 }
 
 model Account {
-  id                String  @id @default(uuid())
+  id                String  @id
   userId            String
   type              String
   provider          String
@@ -68,7 +69,7 @@ model Account {
 }
 
 model VerificationToken {
-  id      String   @id @default(uuid())
+  id      String   @id
   email   String
   token   String   @unique
   expires DateTime
@@ -78,7 +79,7 @@ model VerificationToken {
 }
 
 model PasswordResetToken {
-  id      String   @id @default(uuid())
+  id      String   @id
   email   String
   token   String   @unique
   expires DateTime
@@ -88,7 +89,7 @@ model PasswordResetToken {
 }
 
 model TwoFactorToken {
-  id      String   @id @default(uuid())
+  id      String   @id
   email   String
   token   String   @unique
   expires DateTime
@@ -98,7 +99,7 @@ model TwoFactorToken {
 }
 
 model TwoFactorConfirmation {
-  id     String @id @default(uuid())
+  id     String @id
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -152,11 +153,27 @@ model Report {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
+  Analysis  Analysis[]
+
+  @@index([userId])
+  @@map("reports")
+}
+
+model Analysis {
+  id       String  @id @default(cuid())
+  userId   String
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  analysis Json
+  report   Report? @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId Int?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
   @@index([userId])
-  @@map("reports")
+  @@map("analysis")
 }
 
 model Question {
@@ -217,6 +234,7 @@ model Appointment {
   status      AppointmentStatus @default(CONFIRMED)
   user        User              @relation(fields: [userId], references: [id])
   timeSlot    TimeSlot          @relation(fields: [timeSlotId], references: [id])
+  funnel      Funnel?           @default(BOOK_APPOINTMENT)
   transaction Transaction?
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
@@ -250,6 +268,7 @@ model UserProgress {
   id                 String      @id @default(cuid())
   user               User        @relation(fields: [userId], references: [id])
   userId             String
+  phoneNumber        String
   lastStep           BookingStep
   selectedDate       DateTime?
   selectedTimeSlotId String?
@@ -257,7 +276,21 @@ model UserProgress {
   createdAt          DateTime    @default(now())
   processedAt        DateTime?
 
-  @@index([userId]) 
+  @@index([userId])
+}
+
+model UserwithScore {
+  id             String    @id
+  Score          Int
+  updatedAt      DateTime  @updatedAt
+  scheduled_call DateTime?
+  call_attempts  Int
+  call_note      String?
+  lastStep       String
+  Status         String
+  createdAt      DateTime  @default(now())
+
+  @@map("UserwithScore")
 }
 
 model ContactSubmission {
@@ -294,6 +327,9 @@ enum Resource {
   CONTACT_SUBMISSIONS
   NEWSLETTER
   LEADS
+  APPOINTMENTS
+  TIME_SLOTS
+  USER_PROGRESS
 }
 
 enum UserRole {
@@ -340,4 +376,9 @@ enum BookingStep {
   DATE_SELECTION
   TIME_SELECTION
   PAYMENT
+}
+
+enum Funnel {
+  HAIR_ANALYSIS
+  BOOK_APPOINTMENT
 }

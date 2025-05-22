@@ -27,6 +27,7 @@ export const registerWithOTP = async (values: RegisterWithOtpSchemaData) => {
         otpExpires,
       },
       create: {
+        id: crypto.randomUUID(),
         phone,
         otp,
         otpExpires,

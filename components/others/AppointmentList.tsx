@@ -22,10 +22,10 @@ export default function AppointmentsList({
 }) {
   return (
     <Card className="w-full mx-auto">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+      <CardHeader className="flex md:flex-row flex-col items-center justify-between space-y-0 pb-5">
         <CardTitle className="text-2xl font-bold">My Appointments</CardTitle>
         <Link href="/appointment-booking">
-          <Button size="sm">
+          <Button className="bg-btnblue text-white hidden md:flex" size="sm">
             <PlusCircle className="mr-2 h-4 w-4" />
             Schedule Appointment
           </Button>

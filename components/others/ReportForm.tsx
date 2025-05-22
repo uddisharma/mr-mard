@@ -45,8 +45,10 @@ export default function ReportForm({ questions, userId }: ReportFormProps) {
           answer: answers[q.id] || "",
         })),
       };
+      const startTimeStr =
+        localStorage.getItem("startTime") ?? new Date().toISOString();
 
-      await submitReport(reportData);
+      await submitReport(reportData, startTimeStr);
       router.push("/dashboard");
       router.refresh();
     } catch (error) {

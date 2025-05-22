@@ -7,11 +7,11 @@ export default function HowWeDoIt() {
       <main className="flex-grow container mx-auto px-4 py-2 md:py-8">
         <section className="mb-8">
           <h2 className="text-3xl text-left mb-8 text-[#1A2255]">
-            Revolutionizing Hair Wellness with AI - Mr. Mard
+            Revolutionizing Hair Wellness with AI - Milele Health
           </h2>
           <p className="text-[#5B5B5B] text-[24px]">Making things fun</p>
           <p className="text-lg my-4">
-            At Mr. Mard, our mission is to redefine mens hair care with the
+            At Milele Health, our mission is to redefine mens hair care with the
             power of Artificial Intelligence. This case study showcases how our
             AI-driven bald spot analysis model transforms the way men approach
             hair health.
@@ -131,7 +131,7 @@ export default function HowWeDoIt() {
             </li>
             <li>
               Outcome: Visible improvement in density within 6 months, with
-              ongoing support from Mr. Mard.
+              ongoing support from Milele Health.
             </li>
           </ul>
         </section>

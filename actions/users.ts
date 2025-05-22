@@ -34,6 +34,7 @@ export async function addUser(userData: UserFormData) {
       const user = await db.user.create({
         data: {
           ...validatedData,
+          id: crypto.randomUUID(),
           name: validatedData.firstName + " " + validatedData.lastName,
           password: hashedPassword,
         },
@@ -44,6 +45,7 @@ export async function addUser(userData: UserFormData) {
       const user = await db.user.create({
         data: {
           ...validatedData,
+          id: crypto.randomUUID(),
           name: validatedData.firstName + " " + validatedData.lastName,
         },
       });

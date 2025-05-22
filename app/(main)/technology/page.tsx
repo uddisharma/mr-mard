@@ -108,9 +108,9 @@ export default function Home() {
           <h1 className="text-4xl text-center mb-5">How Our AI Model Works</h1>
 
           <p className="text-btnblue">
-            At Mr. Mard, we leverage cutting-edge Artificial Intelligence and
-            Machine Learning (ML) technologies to analyze, detect, and deliver
-            actionable insights for hair health. Our AI-driven bald spot
+            At Milele Health, we leverage cutting-edge Artificial Intelligence
+            and Machine Learning (ML) technologies to analyze, detect, and
+            deliver actionable insights for hair health. Our AI-driven bald spot
             detection system ensures precision and efficiency by blending
             computer vision, neural networks, and dermatological expertise.
           </p>

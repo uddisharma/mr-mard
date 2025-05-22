@@ -152,7 +152,7 @@ export default function ProfileCard({ admin, stats }: Props) {
 
           <div className="flex items-center gap-2 rounded-lg border p-3 mt-4">
             <span className="text-muted-foreground flex-1 truncate">
-              https://app.Mr.Mard
+              https://app.milele.health
             </span>
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <Copy className="h-4 w-4" />

@@ -41,6 +41,7 @@ const navItems = [
     href: "/admin/contact-submissions",
   },
   { icon: Newspaper, label: "NewsLetter", href: "/admin/newsletter" },
+  { icon: Newspaper, label: "Face Detection", href: "/face" },
 ];
 
 export default function Sidebar({ role }: { role: string | undefined }) {
@@ -50,7 +51,7 @@ export default function Sidebar({ role }: { role: string | undefined }) {
       {/* <div className="p-6">
         <Link href="/" className="text-xl font-serif font-bold">
           <Image
-            src="/logo2.png"
+            src="/m_logo1.png"
             alt="Milele Health"
             className="ml-3"
             width={120}

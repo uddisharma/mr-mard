@@ -15,17 +15,18 @@ const Header = async ({ className }: { className?: string }) => {
       <div className="container mx-auto px-10 items-center justify-between hidden md:flex">
         <Link href="/" className="text-xl font-bold">
           <Image
-            src="/logo2.png"
+            src="/m_logo1.png"
             alt="Milele Health"
-            className="m-auto mt-[-25px]"
-            width={105}
+            className="m-auto"
+            width={110}
             height={50}
           />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-black">
-          <Link href="/technology">Our Technology</Link>
           <Link href="/analyze">Analyze</Link>
+          <Link href="/technology">Our Technology</Link>
           <Link href="/about-us">About us</Link>
+          {/* <Link href="/">FAQs</Link> */}
         </nav>
         <div className="flex items-center gap-4">
           {sessions?.name ? (
@@ -47,12 +48,12 @@ const Header = async ({ className }: { className?: string }) => {
             </SheetTrigger>
             <SheetContent className="bg-white" side="left">
               <nav className="flex flex-col gap-4 mt-8">
-                <Link href="/technology" className="text-lg font-medium">
+                {/* <Link href="/technology" className="text-lg font-medium">
                   Our Technology
-                </Link>
-                <Link href="/analyze" className="text-lg font-medium">
+                </Link> */}
+                {/* <Link href="/analyze" className="text-lg font-medium">
                   Analyze
-                </Link>
+                </Link> */}
                 <Link href="/about-us" className="text-lg font-medium">
                   About us
                 </Link>
@@ -73,21 +74,24 @@ const Header = async ({ className }: { className?: string }) => {
           </SheetTrigger>
           <SheetContent className="bg-white" side="left">
             <nav className="flex flex-col gap-4 mt-8">
+              <Link href="/" className="text-lg font-medium">
+                Home
+              </Link>
               <Link href="/technology" className="text-lg font-medium">
                 Our Technology
               </Link>
-              <Link href="/analyze" className="text-lg font-medium">
+              {/* <Link href="/analyze" className="text-lg font-medium">
                 Analyze
-              </Link>
+              </Link> */}
               <Link href="/about-us" className="text-lg font-medium">
                 About us
               </Link>
               <Link href="/blogs" className="text-lg font-medium">
                 Blogs
               </Link>
-              <Link href="/report" className="text-lg font-medium">
+              {/* <Link href="/report" className="text-lg font-medium">
                 Report
-              </Link>
+              </Link> */}
             </nav>
           </SheetContent>
         </Sheet>
@@ -98,7 +102,8 @@ const Header = async ({ className }: { className?: string }) => {
           className="text-xl font-bold font-serif tracking-wide text-center flex-1"
         >
           <Image
-            src="/logo2.png"
+            style={{ marginLeft: "100px", scale: "1.1" }}
+            src="/m_logo1.png"
             alt="Milele Health"
             className="m-auto mt-[-15px]"
             width={80}
@@ -107,7 +112,7 @@ const Header = async ({ className }: { className?: string }) => {
         </Link>
 
         {/* Profile or Sign In */}
-        <div className="md:flex items-center gap-2 hidden">
+        <div className="md:flex items-center gap-2 ">
           {sessions?.name ? (
             <Logout
               image={sessions.image ?? "/user.png"}

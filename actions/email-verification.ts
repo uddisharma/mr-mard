@@ -32,8 +32,10 @@ export async function EmailVerification(
 
     if (isProduction) {
       const response = await sendVerificationOTP(email, otp);
+
       if (!response?.success)
         return { success: false, message: "Failed to send OTP" };
+
       await db.user.update({
         where: { phone },
         data: {

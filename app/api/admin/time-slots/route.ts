@@ -7,10 +7,19 @@ import timezone from "dayjs/plugin/timezone";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const from = searchParams.get("from");
+  const to = searchParams.get("to");
   try {
     const timeSlots = await db.timeSlot.findMany({
       orderBy: [{ date: "asc" }, { startTime: "asc" }],
+      where: {
+        createdAt: {
+          gte: from ? new Date(from) : undefined,
+          lte: to ? new Date(to) : undefined,
+        },
+      },
     });
 
     return NextResponse.json(timeSlots);
@@ -42,8 +51,6 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       );
     }
-    const parsedStart = dayjs.tz(startTime, "Asia/Kolkata").toDate();
-    const parsedEnd = dayjs.tz(endTime, "Asia/Kolkata").toDate();
 
     const timeSlot = await db.timeSlot.create({
       data: {
@@ -63,6 +70,50 @@ export async function POST(request: NextRequest) {
     console.error("Error creating time slot:", error);
     return NextResponse.json(
       { error: "Failed to create time slot" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const from = searchParams.get("from");
+  const to = searchParams.get("to");
+
+  if (
+    !from ||
+    !to ||
+    isNaN(new Date(from).getTime()) ||
+    isNaN(new Date(to).getTime())
+  ) {
+    return NextResponse.json(
+      { error: "Invalid 'from' or 'to' date provided" },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const data = await db.timeSlot.deleteMany({
+      where: {
+        date: {
+          gte: new Date(from),
+          lte: new Date(to),
+        },
+        appointments: {
+          none: {},
+        },
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: `${data.count} time slots deleted successfully`,
+      data,
+    });
+  } catch (error) {
+    console.error("Error deleting time slots:", error);
+    return NextResponse.json(
+      { error: "Failed to delete time slots" },
       { status: 500 },
     );
   }

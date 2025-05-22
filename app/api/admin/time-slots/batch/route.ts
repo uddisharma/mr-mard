@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate each time slot
     for (const slot of timeSlots) {
       if (
         !slot.date ||
@@ -30,13 +29,11 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Process the time slots in a transaction
     const result = await db.$transaction(async (tx: any) => {
       const createdSlots = [];
 
       for (const slot of timeSlots) {
         try {
-          // Check if a time slot with the same date, start time, and end time already exists
           const existingSlot = await tx.timeSlot.findFirst({
             where: {
               date: new Date(slot.date),
@@ -46,25 +43,27 @@ export async function POST(request: NextRequest) {
           });
 
           if (existingSlot) {
-            // Update the existing slot
             const updatedSlot = await tx.timeSlot.update({
               where: { id: existingSlot.id },
               data: {
                 totalSeats: slot.totalSeats,
-                price: slot.price || 50.0,
+                price: slot.price || 500,
+                originalPrice: slot.originalPrice || 600,
+                label: slot.label || "",
                 isActive: slot.isActive !== undefined ? slot.isActive : true,
               },
             });
             createdSlots.push(updatedSlot);
           } else {
-            // Create a new slot
             const newSlot = await tx.timeSlot.create({
               data: {
                 date: new Date(slot.date),
                 startTime: new Date(slot.startTime),
                 endTime: new Date(slot.endTime),
                 totalSeats: slot.totalSeats,
-                price: slot.price || 50.0,
+                price: slot.price || 500,
+                originalPrice: slot.originalPrice || 600,
+                label: slot.label || "",
                 isActive: slot.isActive !== undefined ? slot.isActive : true,
               },
             });
@@ -72,7 +71,6 @@ export async function POST(request: NextRequest) {
           }
         } catch (error) {
           console.error("Error processing time slot:", error);
-          // Continue with the next slot
         }
       }
 

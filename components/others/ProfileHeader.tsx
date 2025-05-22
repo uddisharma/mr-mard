@@ -15,7 +15,7 @@ const ProfileHeader = ({ user }: { user: any }) => {
 
   return (
     <div>
-      <div className="mb-5 md:mb-8 flex flex-wrap md:flex-nowrap items-center w-full justify-between gap-4">
+      <div className="md:mb-8 flex flex-wrap md:flex-nowrap items-center w-full justify-between gap-4">
         <div className="flex md:flex-row justify-between items-start md:items-center gap-4 w-full mb-2 md:mb-0">
           <div className="md:w-auto md:mb-0">
             <h2 className="text-2xl font-medium text-gray-800">
@@ -55,13 +55,13 @@ const ProfileHeader = ({ user }: { user: any }) => {
           </div> */}
 
           <Link href="/contact-us">
-            <div className="flex items-center justify-center w-[250px] h-[45px] md:h-[35px] bg-btnblue text-white text-center rounded-md border-none">
+            <div className="hidden md:flex items-center justify-center w-[250px] h-[45px] md:h-[35px] bg-btnblue text-white text-center rounded-md border-none">
               Need Help?
             </div>
           </Link>
 
           <Button className="hidden md:flex" variant="ghost" size="icon">
-            <Bell className="h-5 w-5" />
+            <Bell className="h-5 w-5 " />
           </Button>
 
           <Logout
@@ -72,7 +72,7 @@ const ProfileHeader = ({ user }: { user: any }) => {
           />
         </div>
       </div>
-      <div className="mb-4 md:mb-8 rounded-lg bg-[#F6E05E] p-5 md:p-6"></div>
+      <div className="mb-8 md:mb-8 rounded-lg bg-[#F6E05E] p-5 md:p-6 "></div>
     </div>
   );
 };

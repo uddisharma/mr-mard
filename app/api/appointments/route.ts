@@ -1,6 +1,16 @@
 import { db } from "@/lib/db";
-import { AppointmentStatus } from "@prisma/client";
+import { sendAppointmentBookings } from "@/lib/mail";
+import { isProduction } from "@/lib/utils";
 import { type NextRequest, NextResponse } from "next/server";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import { AppointmentStatus } from "@prisma/client";
+
+export const runtime = "nodejs";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export async function POST(request: NextRequest) {
   try {
@@ -111,12 +121,57 @@ export async function POST(request: NextRequest) {
           },
         });
 
-        await tx.userProgress.delete({
-          where: { userId },
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+
+        const endOfDay = new Date();
+        endOfDay.setHours(23, 59, 59, 999);
+
+        await tx.userProgress.deleteMany({
+          where: {
+            userId,
+            createdAt: {
+              gte: startOfDay,
+              lte: endOfDay,
+            },
+          },
         });
 
         return { appointment, transaction };
       });
+
+      if (isProduction) {
+        await sendAppointmentBookings(
+          "naveen@mrmard.com",
+          user.name ?? "",
+          user.phone ?? "",
+          dayjs(timeSlot.date).tz("Asia/Kolkata").format("DD/MM/YYYY"),
+          `${dayjs.utc(timeSlot.startTime).format("h:mm A")} - ${dayjs
+            .utc(timeSlot.endTime)
+            .format("h:mm A")}`,
+        );
+
+        await sendAppointmentBookings(
+          "santhosh.k@mrmard.com",
+          user.name ?? "",
+          user.phone ?? "",
+          dayjs(timeSlot.date).tz("Asia/Kolkata").format("DD/MM/YYYY"),
+          `${dayjs.utc(timeSlot.startTime).format("h:mm A")} - ${dayjs
+            .utc(timeSlot.endTime)
+            .format("h:mm A")}`,
+        );
+
+        await sendAppointmentBookings(
+          "arthilakshmi2001@mrmard.com",
+          user.name ?? "",
+          user.phone ?? "",
+          dayjs(timeSlot.date).tz("Asia/Kolkata").format("DD/MM/YYYY"),
+          `${dayjs.utc(timeSlot.startTime).format("h:mm A")} - ${dayjs
+            .utc(timeSlot.endTime)
+            .format("h:mm A")}`,
+        );
+      }
+
       return NextResponse.json(result);
     }
   } catch (error) {
@@ -127,6 +182,7 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
 function Float(amount: any): number {
   const parsed = parseFloat(amount);
   if (isNaN(parsed)) {

@@ -17,36 +17,36 @@ const Footer = () => {
             <div className="m-auto">
               <Link href="/" className="text-xl font-bold">
                 <Image
-                  src="/logo2.png"
+                  src="/m_logo1.png"
                   alt="Milele Health"
                   className="pb-5"
                   width={80}
                   height={50}
                 />
               </Link>
-              <p className="text-sm text-white/80 w-20">
-                Your go to place for all wellness needs
+              <p className="text-sm text-white/80 w-32">
+                Your most trusted haircare solution brand
               </p>
             </div>
             <div className="m-auto">
               <h3 className=" mb-4">Quick Links</h3>
               <ul className="space-y-2 text-sm text-white/80">
-                <li>
+                {/* <li>
                   <Link href="/analyze">Take the test</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link href="/blogs">Blogs</Link>
                 </li>
                 <li>
                   <Link href="/contact-us">Contact Us</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link href="/technology">Our Technology</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="m-auto">
-              <h3 className=" mb-4">About</h3>
+              <h3 className=" mb-4">Popular links</h3>
               <ul className="space-y-2 text-sm text-white/80">
                 <li>
                   <Link href="/about-us">About Us</Link>
@@ -100,7 +100,7 @@ const Footer = () => {
             <div className="">
               <Link href="/" className="text-xl font-bold">
                 <Image
-                  src="/logo2.png"
+                  src="/m_logo1.png"
                   className="pb-5"
                   alt="Milele Health"
                   width={80}
@@ -108,15 +108,15 @@ const Footer = () => {
                 />
               </Link>
               <p className="text-sm text-white/80 ">
-                Your go to place for all wellness needs
+                Your most trusted haircare solution brand
               </p>
             </div>
             <div className="">
               <h3 className=" mb-4">Quick Links</h3>
               <ul className="space-y-2 text-sm text-white/80">
-                <li>
+                {/* <li>
                   <Link href="/report">Report</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link href="/blogs">Blogs</Link>
                 </li>
@@ -126,7 +126,7 @@ const Footer = () => {
               </ul>
             </div>
             <div className="">
-              <h3 className=" mb-4">About</h3>
+              <h3 className=" mb-4">Popular links</h3>
               <ul className="space-y-2 text-sm text-white/80">
                 <li>
                   <Link href="/about-us">About Us</Link>

@@ -1,17 +1,17 @@
 import * as React from "react";
 import { format } from "date-fns";
-import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { FormError } from "@/components/others/form-error";
 import Pagination from "@/components/admin/pagination";
 import { Prisma } from "@prisma/client";
 import SearchInput from "@/components/others/SearchInput";
 import ExportButton from "@/components/admin/export";
-import Link from "next/link";
 import CleartButton from "@/components/admin/appointment/clear-button";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
@@ -69,10 +69,10 @@ export default async function CancelledAppointmentsPage({
           <div className="min-w-[800px]">
             {/* Table Header */}
             <div className="grid grid-cols-5 gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+              <div className="font-semibold">Started Date</div>
               <div className="font-semibold">ID</div>
               <div className="font-semibold">Phone</div>
               <div className="font-semibold">Last Step</div>
-              <div className="font-semibold">Started At</div>
               <div className="font-semibold">Updated At</div>
             </div>
 
@@ -88,17 +88,17 @@ export default async function CancelledAppointmentsPage({
                     key={progress.id}
                     className="grid grid-cols-5 gap-4 p-4 hover:bg-gray-50 text-left"
                   >
+                    <div>
+                      {format(new Date(progress.createdAt), "dd/MM/yyyy")}
+                    </div>
                     <div>{progress.id.substring(0, 8).toUpperCase()}</div>
                     <div>{progress.user.phone}</div>
                     <div>{progress.lastStep}</div>
                     <div>
-                      {format(new Date(progress.createdAt), "dd/MM/yyyy")}
-                    </div>
-                    <div>
-                      {format(
-                        new Date(progress.updatedAt),
-                        "dd/MM/yyyy hh:mm a",
-                      )}
+                      {dayjs
+                        .utc(progress.updatedAt)
+                        .tz("Asia/Kolkata")
+                        .format("DD/MM/YYYY hh:mm A")}
                     </div>
                   </div>
                 ))

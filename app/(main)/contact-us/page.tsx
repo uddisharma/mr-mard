@@ -13,6 +13,7 @@ import { useTransition } from "react";
 import { submitContactForm } from "@/actions/contacts";
 import { toast } from "sonner";
 import { IconBrandInstagram, IconBrandYoutube } from "@tabler/icons-react";
+import FAQ from "@/components/others/faq";
 
 export default function ContactPage() {
   const [isPending, startTransition] = useTransition();
@@ -41,11 +42,11 @@ export default function ContactPage() {
   return (
     <div className="md:px-24">
       {/* Main Content */}
-      <main className="mx-auto px-4 py-2 md:py-6 mb-20">
+      <main className="mx-auto px-4 py-2 md:py-6 mb-10">
         <div className="text-center mb-6">
           <h1 className="text-4xl text-btnblue mb-4">Contact Us</h1>
           <p className="text-[#717171]">
-            Any question or remarks? Just write us a message !
+            We're here to help you with hair goals. We're just a message away.
           </p>
         </div>
 
@@ -62,7 +63,7 @@ export default function ContactPage() {
           >
             <h2 className="text-2xl mb-6">Contact Information</h2>
             <p className="text-gray-300 mb-8">
-              Say something to start a live chat!
+              Just shoot your questions.We will get back in no time.
             </p>
 
             <div className="space-y-8 md:space-y-12 md:mt-32">
@@ -72,7 +73,7 @@ export default function ContactPage() {
               </div>
               <div className="flex items-center gap-4">
                 <Mail className="h-5 w-5" />
-                <span>contactus@mrmard.com</span>
+                <span>contactus@milele.health</span>
               </div>
               <div className="flex items-center gap-4">
                 <MapPin className="h-9 w-9" />
@@ -160,7 +161,7 @@ export default function ContactPage() {
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="+1 012 3456 789"
+                  placeholder="+91 012 3456 789"
                   className="border-0 border-b rounded-none focus-visible:ring-0 focus-visible:border-[#1a2642] px-0"
                   {...register("phone")}
                 />
@@ -182,20 +183,34 @@ export default function ContactPage() {
                     className="flex flex-wrap gap-4"
                   >
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="general1" id="general1" />
-                      <Label htmlFor="general1">General Inquiry</Label>
+                      <RadioGroupItem
+                        value="Doctor Consultation"
+                        id="Doctor Consultation"
+                      />
+                      <Label htmlFor="Payment related">
+                        Doctor Consultation
+                      </Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="general2" id="general2" />
-                      <Label htmlFor="general2">General Inquiry</Label>
+                      <RadioGroupItem
+                        value="Payment related"
+                        id="Payment related"
+                      />
+                      <Label htmlFor="Payment related">Payment related</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="general3" id="general3" />
-                      <Label htmlFor="general3">General Inquiry</Label>
+                      <RadioGroupItem
+                        value="Refund related"
+                        id="Refund related"
+                      />
+                      <Label htmlFor="Refund related">Refund related</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="general4" id="general4" />
-                      <Label htmlFor="general4">General Inquiry</Label>
+                      <RadioGroupItem
+                        value="General Inquiry"
+                        id="General Inquiry"
+                      />
+                      <Label htmlFor="General Inquiry">General Inquiry</Label>
                     </div>
                   </RadioGroup>
                 )}
@@ -229,6 +244,9 @@ export default function ContactPage() {
           </form>
         </div>
       </main>
+      <div className="mb-20">
+        <FAQ />
+      </div>
     </div>
   );
 }

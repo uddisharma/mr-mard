@@ -33,6 +33,7 @@ export const register = async (values: RegisterSchemaData) => {
 
   await db.user.create({
     data: {
+      id: crypto.randomUUID(),
       name,
       email,
       password: hashedPassword,

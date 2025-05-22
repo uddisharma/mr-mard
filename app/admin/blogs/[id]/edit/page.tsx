@@ -33,8 +33,6 @@ export default async function EditBlogPage({ params }: PageProps) {
     where: { id: Number(params.id) },
   });
 
-  console.log("content", blog?.content);
-
   if (!blog) {
     notFound();
   }

@@ -83,13 +83,13 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
 
         <div className="bg-white rounded-lg border overflow-x-auto">
           <div className="min-w-[800px]">
-            <div className="grid grid-cols-[1fr_0.8fr_0.8fr_1fr_1fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
+            <div className="grid grid-cols-[0.8fr_0.8fr_1.2fr_1.3fr_1fr_1fr_auto] gap-4 p-4 bg-btnblue text-white rounded-t-lg text-left">
               <div>ID</div>
               <div>Phone</div>
-              <div>Date</div>
-              <div>Time</div>
-              <div>Date</div>
-              <div>Status</div>
+              <div>Appointment Date</div>
+              <div className="ml-4">Appointment Time</div>
+              <div className="ml-4">Booked on</div>
+              <div className="ml-4">Status</div>
               <div>Actions</div>
             </div>
 
@@ -102,7 +102,7 @@ export default async function AppointmentsPage({ searchParams }: PageProps) {
                 appointments.map((appointment) => (
                   <div
                     key={appointment.id}
-                    className="grid grid-cols-[1fr_0.8fr_0.8fr_1fr_1fr_1fr_auto] gap-4 p-4 hover:bg-gray-50 text-left"
+                    className="grid grid-cols-[0.8fr_0.8fr_1fr_1.2fr_1fr_1fr_auto] gap-4 p-4 hover:bg-gray-50 text-left"
                   >
                     <div>{appointment.id.substring(0, 8).toUpperCase()}</div>
                     <div>{appointment.user.phone}</div>

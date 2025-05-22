@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {
   try {
-    const { userId, lastStep, selectedDate, selectedTimeSlotId } =
+    const { userId, lastStep, selectedDate, selectedTimeSlotId, phone } =
       await request.json();
 
     if (!userId || !lastStep) {
@@ -13,13 +13,19 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
 
     const existingProgress = await db.userProgress.findFirst({
       where: {
         userId,
-        createdAt: today,
+        createdAt: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
       },
     });
 
@@ -39,6 +45,7 @@ export async function PUT(request: NextRequest) {
         data: {
           userId,
           lastStep,
+          phoneNumber: phone ?? "",
           selectedDate: selectedDate ? new Date(selectedDate) : undefined,
           selectedTimeSlotId,
         },
