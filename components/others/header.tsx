@@ -23,7 +23,7 @@ const Header = async ({ className }: { className?: string }) => {
           />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-black">
-          <Link href="/appointment-booking">Analyze</Link>
+          {/* <Link href="/appointment-booking">Analyze</Link> */}
           <Link href="/technology">Our Technology</Link>
           <Link href="/about-us">About us</Link>
           {/* <Link href="/">FAQs</Link> */}
