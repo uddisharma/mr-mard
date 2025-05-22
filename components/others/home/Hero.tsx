@@ -172,7 +172,7 @@ const Hero = () => {
             </div>
             Trusted by 1000+ customers
           </div>
-          {/* <Link href="/analyze">
+          {/* <Link href="/appointment-booking">
             <div className={`text-white rounded-[12px]`}>
               <button className="inline-flex h-12 items-center justify-center rounded-[12px] px-6 font-medium text-black w-full bg-transparent border-black border-[2px]">
                 Try AI Hair Analysis

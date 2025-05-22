@@ -217,14 +217,17 @@ export default function FaceDetection() {
         return setIssues(data?.issues);
       }
 
-      const response1 = await fetch("https://api.milele.health/analyze-hair/", {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "accept-language": "en-US,en;q=0.9",
+      const response1 = await fetch(
+        "https://api.milele.health/appointment-booking-hair/",
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "accept-language": "en-US,en;q=0.9",
+          },
+          body: formData,
         },
-        body: formData,
-      });
+      );
 
       const data1 = await response1.json();
       setData(data1);

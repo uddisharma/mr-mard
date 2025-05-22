@@ -18,7 +18,7 @@ const Work = () => {
           </h2>
         </div>
         <div className="mt-4 flex justify-center items-center">
-          <Link href={`/analyze`}>
+          <Link href={`/appointment-booking`}>
             <Button
               variant="default"
               className="bg-[#1a2255] text-white p-[6px_30px] text-[14px] rounded-[11px] py-[25px]"
@@ -66,7 +66,7 @@ const Work = () => {
                     treatments based on advanced hair and scalp analysis.
                   </p>
                   <div className=" mt-4">
-                    <Link href={`/analyze`}>
+                    <Link href={`/appointment-booking`}>
                       <Button
                         variant="default"
                         className="bg-btnblue text-white p-[6px_30px] text-[14px] rounded-[11px] py-[20px]"

@@ -35,7 +35,7 @@ export default function Analyze() {
       </div> */}
 
       <Image
-        src="/analyze.png"
+        src="/appointment-booking.png"
         alt="progress"
         width={500}
         height={500}

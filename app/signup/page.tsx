@@ -158,7 +158,7 @@ export default function SignupForm() {
           year: "",
         });
         router.push(
-          `${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")} ` : "/analyze"}`,
+          `${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")} ` : "/appointment-booking"}`,
         );
       } else {
         toast.error(res?.message);

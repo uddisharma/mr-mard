@@ -150,7 +150,7 @@ export default function PhoneVerification({
                   {isPending ? "Sending..." : "Send OTP"}
                 </button>
                 {/* <a
-                  href="/analyze"
+                  href="/appointment-booking"
                   className="text-sm font-semibold leading-6 text-foreground"
                 >
                   Analyze your hairs <span aria-hidden="true">→</span>
@@ -204,7 +204,7 @@ export default function PhoneVerification({
                   {isPending ? "Verifying..." : "Verify OTP"}
                 </button>
                 {/* <a
-                  href="/analyze"
+                  href="/appointment-booking"
                   className="text-sm font-semibold leading-6 text-foreground"
                 >
                   Analyze your hairs <span aria-hidden="true">→</span>

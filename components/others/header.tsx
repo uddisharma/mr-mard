@@ -23,7 +23,7 @@ const Header = async ({ className }: { className?: string }) => {
           />
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-black">
-          <Link href="/analyze">Analyze</Link>
+          <Link href="/appointment-booking">Analyze</Link>
           <Link href="/technology">Our Technology</Link>
           <Link href="/about-us">About us</Link>
           {/* <Link href="/">FAQs</Link> */}
@@ -51,7 +51,7 @@ const Header = async ({ className }: { className?: string }) => {
                 {/* <Link href="/technology" className="text-lg font-medium">
                   Our Technology
                 </Link> */}
-                {/* <Link href="/analyze" className="text-lg font-medium">
+                {/* <Link href="/appointment-booking" className="text-lg font-medium">
                   Analyze
                 </Link> */}
                 <Link href="/about-us" className="text-lg font-medium">
@@ -80,7 +80,7 @@ const Header = async ({ className }: { className?: string }) => {
               <Link href="/technology" className="text-lg font-medium">
                 Our Technology
               </Link>
-              {/* <Link href="/analyze" className="text-lg font-medium">
+              {/* <Link href="/appointment-booking" className="text-lg font-medium">
                 Analyze
               </Link> */}
               <Link href="/about-us" className="text-lg font-medium">
