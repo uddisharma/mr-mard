@@ -54,6 +54,7 @@ jobs:
           script: |
             cd ${{ secrets.LIVE_PATH }}
             export DATABASE_URL=${{ secrets.DATABASE_URL_QA }}
+            npx prisma migrate reset --force --skip-generate --skip-seed
             npx prisma migrate deploy
 
       - name: Restart App via PM2
