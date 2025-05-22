@@ -309,10 +309,10 @@ export default async function BlogPage({ params }: PageProps) {
                 </div>
 
                 <div className="bg-yellow p-6 rounded-lg text-center">
-                  <h2 className=" mb-2 text-[24px]">
+                  <h2 className=" mb-2 text-[20px]">
                     Get expert advice for your hair
                   </h2>
-                  <p className="text-[22px] text-black mb-10">
+                  <p className="text-[14px] text-black mb-10">
                     get a 20 min in depth consultation with our doctors to
                     address your hair problems
                   </p>

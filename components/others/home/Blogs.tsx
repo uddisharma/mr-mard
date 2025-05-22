@@ -28,13 +28,14 @@ const Blogs = ({ blogs }: any) => {
     return (
       <Link href={`/blogs/${blog?.id}`}>
         <article className="cursor-pointer flex flex-col">
-          <div className="relative h-[220px] mb-4 border-[1px] border-gray-200 rounded-lg overflow-hidden">
+          <div className="relative h-[200px] mb-4 border-[1px] border-gray-200 rounded-lg overflow-hidden">
             <Image
               src={blog?.image ?? "/blogs2.png"}
               alt={blog?.title ?? "Blog"}
-              height={240}
-              width={300}
-              className="w-full h-full object-cover"
+              // height={240}
+              // width={800}
+              fill
+              className="w-full h-full"
             />
           </div>
           <div className="flex items-center gap-2 text-sm text-gray1 mb-2">
