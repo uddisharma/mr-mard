@@ -52,6 +52,7 @@ const Page = () => {
         );
 
         const data1 = await response1.json();
+        return console.log(data1);
         const formData1 = new FormData();
         formData1.append("image", file);
         const uploaded = await uploadFile(formData1);

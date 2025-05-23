@@ -15,7 +15,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Milele Health",
+  title: "Barsys - Crafting Cocktails Made Easy",
   description: "Milele Health",
   icons: {
     icon: "/icon.png",
