@@ -34,13 +34,15 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
   const [errors, setErrors] = useState<string>("");
   const [isPending, startTransition] = useTransition();
   const [step, setStep] = useState<number>(0);
+  const [reportId, setReportId] = useState<number>(0);
 
   useEffect(() => {
     localStorage.setItem("startTime", JSON.stringify(new Date().toISOString()));
     const reportData = localStorage.getItem("reportId");
     if (reportData) {
-      const { step } = JSON.parse(reportData);
+      const { step, reportId } = JSON.parse(reportData);
       setStep(step);
+      setReportId(Number(reportId));
     }
   }, []);
 
@@ -99,6 +101,7 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
         };
         localStorage.setItem("reportId", JSON.stringify(data));
         localStorage.removeItem("startTime");
+        setReportId(res.reportId);
       } else {
         toast.error(res.message);
       }
@@ -237,7 +240,7 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
             </div>
           ) : (
             <div>
-              <FaceDetection />
+              <FaceDetection reportId={reportId} />
             </div>
           )}
         </div>

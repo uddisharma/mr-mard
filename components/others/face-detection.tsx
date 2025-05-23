@@ -6,8 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { uploadFile } from "@/actions/upload";
+import { analyzeHair } from "@/actions/analyze";
+import { toast } from "sonner";
 
-export default function FaceDetection() {
+export default function FaceDetection({ reportId }: { reportId: number }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -217,27 +220,36 @@ export default function FaceDetection() {
         return setIssues(data?.issues);
       }
 
-      const response1 = await fetch(
-        "https://api.milele.health/appointment-booking-hair/",
-        {
-          method: "POST",
-          headers: {
-            accept: "application/json",
-            "accept-language": "en-US,en;q=0.9",
-          },
-          body: formData,
+      const response1 = await fetch("https://api.milele.health/analyze-hair", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "accept-language": "en-US,en;q=0.9",
         },
-      );
+        body: formData,
+      });
 
       const data1 = await response1.json();
-      setData(data1);
-      const reportData = localStorage.getItem("reportId");
-      if (reportData) {
-        localStorage.removeItem("reportId");
-        localStorage.removeItem("startTime");
-        const { reportId } = JSON.parse(reportData);
-        router.push(`/profile/my-reports/${reportId}`);
+      const formData1 = new FormData();
+      formData1.append("image", file);
+      const uploaded = await uploadFile(formData1);
+      const analizedData = {
+        image: uploaded.url,
+        analysis: data1,
+      };
+      setData(analizedData);
+      const res = await analyzeHair({
+        reportId: reportId,
+        analysis: analizedData,
+      });
+      if (res.success) {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
       }
+      localStorage.removeItem("reportId");
+      localStorage.removeItem("startTime");
+      router.push(`/report/${reportId}`);
     } catch (error) {
       console.error("Error capturing image:", error);
       setApiError(
