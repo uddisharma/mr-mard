@@ -1,5 +1,7 @@
 import { Card } from "@/components/ui/card";
 import HairHealthDashboard from "./components/dashboard";
+import { HardDriveIcon } from "lucide-react";
+import { BellCurveChart } from "./components/bell-curve-chart";
 
 export default function Home() {
   const hairData = {
@@ -53,19 +55,18 @@ export default function Home() {
   return (
     <>
       {/* <HairHealthDashboard /> */}
-      <main className="container max-w-screen-lg mx-auto m-auto">
+      <main className="container max-w-screen-lg mx-auto m-auto bg-[#D5D5D5]">
         <div className="min-h-screen p-4">
           <div className="grid grid-cols-10 gap-4 h-full">
             {/* Sidebar */}
-            <div className="col-span-3 space-y-5 bg-white rounded-2xl p-4">
-              <div className="p-6 rounded-xl">
+            {/* <div className="col-span-3 space-y-5  rounded-2xl p-4">
+              <div className="p-6 bg-white rounded-xl">
                 <h3 className="text-lg font-semibold mb-4 text-center">
                   Your Hair Score
                 </h3>
                 <div className="flex justify-center">
                   <div className="relative w-48 h-48">
                     <svg className="w-full h-full" viewBox="0 0 100 100">
-                      {/* Background Circle (semi-circle style) */}
                       <circle
                         cx="50"
                         cy="50"
@@ -73,13 +74,11 @@ export default function Home() {
                         fill="none"
                         stroke="#f1f5f9"
                         strokeWidth="10"
-                        strokeDasharray="141.3" // Half of full circle (2πr / 2)
+                        strokeDasharray="141.3"
                         strokeDashoffset="0"
                         strokeLinecap="round"
                         transform="rotate(-140 50 50)"
                       />
-
-                      {/* Progress Arc */}
                       <circle
                         cx="50"
                         cy="50"
@@ -92,8 +91,6 @@ export default function Home() {
                         strokeLinecap="round"
                         transform="rotate(-100 50 50)"
                       />
-
-                      {/* Score Text */}
                       <text
                         x="50"
                         y="50"
@@ -114,7 +111,6 @@ export default function Home() {
                         /100
                       </text>
 
-                      {/* Labels */}
                       <text
                         x="15"
                         y="95"
@@ -157,33 +153,55 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Main Content Area */}
-            <div className="col-span-7 grid grid-cols-2 gap-4">
-              <div className=" rounded-2xl p-4 h-40 text-white">
-                <div className="py-10 shadow-sm">
-                  <h3 className="text-lg font-semibold text-center mb-4">
+            <div className="col-span-7 grid grid-cols-2 gap-4 rounded-2xl p-4">
+              {/* <div className="bg-white rounded-2xl p-4 h-44 text-black flex justify-center items-center">
+                <div className="py-8 shadow-sm text-left">
+                  <h3 className="text-lg font-semibold px-6 mb-6 mr-16">
                     Total Hair Count
                   </h3>
-                  <div className="flex justify-center items-center h-full">
+                  <div  className="flex justify-center items-center h-full m-auto">
                     <div className="text-5xl font-bold text-[#1e3a5f]">
-                      {enhancedData.estimated_hair_count?.toLocaleString() ||
-                        "95,675"}
+                      {enhancedData.estimated_hair_count?.toLocaleString() || "95,675"}
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-2xl p-4 h-40 text-white">
-                Card 2
+              <div className="bg-white rounded-2xl p-4 h-44 text-black flex justify-center items-center">
+                <div className="py-10 shadow-sm text-center">
+                  <h3 className="text-lg font-semibold px-6 mb-6 ">
+                    Total Hair Type
+                  </h3>
+                  <div className="flex justify-center gap-5 items-center bg-gray-200 p-2 rounded-2xl h-full">
+                    {["Straight", "Wavy", "Curly"].map((type) => (
+                      <div
+                        key={type}
+                        className="text-5xl font-bold text-[#1e3a5f]"
+                      >
+                        <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-8 h-8 flex items-center justify-center">
+                          <HardDriveIcon className="w-4 h-4 text-btnblue" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div> */}
+              <div className="rounded-2xl p-4 h-44 text-btnblue">
+                <Card className="p-6 shadow-sm">
+                  <BellCurveChart
+                    value={91}
+                    average={100}
+                    label="91K"
+                    color="red"
+                  />
+                </Card>
               </div>
-              <div className="bg-gray-800 rounded-2xl p-4 h-40 text-white">
-                Card 3
-              </div>
-              <div className="bg-gray-800 rounded-2xl p-4 h-40 text-white">
+              <div className="bg-gray-800 rounded-2xl p-4 h-40 text-btnblue">
                 Card 4
               </div>
-              <div className="col-span-2 bg-gray-800 rounded-2xl p-4 h-40 text-white">
+              <div className="col-span-2 bg-gray-800 rounded-2xl p-4 h-40 text-btnblue">
                 Full Width Card
               </div>
             </div>

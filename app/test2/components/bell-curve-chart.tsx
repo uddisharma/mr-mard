@@ -92,11 +92,12 @@ export function BellCurveChart({
     ctx.fillText(label, valueX, 25);
 
     // Draw "You" and "Age Average" labels
-    ctx.font = "12px Inter, system-ui, sans-serif";
+    ctx.font = "8px Inter, system-ui, sans-serif";
     ctx.fillStyle = "#64748b";
     ctx.textAlign = "center";
-    ctx.fillText("You", valueX, height - 5);
-    ctx.fillText("Age Average", averageX, height - 5);
+    const gap = Math.abs(valueX - averageX) < 40 ? 30 : 20;
+    ctx.fillText("You", valueX - gap, height - 5);
+    ctx.fillText("Age Average", averageX + gap, height - 5);
   }, [value, average, label, color]);
 
   return (
