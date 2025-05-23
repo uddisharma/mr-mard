@@ -17,11 +17,16 @@ import {
   reportData3,
   reportData4,
 } from "@/data/report";
+import Report from "@/components/others/report";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { User } from "next-auth";
+import Score from "@/components/others/Score";
 
 export default function HairAnalysis() {
+  const user = useCurrentUser();
   return (
     <div className="container mx-auto">
-      <MobileVerion />
+      <MobileVerion user={user} />
       <div className="p-4 rounded-xl">
         <Tabs defaultValue="general" className="w-full">
           <div className="flex justify-center mb-6 md:mb-10">
@@ -55,16 +60,19 @@ export default function HairAnalysis() {
   );
 }
 
-const MobileVerion = () => {
+const MobileVerion = ({ user }: { user: User | undefined }) => {
   return (
     <>
       <div className="md:bg-yellow bg-[#f9f3ce] py-6  md:mx-6 px-4 mx-5 rounded-[15px] md:rounded-[144px]  ">
         <p className="text-[#1E2A4A] text-[25px] text-center font-semibold hidden md:block">
-          Hair Health Report for Naveen
+          Hair Health Report for {user?.name}
         </p>
         <p className="text-[#1E2A4A] text-[25px] text-center font-semibold md:hidden">
           Hair Health Report
         </p>
+      </div>
+      <div className="hidden md:block md:mx-24">
+        <Report />
       </div>
 
       <Card className="max-w-2xl bg-[#f9f3ce] md:hidden mx-5 rounded-[15px] mt-8">
@@ -104,9 +112,7 @@ const MobileVerion = () => {
               Your Hair Score
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col items-center gap-6 pb-12 my-5 mb-12">
-            <Image src="/85.png" alt="" className="" width={200} height={200} />
-          </CardContent>
+          <Score />
         </Card>
         <Button
           variant="default"
@@ -120,16 +126,16 @@ const MobileVerion = () => {
         <Card className="w-full bg-white border-[1px] border-black">
           <CardHeader>
             <CardTitle className="text-2xl font-semibold text-center">
-              Naveen’s projection with and without Milele Health
+              {user?.name}’s projection with and without Milele Health
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 pb-5 my-5">
             <Image
-              src="/report-chart.png"
+              src="/graphs/image3.png"
               alt=""
-              className=""
-              width={700}
-              height={300}
+              className="w-full h-full"
+              width={1000}
+              height={500}
             />
             <Separator />
             <ul className="text-[#919192] space-y-2 mt-3 list-disc list-inside">
