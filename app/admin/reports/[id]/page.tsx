@@ -306,8 +306,8 @@ export default async function ViewReportPage({ params }: PageProps) {
         </>
       )}
       <div className="flex justify-center items-center">
-        {/* @ts-ignore */}
         <Image
+          //@ts-ignore
           src={data?.analysis?.image}
           alt={user?.firstName || "User"}
           height={500}
