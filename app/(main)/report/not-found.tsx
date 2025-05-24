@@ -11,9 +11,9 @@ const NotFound = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-gray-800 p-4">
       <h1 className="text-9xl font-bold text-btnblue mt-[-100px]">404</h1>
-      <h2 className="text-3xl font-semibold mt-4">Page Not Found</h2>
+      <h2 className="text-3xl font-semibold mt-4">Report Not Found</h2>
       <p className="text-lg text-gray-500 mt-2 mb-6">
-        Oops! The page you are looking for doesn't exist or has been moved.
+        Oops! The report you are looking for doesn't exist or has been moved.
       </p>
       <Link
         href="/"

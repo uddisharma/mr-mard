@@ -1,21 +1,21 @@
 "use client";
 import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
-const value = 80;
-const chartData = [{ desktop: value, mobile: 100 - value }];
 
-const chartConfig = {
-  desktop: {
-    label: "Hair Count",
-    color: "#6976eb",
-  },
-  mobile: {
-    label: "Hair Type",
-    color: "#f2f3f6",
-  },
-} satisfies ChartConfig;
+export default function Score({ score }: { score: number }) {
+  const chartData = [{ desktop: score, mobile: 100 - score }];
 
-export default function Score() {
+  const chartConfig = {
+    desktop: {
+      label: "Hair Count",
+      color: "#6976eb",
+    },
+    mobile: {
+      label: "Hair Type",
+      color: "#f2f3f6",
+    },
+  } satisfies ChartConfig;
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-1 items-center pb-0">
@@ -50,7 +50,7 @@ export default function Score() {
                           fontSize={28}
                           fontWeight={700}
                         >
-                          {value} /
+                          {score} /
                         </tspan>
                         <tspan
                           className="fill-foreground text-md font-bold"

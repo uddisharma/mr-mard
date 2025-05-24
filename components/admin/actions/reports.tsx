@@ -26,12 +26,13 @@ import { toast } from "sonner";
 
 interface ReportActionsProps {
   report: {
-    id: number;
+    id: any;
     name: string;
   };
 }
 
 export default function ReportActions({ report }: ReportActionsProps) {
+  console.log(report);
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 

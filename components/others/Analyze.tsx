@@ -21,12 +21,40 @@ import Report from "@/components/others/report";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { User } from "next-auth";
 import Score from "@/components/others/Score";
-
-export default function HairAnalysis() {
+import { useState } from "react";
+import Link from "next/link";
+export default function HairAnalysis({ data }: { data: any }) {
+  const enhancedData = {
+    ...data,
+    overall_score: data.overall_score || 75,
+    estimated_hair_count: data.estimated_hair_count || 95675,
+    metrics: {
+      "Hair Thickness": 80,
+      Oiliness: 65,
+      "Hair Density": 78,
+      "Scalp Coverage": 85,
+      Dryness: 70,
+      "Hair Type Adjustment": 75,
+    },
+    hairCount: {
+      current: 91000,
+      average: 100000,
+    },
+    hairScore: {
+      current: 75,
+      average: 70,
+    },
+    recommendations: [
+      "Better hair coverage.",
+      "Dryness in top 70%; hydrate more.",
+      "Hair density improved; more growth",
+      "No dandruff.",
+    ],
+  };
   const user = useCurrentUser();
   return (
     <div className="container mx-auto">
-      <MobileVerion user={user} />
+      <MobileVerion user={user} enhancedData={enhancedData} />
       <div className="p-4 rounded-xl">
         <Tabs defaultValue="general" className="w-full">
           <div className="flex justify-center mb-6 md:mb-10">
@@ -60,10 +88,17 @@ export default function HairAnalysis() {
   );
 }
 
-const MobileVerion = ({ user }: { user: User | undefined }) => {
+const MobileVerion = ({
+  user,
+  enhancedData,
+}: {
+  user: User | undefined;
+  enhancedData: any;
+}) => {
+  const [showReport, setShowReport] = useState<boolean>(false);
   return (
     <>
-      <div className="md:bg-yellow bg-[#f9f3ce] py-6  md:mx-6 px-4 mx-5 rounded-[15px] md:rounded-[144px]  ">
+      <div className="md:bg-yellow bg-[#f9f3ce] py-5  md:mx-6 px-4 mx-5 rounded-[15px] md:rounded-[144px]  ">
         <p className="text-[#1E2A4A] text-[25px] text-center font-semibold hidden md:block">
           Hair Health Report for {user?.name}
         </p>
@@ -72,7 +107,7 @@ const MobileVerion = ({ user }: { user: User | undefined }) => {
         </p>
       </div>
       <div className="hidden md:block md:mx-24">
-        <Report />
+        <Report enhancedData={enhancedData} />
       </div>
 
       <Card className="max-w-2xl bg-[#f9f3ce] md:hidden mx-5 rounded-[15px] mt-8">
@@ -112,17 +147,42 @@ const MobileVerion = ({ user }: { user: User | undefined }) => {
               Your Hair Score
             </CardTitle>
           </CardHeader>
-          <Score />
+          <Score score={enhancedData.overall_score} />
         </Card>
         <Button
+          onClick={() => setShowReport(!showReport)}
           variant="default"
           className="absolute left-1/2 top-[80%] bottom-0 -translate-x-1/2 rounded-full w-[95px] px-3 h-[95px] bg-btnblue hover:bg-btnblue flex items-center justify-center text-sm"
         >
-          See More
+          {showReport ? "See Less" : "See More"}
         </Button>
       </div>
+      {showReport && (
+        <div className="p-8 mx-5  rounded-xl bg-[#eaecef]">
+          <div className="space-y-4">
+            {Object.entries(enhancedData.metrics).map(([name, value]: any) => (
+              <div key={name} className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">{name}</span>
+                  <span className="text-gray-500">{value}/100</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="relative w-full h-2 bg-yellow rounded-full overflow-hidden">
+                    <div
+                      className="absolute top-0 left-0 h-full bg-btnblue rounded-full"
+                      style={{ width: `${value}%` }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
-      <div className="relative pb-8 mx-5 mt-16 md:hidden">
+      <div
+        className={`relative pb-5 mx-5  md:hidden ${showReport ? "mt-12" : "mt-16"}`}
+      >
         <Card className="w-full bg-white border-[1px] border-black">
           <CardHeader>
             <CardTitle className="text-2xl font-semibold text-center">
@@ -130,13 +190,21 @@ const MobileVerion = ({ user }: { user: User | undefined }) => {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 pb-5 my-5">
-            <Image
-              src="/graphs/image3.png"
-              alt=""
-              className="w-full h-full"
-              width={1000}
-              height={500}
-            />
+            <div className="relative w-full h-full flex items-center justify-center">
+              <Image
+                src="/graphs/image3.png"
+                alt=""
+                className="w-full h-full"
+                width={1000}
+                height={500}
+              />
+              <p className="absolute top-[24px] left-[81px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
+                23423
+              </p>
+              <p className="absolute top-[60px] left-[102px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
+                36546
+              </p>
+            </div>
             <Separator />
             <ul className="text-[#919192] space-y-2 mt-3 list-disc list-inside">
               <li>Better hair coverage</li>
@@ -147,7 +215,11 @@ const MobileVerion = ({ user }: { user: User | undefined }) => {
           </CardContent>
         </Card>
       </div>
-
+      <Link href="/appointment-booking?f=report">
+        <div className="mx-auto w-max bg-btnblue mb-10 text-white px-20 py-3 rounded-full shadow-lg cursor-pointer hover:bg-gray-800 transition duration-300 mt-5 md:hidden">
+          Book Consultation
+        </div>
+      </Link>
       <div className="md:bg-yellow bg-[#f9f3ce] py-4 md:mx-6 px-4 mx-5 rounded-[15px] md:rounded-[144px] md:hidden mb-3">
         <p className="text-[#1E2A4A] text-[25px] text-center font-semibold">
           Diet Plans

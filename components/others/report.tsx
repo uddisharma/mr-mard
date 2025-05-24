@@ -1,56 +1,9 @@
 import { HardDriveIcon } from "lucide-react";
 import Score from "./Score";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Report() {
-  const hairData = {
-    density: 0.0,
-    scaled_density: 0.0,
-    coverage: {
-      overall: 0.0,
-      frontal: 0.0,
-      crown: 0.0,
-    },
-    regional_densities: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-    hair_type: "Straight",
-    hair_type_confidence: 0.8140454888343811,
-    density_class: "High",
-    hair_condition: "dry",
-    condition_confidence: 0.3780626654624939,
-    overall_score: 34.0,
-    future_prediction: {},
-    estimated_hair_count: null,
-    expected_range: null,
-  };
-
-  const enhancedData = {
-    ...hairData,
-    overall_score: hairData.overall_score || 75,
-    estimated_hair_count: hairData.estimated_hair_count || 95675,
-    metrics: {
-      "Hair Thickness": 80,
-      Oiliness: 65,
-      "Hair Density": 78,
-      "Scalp Coverage": 85,
-      Dryness: 70,
-      "Hair Type Adjustment": 75,
-    },
-    hairCount: {
-      current: 91000,
-      average: 100000,
-    },
-    hairScore: {
-      current: 75,
-      average: 70,
-    },
-    recommendations: [
-      "Better hair coverage.",
-      "Dryness in top 70%; hydrate more.",
-      "Hair density improved; more growth",
-      "No dandruff.",
-    ],
-  };
-
+export default function Report({ enhancedData }: { enhancedData: any }) {
   return (
     <main className="container w-full mx-auto my-10 bg-[#f2f2f2] rounded-2xl px-16 py-6">
       <div className=" p-4">
@@ -60,26 +13,28 @@ export default function Report() {
               <h3 className="text-lg font-semibold mb-10 text-center">
                 Your Hair Score
               </h3>
-              <Score />
+              <Score score={enhancedData.overall_score} />
             </div>
             <div className="p-6 shadow-sm rounded-3xl bg-[#f7f7f7]">
               <div className="space-y-4">
-                {Object.entries(enhancedData.metrics).map(([name, value]) => (
-                  <div key={name} className="space-y-1">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">{name}</span>
-                      <span className="text-gray-500">{value}/100</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="relative w-full h-2 bg-yellow rounded-full overflow-hidden">
-                        <div
-                          className="absolute top-0 left-0 h-full bg-btnblue rounded-full"
-                          style={{ width: `${value}%` }}
-                        ></div>
+                {Object.entries(enhancedData.metrics).map(
+                  ([name, value]: any) => (
+                    <div key={name} className="space-y-1">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600">{name}</span>
+                        <span className="text-gray-500">{value}/100</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="relative w-full h-2 bg-yellow rounded-full overflow-hidden">
+                          <div
+                            className="absolute top-0 left-0 h-full bg-btnblue rounded-full"
+                            style={{ width: `${value}%` }}
+                          ></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ),
+                )}
               </div>
             </div>
           </div>
@@ -102,7 +57,7 @@ export default function Report() {
                 <h3 className="text-lg font-semibold px-6 mb-6 ">
                   Total Hair Type
                 </h3>
-                <div className="flex justify-evenly gap-5 items-center bg-[#ededed] p-2 rounded-2xl h-full mx-5">
+                <div className="flex justify-evenly gap-5 items-center bg-[#ededed] p-3 rounded-2xl h-full mx-5">
                   {["Straight", "Wavy", "Curly"].map((type) => (
                     <div
                       key={type}
@@ -164,6 +119,11 @@ export default function Report() {
           </div>
         </div>
       </div>
+      <Link href="/appointment-booking?f=report">
+        <div className="mx-auto w-max bg-btnblue text-white px-20 py-3 rounded-full shadow-lg cursor-pointer hover:bg-gray-800 transition duration-300 mt-5">
+          Book Consultation
+        </div>
+      </Link>
     </main>
   );
 }

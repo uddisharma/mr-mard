@@ -10,7 +10,7 @@ export default async function MyReportsPage() {
     return redirect("/auth");
   }
 
-  const reports = await db.report.findMany({
+  const analysis = await db.analysis.findMany({
     where: { userId: sessions.id },
     orderBy: { createdAt: "desc" },
   });
@@ -18,7 +18,7 @@ export default async function MyReportsPage() {
   return (
     <div className="min-h-screen px-5 md:px-16 pt-5">
       <ProfileHeader user={sessions} />
-      <ReportsList reports={reports} />
+      <ReportsList analysis={analysis} />
     </div>
   );
 }

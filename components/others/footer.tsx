@@ -31,9 +31,9 @@ const Footer = () => {
             <div className="m-auto">
               <h3 className=" mb-4">Quick Links</h3>
               <ul className="space-y-2 text-sm text-white/80">
-                {/* <li>
-                  <Link href="/appointment-booking">Take the test</Link>
-                </li> */}
+                <li>
+                  <Link href="/analyze">Take the test</Link>
+                </li>
                 <li>
                   <Link href="/blogs">Blogs</Link>
                 </li>

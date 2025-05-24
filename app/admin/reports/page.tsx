@@ -69,16 +69,67 @@ export default async function ReportsPage({ searchParams }: PageProps) {
     );
   }
 
-  const reports = await db.report.findMany({
-    where,
+  // const reports = await db.report.findMany({
+  //   where,
+  //   skip: (page - 1) * limit,
+  //   take: limit,
+  //   orderBy: { createdAt: "desc" },
+  //   include: { user: true },
+  // });
+
+  // const totalReports = await db.report.count({ where });
+  // const totalPages = Math.ceil(totalReports / limit);
+
+  const where1: Prisma.AnalysisWhereInput = search
+    ? {
+        OR: [
+          {
+            user: {
+              firstName: {
+                contains: search,
+                mode: "insensitive" as Prisma.QueryMode,
+              },
+            },
+          },
+          {
+            user: {
+              lastName: {
+                contains: search,
+                mode: "insensitive" as Prisma.QueryMode,
+              },
+            },
+          },
+          {
+            user: {
+              email: {
+                contains: search,
+                mode: "insensitive" as Prisma.QueryMode,
+              },
+            },
+          },
+        ],
+      }
+    : {};
+
+  const analysis = await db.analysis.findMany({
+    where: where1,
     skip: (page - 1) * limit,
     take: limit,
     orderBy: { createdAt: "desc" },
-    include: { user: true },
+    include: {
+      user: {
+        select: {
+          firstName: true,
+          lastName: true,
+          email: true,
+        },
+      },
+      report: true,
+    },
   });
 
-  const totalReports = await db.report.count({ where });
-  const totalPages = Math.ceil(totalReports / limit);
+  const totalAnalysis = await db.analysis.count({ where: where1 });
+  const totalPages1 = Math.ceil(totalAnalysis / limit);
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
@@ -103,17 +154,18 @@ export default async function ReportsPage({ searchParams }: PageProps) {
               <div>User</div>
               <div className="text-center">Email</div>
               <div className="text-center">Questions</div>
+
               <div className="text-center">Created At</div>
               <div className="text-center">Actions</div>
             </div>
 
             <div className="divide-y">
-              {reports.length === 0 ? (
+              {analysis.length === 0 ? (
                 <div className="p-4 text-center text-muted-foreground">
                   No reports found
                 </div>
               ) : (
-                reports.map((report) => (
+                analysis.map((report: any) => (
                   <div
                     key={report.id}
                     className="grid grid-cols-[1fr_1.5fr_1fr_1fr_auto] gap-4 p-4 items-left justify-left hover:bg-gray-50 text-left"
@@ -125,14 +177,14 @@ export default async function ReportsPage({ searchParams }: PageProps) {
                     <div className="text-center">{report.user.email}</div>
 
                     <div className="text-center">
-                      {report?.questions?.length} questions
+                      {report?.report?.questions?.length} questions
                     </div>
 
                     <div className="text-center">
                       {format(new Date(report.createdAt), "dd/MM/yyyy")}
                     </div>
 
-                    <div className="flex items-left justify-left ">
+                    <div className="flex items-left justify-left">
                       <ReportActions
                         report={{
                           id: report.id,
@@ -148,8 +200,8 @@ export default async function ReportsPage({ searchParams }: PageProps) {
         </div>
         <Pagination
           searchParams={searchParams}
-          total={totalReports}
-          totalPages={totalPages}
+          total={totalAnalysis}
+          totalPages={totalPages1}
         />
       </main>
     </div>
