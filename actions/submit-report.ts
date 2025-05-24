@@ -20,9 +20,7 @@ export async function submitReport(
 
   const validatedData = reportSchema.parse(reportData);
   let { questions } = validatedData;
-  const startTime = startTimeStr
-    ? new Date(JSON.parse(startTimeStr))
-    : new Date();
+  const startTime = startTimeStr ? new Date(startTimeStr) : new Date();
   const endTime = new Date();
 
   try {
@@ -45,8 +43,8 @@ export async function submitReport(
       reportId: report.id,
       message: "Report submitted successfully",
     };
-  } catch (error) {
-    console.error("Error submitting report:", error);
+  } catch (error: any) {
+    console.error("Error submitting report:", error?.message);
     return { success: false, message: "Error submitting report" };
   }
 }

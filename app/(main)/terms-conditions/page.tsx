@@ -1,5 +1,10 @@
 import React from "react";
 
+export const metadata = {
+  title: "Terms and Conditions",
+  description: "Terms and Conditions",
+};
+
 export default function TermsAndConditions() {
   return (
     <div className="text-black md:mx-40 mb-10">

@@ -1,6 +1,11 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
+export const metadata = {
+  title: "How It Works",
+  description: "How It Works",
+};
+
 export default function HowWeDoIt() {
   return (
     <div className="text-black md:mx-40">

@@ -198,10 +198,10 @@ const MobileVerion = ({
                 width={1000}
                 height={500}
               />
-              <p className="absolute top-[24px] left-[81px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
+              <p className="absolute top-[28px] left-[95px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
                 23423
               </p>
-              <p className="absolute top-[60px] left-[102px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
+              <p className="absolute top-[70px] left-[115px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
                 36546
               </p>
             </div>

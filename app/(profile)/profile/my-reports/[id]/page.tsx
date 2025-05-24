@@ -5,6 +5,12 @@ import ReportDetails from "@/components/others/ReportDetail";
 interface PageProps {
   params: { id: string };
 }
+
+export const metadata = {
+  title: "Report Detail",
+  description: "Report Detail",
+};
+
 export default async function ReportDetail({ params }: PageProps) {
   const sessions = await currentUser();
 

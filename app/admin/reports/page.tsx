@@ -20,37 +20,6 @@ export default async function ReportsPage({ searchParams }: PageProps) {
   const search =
     typeof searchParams.search === "string" ? searchParams.search : undefined;
 
-  const where: Prisma.ReportWhereInput = search
-    ? {
-        OR: [
-          {
-            user: {
-              firstName: {
-                contains: search,
-                mode: "insensitive" as Prisma.QueryMode,
-              },
-            },
-          },
-          {
-            user: {
-              lastName: {
-                contains: search,
-                mode: "insensitive" as Prisma.QueryMode,
-              },
-            },
-          },
-          {
-            user: {
-              email: {
-                contains: search,
-                mode: "insensitive" as Prisma.QueryMode,
-              },
-            },
-          },
-        ],
-      }
-    : {};
-
   const session = await currentUser();
 
   if (!session) {
@@ -68,19 +37,7 @@ export default async function ReportsPage({ searchParams }: PageProps) {
       <FormError message="You do not have permission to view this content!" />
     );
   }
-
-  // const reports = await db.report.findMany({
-  //   where,
-  //   skip: (page - 1) * limit,
-  //   take: limit,
-  //   orderBy: { createdAt: "desc" },
-  //   include: { user: true },
-  // });
-
-  // const totalReports = await db.report.count({ where });
-  // const totalPages = Math.ceil(totalReports / limit);
-
-  const where1: Prisma.AnalysisWhereInput = search
+  const where: Prisma.AnalysisWhereInput = search
     ? {
         OR: [
           {
@@ -112,7 +69,7 @@ export default async function ReportsPage({ searchParams }: PageProps) {
     : {};
 
   const analysis = await db.analysis.findMany({
-    where: where1,
+    where,
     skip: (page - 1) * limit,
     take: limit,
     orderBy: { createdAt: "desc" },
@@ -127,9 +84,8 @@ export default async function ReportsPage({ searchParams }: PageProps) {
       report: true,
     },
   });
-
-  const totalAnalysis = await db.analysis.count({ where: where1 });
-  const totalPages1 = Math.ceil(totalAnalysis / limit);
+  const totalAnalysis = await db.analysis.count({ where });
+  const totalPages = Math.ceil(totalAnalysis / limit);
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
@@ -188,6 +144,8 @@ export default async function ReportsPage({ searchParams }: PageProps) {
                       <ReportActions
                         report={{
                           id: report.id,
+                          //@ts-ignore
+                          reportId: report?.report?.id,
                           name: report?.user?.firstName ?? "",
                         }}
                       />
@@ -201,7 +159,7 @@ export default async function ReportsPage({ searchParams }: PageProps) {
         <Pagination
           searchParams={searchParams}
           total={totalAnalysis}
-          totalPages={totalPages1}
+          totalPages={totalPages}
         />
       </main>
     </div>

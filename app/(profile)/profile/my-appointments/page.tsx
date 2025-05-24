@@ -4,6 +4,11 @@ import { redirect } from "next/navigation";
 import ProfileHeader from "@/components/others/ProfileHeader";
 import AppointmentsList from "@/components/others/AppointmentList";
 
+export const metadata = {
+  title: "My Appointments",
+  description: "My Appointments",
+};
+
 export default async function MyAppointmentsPage() {
   const sessions = await currentUser();
   if (!sessions) {

@@ -153,6 +153,13 @@ const Hero = () => {
               </button>
             </motion.div>
           </Link>
+          <Link href="/analyze">
+            <div className={`text-white rounded-[12px]`}>
+              <button className="inline-flex h-12 items-center justify-center rounded-[12px] px-2 font-medium text-black w-full bg-transparent border-black border-[2px]">
+                Try AI Hair Analysis
+              </button>
+            </div>
+          </Link>
           <div className="min-w-[280px] flex justify-left items-center gap-3 m-auto text-gray-700  text-[12px]">
             <div className="flex -space-x-2 items-center text-[15px]">
               {images?.slice(0, 3)?.map((i) => (
@@ -172,13 +179,6 @@ const Hero = () => {
             </div>
             Trusted by 1000+ customers
           </div>
-          {/* <Link href="/appointment-booking">
-            <div className={`text-white rounded-[12px]`}>
-              <button className="inline-flex h-12 items-center justify-center rounded-[12px] px-6 font-medium text-black w-full bg-transparent border-black border-[2px]">
-                Try AI Hair Analysis
-              </button>
-            </div>
-          </Link> */}
         </div>
         <div className="bg-yellow rounded-[30px] overflow-hidden mx-2 mt-15">
           <Image

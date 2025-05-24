@@ -3,6 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MoreVertical } from "lucide-react";
 
+export const metadata = {
+  title: "Past Analysis",
+  description: "Past Analysis",
+};
+
 const analysisData = [
   {
     date: "dd/mm/yyyy",

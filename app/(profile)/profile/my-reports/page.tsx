@@ -4,6 +4,11 @@ import { redirect } from "next/navigation";
 import ProfileHeader from "@/components/others/ProfileHeader";
 import ReportsList from "@/components/others/Reports";
 
+export const metadata = {
+  title: "My Reports",
+  description: "My Reports",
+};
+
 export default async function MyReportsPage() {
   const sessions = await currentUser();
   if (!sessions) {

@@ -1,5 +1,10 @@
 import Image from "next/image";
 
+export const metadata = {
+  title: "About Us",
+  description: "About Us",
+};
+
 export default function AboutUs() {
   return (
     <div className="text-black md:mx-24">

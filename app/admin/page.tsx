@@ -6,6 +6,11 @@ import { db } from "@/lib/db";
 import { parseTimeRange } from "@/lib/parseTimeRange";
 import { redirect } from "next/navigation";
 
+export const metadata = {
+  title: "Admin Dashboard",
+  description: "Admin Dashboard",
+};
+
 async function fetchStats(timeRange: string | null) {
   const startDate = parseTimeRange(timeRange);
 

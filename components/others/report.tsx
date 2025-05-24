@@ -3,9 +3,17 @@ import Score from "./Score";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Report({ enhancedData }: { enhancedData: any }) {
+export default function Report({
+  enhancedData,
+  className = "px-16",
+}: {
+  enhancedData: any;
+  className?: string;
+}) {
   return (
-    <main className="container w-full mx-auto my-10 bg-[#f2f2f2] rounded-2xl px-16 py-6">
+    <main
+      className={`container w-full mx-auto my-10 bg-[#f2f2f2] rounded-2xl py-6 ${className}`}
+    >
       <div className=" p-4">
         <div className="grid grid-cols-10 gap-6 h-full">
           <div className="col-span-3 space-y-5 bg-white rounded-2xl p-2">
@@ -71,12 +79,12 @@ export default function Report({ enhancedData }: { enhancedData: any }) {
                 </div>
               </div>
             </div>
-            <div className="rounded-2xl h-48 text-btnblue">
+            <div className="rounded-2xl h-48 text-btnblue overflow-hidden">
               <div className="relative w-full h-full flex items-center justify-center">
                 <Image
                   src="/graphs/image1.png"
                   alt="Density"
-                  className="w-full h-full"
+                  className="w-full h-full object-contain"
                   width={1000}
                   height={1000}
                 />
@@ -85,12 +93,12 @@ export default function Report({ enhancedData }: { enhancedData: any }) {
                 </p>
               </div>
             </div>
-            <div className=" rounded-2xl h-48 text-btnblue">
+            <div className="rounded-2xl h-48 text-btnblue overflow-hidden">
               <div className="relative w-full h-full flex items-center justify-center">
                 <Image
                   src="/graphs/image.png"
                   alt="Density"
-                  className="w-full h-full"
+                  className="w-full h-full object-contain"
                   width={1000}
                   height={1000}
                 />
@@ -99,12 +107,12 @@ export default function Report({ enhancedData }: { enhancedData: any }) {
                 </p>
               </div>
             </div>
-            <div className="col-span-2 rounded-2xl bg-white h-64 text-btnblue flex justify-center items-center">
+            <div className="col-span-2 rounded-2xl bg-white h-64 text-btnblue overflow-hidden">
               <div className="relative w-full h-full flex items-center justify-center">
                 <Image
                   src="/graphs/image2.png"
                   alt="Density"
-                  className=""
+                  className="w-full h-full object-contain"
                   width={2000}
                   height={1000}
                 />

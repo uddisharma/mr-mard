@@ -1,5 +1,10 @@
 import React from "react";
 
+export const metadata = {
+  title: "Privacy Policy",
+  description: "Privacy Policy",
+};
+
 export default function PrivacyPolicy() {
   return (
     <div className="text-black md:mx-40 mb-10">

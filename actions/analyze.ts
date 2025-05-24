@@ -79,6 +79,7 @@ export async function analyzeHair(data: AnalysisData) {
 
     return {
       success: true,
+      id: res.id,
       message: "Analysis successfully saved",
     };
   } catch (error) {

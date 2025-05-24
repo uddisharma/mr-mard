@@ -17,6 +17,11 @@ import Newsletter from "@/components/others/newsletter";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+export const metadata = {
+  title: "Blogs",
+  description: "Blogs",
+};
+
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }

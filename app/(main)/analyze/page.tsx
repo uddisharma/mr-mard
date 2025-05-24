@@ -2,6 +2,11 @@ import MultiStepForm from "@/components/others/analysis";
 import { db } from "@/lib/db";
 import React from "react";
 
+export const metadata = {
+  title: "Analyze",
+  description: "Analyze",
+};
+
 const Page = async () => {
   const questions = await db.question.findMany({
     where: { isActive: true },

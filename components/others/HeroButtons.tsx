@@ -42,13 +42,13 @@ const HeroButtons = () => {
           </button>
         </motion.div>
       </Link>
-      {/* <Link href="/appointment-booking">
+      <Link href="/analyze">
         <div className={`text-white rounded-[12px]`}>
           <button className="inline-flex h-12 items-center justify-center rounded-[12px] px-6 font-medium text-black w-full bg-transparent border-black border-[2px]">
             Try AI Hair Analysis
           </button>
         </div>
-      </Link> */}
+      </Link>
     </div>
   );
 };

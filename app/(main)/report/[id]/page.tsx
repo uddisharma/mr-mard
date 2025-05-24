@@ -18,10 +18,7 @@ export default async function Report({ params }: { params: { id: string } }) {
   if (!data) notFound();
 
   // @ts-ignore
-  const analysisData =
-    typeof data.analysis === "string"
-      ? JSON.parse(data.analysis)
-      : data.analysis?.analysis;
+  const analysisData = data.analysis?.analysis;
 
   return <HairAnalysis data={analysisData} />;
 }

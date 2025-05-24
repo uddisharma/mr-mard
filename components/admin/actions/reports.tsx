@@ -27,28 +27,35 @@ import { toast } from "sonner";
 interface ReportActionsProps {
   report: {
     id: any;
+    reportId: any;
     name: string;
   };
 }
 
 export default function ReportActions({ report }: ReportActionsProps) {
-  console.log(report);
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      const response = await fetch(`/api/reports/${report.id}`, {
+      const res = await fetch(`/api/analyze/${report.id}`, {
         method: "DELETE",
       });
-      if (response.ok) {
-        router.refresh();
-        toast.success("Report deleted successfully");
-      } else if (response.status == 403) {
-        toast.error("You don't have permission to delete a report.");
+      if (res.ok) {
+        const response = await fetch(`/api/reports/${report.reportId}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          router.refresh();
+          toast.success("Report deleted successfully");
+        } else if (response.status == 403) {
+          toast.error("You don't have permission to delete a report.");
+        } else {
+          toast.error("Report failed to delete");
+        }
       } else {
-        toast.error("Report failed to delete");
+        toast.error("Failed to delete report");
       }
     } catch (error) {
       toast.error("Failed to delete report. Please try again.");

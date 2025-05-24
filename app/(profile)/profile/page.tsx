@@ -4,6 +4,11 @@ import { db } from "@/lib/db";
 import ProfileForm from "@/components/others/ProfileForm";
 import ProfileHeader from "@/components/others/ProfileHeader";
 
+export const metadata = {
+  title: "Profile",
+  description: "Profile",
+};
+
 export default async function ProfilePage() {
   const session = await currentUser();
 

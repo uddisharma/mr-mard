@@ -9,8 +9,13 @@ import { useRouter } from "next/navigation";
 import { uploadFile } from "@/actions/upload";
 import { analyzeHair } from "@/actions/analyze";
 import { toast } from "sonner";
-
-export default function FaceDetection({ reportId }: { reportId: number }) {
+export default function FaceDetection({
+  setStep,
+  reportId,
+}: {
+  setStep: (step: number) => void;
+  reportId: number;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -242,14 +247,12 @@ export default function FaceDetection({ reportId }: { reportId: number }) {
         reportId: reportId,
         analysis: analizedData,
       });
-      if (res.success) {
-        toast.success(res.message);
-      } else {
-        toast.error(res.message);
+      if (!res.success) {
+        return toast.error(res.message);
       }
       localStorage.removeItem("reportId");
       localStorage.removeItem("startTime");
-      router.push(`/report/${reportId}`);
+      router.push(`/report/${res?.id}`);
     } catch (error) {
       console.error("Error capturing image:", error);
       setApiError(
@@ -264,6 +267,12 @@ export default function FaceDetection({ reportId }: { reportId: number }) {
 
   const resetCapture = () => {
     return window.location.reload();
+  };
+
+  const startOver = () => {
+    localStorage.removeItem("reportId");
+    localStorage.removeItem("startTime");
+    setStep(0);
   };
 
   return (
@@ -320,23 +329,6 @@ export default function FaceDetection({ reportId }: { reportId: number }) {
                   Analysis completed successfully!
                 </AlertDescription>
               </Alert>
-              <div className="mt-4 w-full max-w-2xl">
-                <h2 className="text-xl font-semibold mb-4">Analysis Results</h2>
-                <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-                  {Object.entries(data).map(([key, value]) => (
-                    <div key={key} className="flex flex-col gap-1">
-                      <h3 className="text-sm font-medium capitalize">
-                        {key.replace(/_/g, " ")}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {typeof value === "object"
-                          ? JSON.stringify(value, null, 2)
-                          : String(value)}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </>
           ) : null}
         </>
@@ -384,6 +376,7 @@ export default function FaceDetection({ reportId }: { reportId: number }) {
           </Alert>
 
           <div className="flex gap-4 mt-4">
+            <Button onClick={startOver}>Start Over</Button>
             <Button
               onClick={captureImage}
               disabled={!faceDetected || processing}

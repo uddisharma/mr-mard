@@ -87,9 +87,10 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
           (question.questionType === "TEXT" ? "" : []),
       })),
     };
+    const startTimeStr = JSON.parse(
+      localStorage.getItem("startTime") ?? new Date().toISOString(),
+    );
     startTransition(async () => {
-      const startTimeStr =
-        localStorage.getItem("startTime") ?? new Date().toISOString();
       const res = await submitReport(questions, startTimeStr);
       if (res?.success && res?.reportId) {
         setResponses({});
@@ -240,7 +241,7 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
             </div>
           ) : (
             <div>
-              <FaceDetection reportId={reportId} />
+              <FaceDetection setStep={setStep} reportId={reportId} />
             </div>
           )}
         </div>

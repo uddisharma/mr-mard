@@ -20,7 +20,7 @@ const Error = () => {
       </p>
       <div
         onClick={Retry}
-        className="inline-flex items-center gap-2 px-6 py-3 bg-btnblue text-white rounded-full hover:bg-gray-800 transition"
+        className="inline-flex items-center gap-2 px-6 py-3 bg-btnblue text-white rounded-full hover:bg-gray-800 transition cursor-pointer"
       >
         <RotateCcw size={20} />
         Try again

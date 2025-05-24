@@ -9,10 +9,11 @@ const AuthHeader = () => {
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="text-xl font-serif font-bold">
           <Image
+            style={{ scale: "1.1" }}
             src="/m_logo1.png"
             alt="Milele Health"
-            className="m-auto"
-            width={120}
+            className="m-auto mt-[-15px]"
+            width={80}
             height={50}
           />
         </Link>
