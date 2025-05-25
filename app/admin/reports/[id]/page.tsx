@@ -87,7 +87,7 @@ export default async function ViewReportPage({ params }: PageProps) {
 
   const enhancedData = {
     ...data,
-    overall_score: analysisData.overall_score || 75,
+    overall_score: analysisData.overall_score?.toFixed(0) || 75,
     estimated_hair_count: analysisData.estimated_hair_count || 95675,
     metrics: {
       "Hair Thickness": 80,

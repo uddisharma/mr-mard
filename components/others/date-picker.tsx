@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { ArrowLeft, CalendarIcon, Info, Loader2 } from "lucide-react";
@@ -46,11 +46,13 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const dateScrollRef = useRef<HTMLDivElement>(null);
+  const params = useSearchParams();
+  const ref = params?.get("f");
 
   useEffect(() => {
     const storedUserId = sessionStorage.getItem("userId");
     if (!storedUserId) {
-      router.push("/appointment-booking");
+      router.push(`/appointment-booking${ref ? `?f=${ref}` : ""}`);
       return;
     }
     setUserId(storedUserId);
@@ -64,7 +66,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
 
     if (!userId) {
       toast.error("Authentication Error");
-      router.push("/appointment-booking");
+      router.push(`/appointment-booking${ref ? `?f=${ref}` : ""}`);
       return;
     }
 
@@ -101,7 +103,7 @@ export default function DatePicker({ id }: { id?: string | undefined | null }) {
           selectedSlot.originalPrice.toString(),
         );
       }
-      router.push("/appointment-booking/payment");
+      router.push(`/appointment-booking/payment${ref ? `?f=${ref}` : ""}`);
     } catch (error) {
       toast.error("Failed to save your selection");
     } finally {

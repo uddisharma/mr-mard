@@ -254,6 +254,7 @@ export default function FaceDetection({
       localStorage.removeItem("startTime");
       router.push(`/report/${res?.id}`);
     } catch (error) {
+      // alert(error?.message)
       console.error("Error capturing image:", error);
       setApiError(
         "An error occurred while processing your image. Please try again.",

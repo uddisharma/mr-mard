@@ -5,7 +5,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import { AppointmentStatus } from "@prisma/client";
+import { AppointmentStatus, Funnel } from "@prisma/client";
 
 export const runtime = "nodejs";
 
@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
       timeSlotId,
       paymentDetails,
       id = null,
+      ref = null,
     } = await request.json();
 
     if (!userId || !timeSlotId) {
@@ -74,6 +75,11 @@ export async function POST(request: NextRequest) {
           where: { id },
           data: {
             status: AppointmentStatus.CONFIRMED,
+            funnel: ref
+              ? ref == "report"
+                ? Funnel.HAIR_ANALYSIS
+                : Funnel.BOOK_APPOINTMENT
+              : undefined,
           },
         });
 
@@ -107,6 +113,11 @@ export async function POST(request: NextRequest) {
           data: {
             userId,
             timeSlotId,
+            funnel: ref
+              ? ref == "report"
+                ? Funnel.HAIR_ANALYSIS
+                : Funnel.BOOK_APPOINTMENT
+              : undefined,
           },
         });
 

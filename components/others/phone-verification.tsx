@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { registerWithOTP } from "@/actions/register-phone";
 import { OtpVerification, UpsertUserProgress } from "@/actions/loginotp";
@@ -21,6 +21,8 @@ export default function PhoneVerification({
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [resendTimer, setResendTimer] = useState(0);
+  const params = useSearchParams();
+  const ref = params?.get("f");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +30,7 @@ export default function PhoneVerification({
         sessionStorage.setItem("userId", id);
         sessionStorage.setItem("phone", phone);
         await UpsertUserProgress(id, phone);
-        router.push("/appointment-booking/date");
+        router.push(`/appointment-booking/date${ref ? `?f=${ref}` : ""}`);
       }
     };
     fetchData();
@@ -81,7 +83,7 @@ export default function PhoneVerification({
         }
         if (res?.id) {
           sessionStorage.setItem("userId", res.id);
-          router.push("/appointment-booking/date");
+          router.push(`/appointment-booking/date${ref ? `?f=${ref}` : ""}`);
         } else {
           toast.error("User ID is missing.");
         }

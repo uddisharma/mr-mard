@@ -30,6 +30,7 @@ export default function PaymentForm() {
   const [appointmentPrice, setAppointmentPrice] = useState("");
   const [originalPrice, setOriginalPrice] = useState("");
   const params = useSearchParams();
+  const ref = params?.get("f");
 
   const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
@@ -58,7 +59,7 @@ export default function PaymentForm() {
     });
 
     if (!storedUserId || !storedTimeSlotId) {
-      router.push("/appointment-booking");
+      router.push(`/appointment-booking${ref ? `?f=${ref}` : ""}`);
       return;
     }
 
@@ -77,7 +78,7 @@ export default function PaymentForm() {
 
     if (!userId || !timeSlotId) {
       toast.warning("Missing required information. Please start over.");
-      router.push("/appointment-booking");
+      router.push(`/appointment-booking${ref ? `?f=${ref}` : ""}`);
       return;
     }
 
@@ -168,6 +169,7 @@ export default function PaymentForm() {
               amount: appointmentPrice,
               transactionId: response.razorpay_payment_id,
             },
+            ...(ref && { ref }),
             ...(params.get("id") && { id: params.get("id") }),
           }),
         });

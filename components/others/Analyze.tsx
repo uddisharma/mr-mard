@@ -26,7 +26,7 @@ import Link from "next/link";
 export default function HairAnalysis({ data }: { data: any }) {
   const enhancedData = {
     ...data,
-    overall_score: data.overall_score || 75,
+    overall_score: data.overall_score?.toFixed(0) || 75,
     estimated_hair_count: data.estimated_hair_count || 95675,
     metrics: {
       "Hair Thickness": 80,
@@ -190,18 +190,18 @@ const MobileVerion = ({
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 pb-5 my-5">
-            <div className="relative w-full h-full flex items-center justify-center">
+            <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
               <Image
                 src="/graphs/image3.png"
                 alt=""
                 className="w-full h-full"
-                width={1000}
+                width={500}
                 height={500}
               />
-              <p className="absolute top-[28px] left-[95px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
+              <p className="absolute top-[23px] left-[210px] text-white text-xs font-bold pointer-events-none">
                 23423
               </p>
-              <p className="absolute top-[70px] left-[115px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
+              <p className="absolute top-[58px] left-[225px] text-white text-xs font-bold pointer-events-none">
                 36546
               </p>
             </div>

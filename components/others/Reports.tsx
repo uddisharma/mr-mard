@@ -63,7 +63,7 @@ export default function ReportsList({ analysis }: { analysis: Analysis[] }) {
                       {new Date(report.createdAt).toLocaleString()}
                     </TableCell>
                     <TableCell className="font-medium text-center">
-                      {analysisData?.overall_score || 50}
+                      {analysisData?.overall_score?.toFixed(0) || 50}
                     </TableCell>
                     <TableCell className="font-medium text-center">
                       {analysisData?.estimated_hair_count || 50000}
@@ -93,7 +93,7 @@ export default function ReportsList({ analysis }: { analysis: Analysis[] }) {
                           </PopoverTrigger>
                           <PopoverContent className="w-40 mr-10">
                             <div className="flex flex-col space-y-2">
-                              <Link href={`/profile/my-reports/${report.id}`}>
+                              <Link href={`/report/${report.id}`}>
                                 <Button
                                   variant="outline"
                                   size="sm"
