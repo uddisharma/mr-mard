@@ -28,10 +28,15 @@ export async function addBlog(blogData: BlogFormData) {
 
   const validatedData = BlogSchema.parse(blogData);
 
+  const lastBlog = await db.blog.findFirst({
+    orderBy: { id: "desc" },
+  });
+
   const blog = await db.blog.create({
     data: {
       ...validatedData,
       authorId: session?.id,
+      id: lastBlog?.id ? lastBlog.id + 1 : 1,
     },
   });
 
