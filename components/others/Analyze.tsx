@@ -29,12 +29,12 @@ export default function HairAnalysis({ data }: { data: any }) {
     overall_score: data.overall_score?.toFixed(0) || 75,
     estimated_hair_count: data.estimated_hair_count || 95675,
     metrics: {
-      "Hair Thickness": 80,
-      Oiliness: 65,
-      "Hair Density": 78,
-      "Scalp Coverage": 85,
-      Dryness: 70,
-      "Hair Type Adjustment": 75,
+      "Hair Thickness": (data?.scaled_density).toFixed(0) || 80,
+      Oiliness: (data?.condition_confidence * 100).toFixed(0) || 65,
+      "Hair Density": (data?.density).toFixed(0) || 78,
+      // "Scalp Coverage": 85,
+      // "Dryness": 70,
+      // "Hair Type Adjustment": 75,
     },
     hairCount: {
       current: 91000,

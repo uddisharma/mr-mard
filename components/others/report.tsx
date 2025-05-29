@@ -2,6 +2,7 @@ import { HardDriveIcon } from "lucide-react";
 import Score from "./Score";
 import Image from "next/image";
 import Link from "next/link";
+import HairBellCurve from "./Chart";
 
 export default function Report({
   enhancedData,
@@ -66,21 +67,34 @@ export default function Report({
                   Total Hair Type
                 </h3>
                 <div className="flex justify-evenly gap-5 items-center bg-[#ededed] p-3 rounded-2xl h-full mx-5">
-                  {["Straight", "Wavy", "Curly"].map((type) => (
+                  {["Medium", "High", "Low"].map((type) => (
                     <div
                       key={type}
                       className="text-5xl font-bold text-[#1e3a5f]"
                     >
-                      <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-8 h-8 flex items-center justify-center">
-                        <HardDriveIcon className="w-4 h-4 text-btnblue" />
+                      <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-9 h-9 flex items-center justify-center">
+                        <Image
+                          src={`/hair-types/density/${type.toLowerCase()}.png`}
+                          alt={type}
+                          width={32}
+                          height={32}
+                          className="w-full h-full object-contain rounded-full"
+                        />
                       </div>
                     </div>
+                  ))}
+                </div>
+                <div className="flex justify-evenly items-center mt-1">
+                  {["Medium", "High", "Low"].map((type) => (
+                    <p key={type} className="text-sm text-black">
+                      {type}
+                    </p>
                   ))}
                 </div>
               </div>
             </div>
             <div className="rounded-2xl h-48 text-btnblue overflow-hidden">
-              <div className="relative w-full h-full flex items-center justify-center">
+              {/* <div className="relative w-full h-full flex items-center justify-center">
                 <Image
                   src="/graphs/image1.png"
                   alt="Density"
@@ -91,11 +105,18 @@ export default function Report({
                 <p className="absolute top-5 left-[-29px] w-full flex items-center justify-center text-[#e94335] text-xs font-bold pointer-events-none">
                   41k
                 </p>
-              </div>
+              </div> */}
+              <HairBellCurve
+                data={{
+                  estimated_hair_count: enhancedData.estimated_hair_count,
+                  expected_range: enhancedData.expected_range,
+                  age: 35,
+                }}
+              />
             </div>
             <div className="rounded-2xl h-48 text-btnblue overflow-hidden">
-              <div className="relative w-full h-full flex items-center justify-center">
-                <Image
+              <div className="relative w-full h-full flex items-center justify-center bg-white">
+                {/* <Image
                   src="/graphs/image.png"
                   alt="Density"
                   className="w-full h-full object-contain"
@@ -103,8 +124,8 @@ export default function Report({
                   height={1000}
                 />
                 <p className="absolute top-5 left-[45px] w-full flex items-center justify-center text-[#34a853] text-xs font-bold pointer-events-none">
-                  41k
-                </p>
+                  41k 
+                </p> */}
               </div>
             </div>
             <div className="col-span-2 rounded-2xl bg-white h-64 text-btnblue overflow-hidden">
