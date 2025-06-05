@@ -67,24 +67,41 @@ export default function Report({
                   Total Hair Type
                 </h3>
                 <div className="flex justify-evenly gap-5 items-center bg-[#ededed] p-3 rounded-2xl h-full mx-5">
-                  {["Medium", "High", "Low"].map((type) => (
-                    <div
-                      key={type}
-                      className="text-5xl font-bold text-[#1e3a5f]"
-                    >
-                      <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-9 h-9 flex items-center justify-center">
-                        <Image
-                          src={`/hair-types/density/${type.toLowerCase()}.png`}
-                          alt={type}
-                          width={32}
-                          height={32}
-                          className="w-full h-full object-contain rounded-full"
-                        />
-                      </div>
+                  <div className="text-5xl font-bold text-[#1e3a5f]">
+                    <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-9 h-9 flex items-center justify-center">
+                      <Image
+                        src={`/hair-types/type/${enhancedData?.hair_type?.toLowerCase()}.png`}
+                        alt={`${enhancedData?.hair_type} hair density`}
+                        width={32}
+                        height={32}
+                        className="w-full h-full object-contain rounded-full"
+                      />
                     </div>
-                  ))}
+                  </div>
+                  <div className="text-5xl font-bold text-[#1e3a5f]">
+                    <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-9 h-9 flex items-center justify-center">
+                      <Image
+                        src={`/hair-types/condition/${enhancedData?.hair_condition?.toLowerCase()}.png`}
+                        alt={`${enhancedData?.hair_condition} hair density`}
+                        width={32}
+                        height={32}
+                        className="w-full h-full object-contain rounded-full"
+                      />
+                    </div>
+                  </div>
+                  <div className="text-5xl font-bold text-[#1e3a5f]">
+                    <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-9 h-9 flex items-center justify-center">
+                      <Image
+                        src={`/hair-types/density/${enhancedData?.density_class?.toLowerCase()}.png`}
+                        alt={`${enhancedData?.density_class} hair density`}
+                        width={32}
+                        height={32}
+                        className="w-full h-full object-contain rounded-full"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="flex justify-evenly items-center mt-1">
+                <div className="flex justify-evenly px-5 ml-[-20px] items-center mt-1">
                   {["Medium", "High", "Low"].map((type) => (
                     <p key={type} className="text-sm text-black">
                       {type}
@@ -128,8 +145,8 @@ export default function Report({
                 </p> */}
               </div>
             </div>
-            <div className="col-span-2 rounded-2xl bg-white h-64 text-btnblue overflow-hidden">
-              <div className="relative w-full h-full flex items-center justify-center">
+            <div className="col-span-2 rounded-2xl bg-white  text-btnblue overflow-hidden">
+              {/* <div className="relative w-full h-full flex items-center justify-center">
                 <Image
                   src="/graphs/image2.png"
                   alt="Density"
@@ -142,6 +159,21 @@ export default function Report({
                 </p>
                 <p className="absolute top-[121px] left-[133px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
                   36546
+                </p>
+              </div> */}
+              <div className="flex items-center justify-center gap-6 p-6">
+                <Image
+                  src={`/hair-types/density/${enhancedData?.density_class.toLowerCase()}.png`}
+                  alt={`${enhancedData?.density_class} hair density`}
+                  width={100}
+                  height={100}
+                  className="w-full h-full object-contain rounded-xl"
+                />
+                <p className="text-left max-w-2xl">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quidem, sint odit temporibus qui doloremque consequatur,
+                  commodi iusto rem ducimus deleniti rerum molestiae id officia
+                  voluptas exercitationem? Autem dicta vero nobis?
                 </p>
               </div>
             </div>
