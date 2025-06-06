@@ -1,14 +1,17 @@
-import { HardDriveIcon } from "lucide-react";
 import Score from "./Score";
 import Image from "next/image";
 import Link from "next/link";
 import HairBellCurve from "./Chart";
 
+type DensityClass = "low" | "medium" | "high";
+
 export default function Report({
   enhancedData,
+  summary,
   className = "px-16",
 }: {
   enhancedData: any;
+  summary: Record<DensityClass, string>;
   className?: string;
 }) {
   return (
@@ -101,28 +104,20 @@ export default function Report({
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-evenly px-5 ml-[-20px] items-center mt-1">
-                  {["Medium", "High", "Low"].map((type) => (
-                    <p key={type} className="text-sm text-black">
-                      {type}
-                    </p>
-                  ))}
+                <div className="flex justify-evenly px-5 ml-[-7px] items-center mt-1">
+                  <p className="text-sm text-black">
+                    {enhancedData?.hair_type}
+                  </p>
+                  <p className="text-sm text-black">
+                    {enhancedData?.hair_condition}
+                  </p>
+                  <p className="text-sm text-black">
+                    {enhancedData?.density_class}
+                  </p>
                 </div>
               </div>
             </div>
             <div className="rounded-2xl h-48 text-btnblue overflow-hidden">
-              {/* <div className="relative w-full h-full flex items-center justify-center">
-                <Image
-                  src="/graphs/image1.png"
-                  alt="Density"
-                  className="w-full h-full object-contain"
-                  width={1000}
-                  height={1000}
-                />
-                <p className="absolute top-5 left-[-29px] w-full flex items-center justify-center text-[#e94335] text-xs font-bold pointer-events-none">
-                  41k
-                </p>
-              </div> */}
               <HairBellCurve
                 data={{
                   estimated_hair_count: enhancedData.estimated_hair_count,
@@ -132,49 +127,26 @@ export default function Report({
               />
             </div>
             <div className="rounded-2xl h-48 text-btnblue overflow-hidden">
-              <div className="relative w-full h-full flex items-center justify-center bg-white">
-                {/* <Image
-                  src="/graphs/image.png"
-                  alt="Density"
-                  className="w-full h-full object-contain"
-                  width={1000}
-                  height={1000}
-                />
-                <p className="absolute top-5 left-[45px] w-full flex items-center justify-center text-[#34a853] text-xs font-bold pointer-events-none">
-                  41k 
-                </p> */}
-              </div>
+              <div className="relative w-full h-full flex items-center justify-center bg-white"></div>
             </div>
             <div className="col-span-2 rounded-2xl bg-white  text-btnblue overflow-hidden">
-              {/* <div className="relative w-full h-full flex items-center justify-center">
-                <Image
-                  src="/graphs/image2.png"
-                  alt="Density"
-                  className="w-full h-full object-contain"
-                  width={2000}
-                  height={1000}
-                />
-                <p className="absolute top-[74px] left-[110px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
-                  23423
-                </p>
-                <p className="absolute top-[121px] left-[133px] w-full flex items-center justify-center text-white text-xs font-bold pointer-events-none">
-                  36546
-                </p>
-              </div> */}
               <div className="flex items-center justify-center gap-6 p-6">
                 <Image
                   src={`/hair-types/density/${enhancedData?.density_class.toLowerCase()}.png`}
                   alt={`${enhancedData?.density_class} hair density`}
                   width={100}
-                  height={100}
-                  className="w-full h-full object-contain rounded-xl"
+                  height={50}
+                  className="h-full object-contain rounded-xl"
                 />
-                <p className="text-left max-w-2xl">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Quidem, sint odit temporibus qui doloremque consequatur,
-                  commodi iusto rem ducimus deleniti rerum molestiae id officia
-                  voluptas exercitationem? Autem dicta vero nobis?
-                </p>
+                <p
+                  className="text-left max-w-2xl"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      summary[
+                        enhancedData?.density_class?.toLowerCase() as DensityClass
+                      ],
+                  }}
+                />
               </div>
             </div>
           </div>

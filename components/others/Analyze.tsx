@@ -96,6 +96,27 @@ const MobileVerion = ({
   enhancedData: any;
 }) => {
   const [showReport, setShowReport] = useState<boolean>(false);
+  type DensityClass = "low" | "medium" | "high";
+
+  const summary: Record<DensityClass, string> = {
+    low: `<p>
+        Your results show the beginning stages of hair loss. The good news is that at this stage, it's highly manageable with the right care.
+        <br />
+        With guidance from our expert doctors, we can create personalized plan just for you.
+      </p>`,
+
+    medium: `<p>
+        Your results indicate a moderate level of hair loss, which means now is the perfect time to take action.
+        <br />
+        At this stage, a proactive approach can make a significant difference.
+      </p>`,
+
+    high: `<p>
+        Thank you for trusting us with your assessment. Your results indicate an advanced stage of hair loss, which requires specialized care for the most effective treatment.
+        <br />
+        In the spirit of full transparency, the best next step is an in-clinic consultation with a hair restoration specialist.
+      </p>`,
+  };
   return (
     <>
       <div className="md:bg-yellow bg-[#f9f3ce] py-5  md:mx-6 px-4 mx-5 rounded-[15px] md:rounded-[144px]  ">
@@ -107,7 +128,7 @@ const MobileVerion = ({
         </p>
       </div>
       <div className="hidden md:block md:mx-24">
-        <Report enhancedData={enhancedData} />
+        <Report enhancedData={enhancedData} summary={summary} />
       </div>
 
       <Card className="max-w-2xl bg-[#f9f3ce] md:hidden mx-5 rounded-[15px] mt-8">
@@ -118,24 +139,42 @@ const MobileVerion = ({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-3 gap-8 px-4">
-            {[
-              { icon: "/man avatar.png", label: "Lorem" },
-              { icon: "/user-icon2.png", label: "Lorem" },
-              { icon: "/emoji.png", label: "Lorem" },
-            ].map((item, index) => (
-              <div key={index} className="flex flex-col items-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gray-200 bg-white">
-                  <Image
-                    className="h-10 w-10"
-                    src={item.icon}
-                    alt={item.label}
-                    height={10}
-                    width={10}
-                  />
-                </div>
-                <span className="text-xl">{item.label}</span>
+            <div className="flex flex-col items-center gap-4">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gray-200 bg-white">
+                <Image
+                  className="h-10 w-10"
+                  src={`/hair-types/type/${enhancedData?.hair_type?.toLowerCase()}.png`}
+                  alt={`${enhancedData?.hair_type} hair density`}
+                  height={10}
+                  width={10}
+                />
               </div>
-            ))}
+              <span className="text-xl">{enhancedData?.hair_type}</span>
+            </div>
+            <div className="flex flex-col items-center gap-4">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gray-200 bg-white">
+                <Image
+                  className="h-10 w-10"
+                  src={`/hair-types/condition/${enhancedData?.hair_condition?.toLowerCase()}.png`}
+                  alt={`${enhancedData?.hair_condition} hair density`}
+                  height={10}
+                  width={10}
+                />
+              </div>
+              <span className="text-xl">{enhancedData?.hair_condition}</span>
+            </div>
+            <div className="flex flex-col items-center gap-4">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gray-200 bg-white">
+                <Image
+                  className="h-10 w-10"
+                  src={`/hair-types/density/${enhancedData?.density_class?.toLowerCase()}.png`}
+                  alt={`${enhancedData?.density_class} hair density`}
+                  height={10}
+                  width={10}
+                />
+              </div>
+              <span className="text-xl">{enhancedData?.density_class}</span>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -184,34 +223,25 @@ const MobileVerion = ({
         className={`relative pb-5 mx-5  md:hidden ${showReport ? "mt-12" : "mt-16"}`}
       >
         <Card className="w-full bg-white border-[1px] border-black">
-          <CardHeader>
-            <CardTitle className="text-2xl font-semibold text-center">
-              {user?.name}’s projection with and without Milele Health
-            </CardTitle>
-          </CardHeader>
           <CardContent className="flex flex-col items-center gap-6 pb-5 my-5">
-            <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+            <div className="flex items-center flex-col justify-center gap-6 p-6">
               <Image
-                src="/graphs/image3.png"
-                alt=""
-                className="w-full h-full"
-                width={500}
-                height={500}
+                src={`/hair-types/density/${enhancedData?.density_class.toLowerCase()}.png`}
+                alt={`${enhancedData?.density_class} hair density`}
+                width={100}
+                height={50}
+                className="h-full object-contain rounded-xl"
               />
-              <p className="absolute top-[23px] left-[210px] text-white text-xs font-bold pointer-events-none">
-                23423
-              </p>
-              <p className="absolute top-[58px] left-[225px] text-white text-xs font-bold pointer-events-none">
-                36546
-              </p>
+              <p
+                className="text-center max-w-2xl"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    summary[
+                      enhancedData?.density_class?.toLowerCase() as DensityClass
+                    ],
+                }}
+              />
             </div>
-            <Separator />
-            <ul className="text-[#919192] space-y-2 mt-3 list-disc list-inside">
-              <li>Better hair coverage</li>
-              <li>Dryness in top 70%; hydrate more</li>
-              <li>Hair density improved; more growth</li>
-              <li>No dandruff.</li>
-            </ul>
           </CardContent>
         </Card>
       </div>
