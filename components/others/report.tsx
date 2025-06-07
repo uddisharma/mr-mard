@@ -11,7 +11,7 @@ export default function Report({
   className = "px-16",
 }: {
   enhancedData: any;
-  summary: Record<DensityClass, string>;
+  summary?: Record<DensityClass, string>;
   className?: string;
 }) {
   return (
@@ -142,9 +142,9 @@ export default function Report({
                   className="text-left max-w-2xl"
                   dangerouslySetInnerHTML={{
                     __html:
-                      summary[
+                      summary?.[
                         enhancedData?.density_class?.toLowerCase() as DensityClass
-                      ],
+                      ] ?? "",
                   }}
                 />
               </div>

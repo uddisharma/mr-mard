@@ -4,14 +4,12 @@ import MealPlan1 from "@/components/others/dietPlan1";
 import FAQ from "@/components/others/faq";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import {
-  // dietPlans,
   reportData1,
   reportData2,
   reportData3,
@@ -32,9 +30,6 @@ export default function HairAnalysis({ data }: { data: any }) {
       "Hair Thickness": (data?.scaled_density).toFixed(0) || 80,
       Oiliness: (data?.condition_confidence * 100).toFixed(0) || 65,
       "Hair Density": (data?.density).toFixed(0) || 78,
-      // "Scalp Coverage": 85,
-      // "Dryness": 70,
-      // "Hair Type Adjustment": 75,
     },
     hairCount: {
       current: 91000,
@@ -223,14 +218,14 @@ const MobileVerion = ({
         className={`relative pb-5 mx-5  md:hidden ${showReport ? "mt-12" : "mt-16"}`}
       >
         <Card className="w-full bg-white border-[1px] border-black">
-          <CardContent className="flex flex-col items-center gap-6 pb-5 my-5">
-            <div className="flex items-center flex-col justify-center gap-6 p-6">
+          <CardContent className="flex flex-col items-center gap-6 ">
+            <div className="flex items-center flex-col justify-center gap-6 ">
               <Image
                 src={`/hair-types/density/${enhancedData?.density_class.toLowerCase()}.png`}
                 alt={`${enhancedData?.density_class} hair density`}
                 width={100}
                 height={50}
-                className="h-full object-contain rounded-xl"
+                className="h-full object-contain rounded-xl pt-5"
               />
               <p
                 className="text-center max-w-2xl"
