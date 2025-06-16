@@ -38,8 +38,16 @@ export async function addQuestion(questionData: QuestionFormValues) {
     return { message: "Question with this sequence already exists" };
   }
 
+  // Get the last question to determine the next ID
+  const lastQuestion = await db.question.findFirst({
+    orderBy: { id: "desc" },
+  });
+
+  const nextId = lastQuestion ? lastQuestion.id + 1 : 1;
+
   const question = await db.question.create({
     data: {
+      id: nextId,
       ...questionFields,
       options: {
         create: options,

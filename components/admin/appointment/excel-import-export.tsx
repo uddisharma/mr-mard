@@ -83,8 +83,8 @@ export default function ExcelImportExport({
       validateExcelData(data);
 
       const batches = [];
-      for (let i = 0; i < data.length; i += 30) {
-        batches.push(data.slice(i, i + 30));
+      for (let i = 0; i < data.length; i += 50) {
+        batches.push(data.slice(i, i + 50));
       }
 
       let processedCount = 0;

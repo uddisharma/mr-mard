@@ -21,6 +21,12 @@ import { User } from "next-auth";
 import Score from "@/components/others/Score";
 import { useState } from "react";
 import Link from "next/link";
+
+const getValidHairType = (hairType: string | undefined): string => {
+  const validTypes = ["curly", "straight", "wavy"];
+  return hairType && validTypes.includes(hairType) ? hairType : "curly";
+};
+
 export default function HairAnalysis({ data }: { data: any }) {
   const enhancedData = {
     ...data,
@@ -46,6 +52,7 @@ export default function HairAnalysis({ data }: { data: any }) {
       "No dandruff.",
     ],
   };
+
   const user = useCurrentUser();
   return (
     <div className="container mx-auto">
@@ -112,6 +119,7 @@ const MobileVerion = ({
         In the spirit of full transparency, the best next step is an in-clinic consultation with a hair restoration specialist.
       </p>`,
   };
+
   return (
     <>
       <div className="md:bg-yellow bg-[#f9f3ce] py-5  md:mx-6 px-4 mx-5 rounded-[15px] md:rounded-[144px]  ">
@@ -138,7 +146,7 @@ const MobileVerion = ({
               <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gray-200 bg-white">
                 <Image
                   className="h-10 w-10"
-                  src={`/hair-types/type/${enhancedData?.hair_type?.toLowerCase()}.png`}
+                  src={`/hair-types/type/${getValidHairType(enhancedData?.hair_type?.toLowerCase())}.png`}
                   alt={`${enhancedData?.hair_type} hair density`}
                   height={10}
                   width={10}
@@ -268,7 +276,7 @@ const General = () => {
             Nourish Your Hair from Within
           </h2>
           <p className=" text-btnblue">
-            Your hair health is closely linked to your diet. Here’s a customized
+            Your hair health is closely linked to your diet. Here's a customized
             meal plan to provide the nutrients your hair needs:
           </p>
         </div>
@@ -501,7 +509,7 @@ const Analysis = () => {
             Nourish Your Hair from Within
           </h2>
           <p className=" text-btnblue">
-            Your hair health is closely linked to your diet. Here’s a customized
+            Your hair health is closely linked to your diet. Here's a customized
             meal plan to provide the nutrients your hair needs:
           </p>
         </div>

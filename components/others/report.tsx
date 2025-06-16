@@ -5,6 +5,11 @@ import HairBellCurve from "./Chart";
 
 type DensityClass = "low" | "medium" | "high";
 
+const getValidHairType = (hairType: string | undefined): string => {
+  const validTypes = ["curly", "straight", "wavy"];
+  return hairType && validTypes.includes(hairType) ? hairType : "curly";
+};
+
 export default function Report({
   enhancedData,
   summary,
@@ -73,7 +78,7 @@ export default function Report({
                   <div className="text-5xl font-bold text-[#1e3a5f]">
                     <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-9 h-9 flex items-center justify-center">
                       <Image
-                        src={`/hair-types/type/${enhancedData?.hair_type?.toLowerCase()}.png`}
+                        src={`/hair-types/type/${getValidHairType(enhancedData?.hair_type?.toLowerCase())}.png`}
                         alt={`${enhancedData?.hair_type} hair density`}
                         width={32}
                         height={32}

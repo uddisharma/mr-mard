@@ -35,6 +35,7 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
   const [isPending, startTransition] = useTransition();
   const [step, setStep] = useState<number>(0);
   const [reportId, setReportId] = useState<number>(0);
+  const [age, setAge] = useState<number>(16);
 
   useEffect(() => {
     localStorage.setItem("startTime", JSON.stringify(new Date().toISOString()));
@@ -192,17 +193,24 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
                       ))}
                     {currentQuestion.questionType === "TEXT" && (
                       <Input
-                        type="text"
+                        type={
+                          currentQuestion.text?.includes("age")
+                            ? "number"
+                            : "text"
+                        }
                         className="border-[1px] border-black text-black bg-white"
                         placeholder="Enter your answer"
                         value={responses[currentQuestion.id] as string}
-                        onChange={(e) =>
+                        onChange={(e) => {
                           handleOptionChange(
                             currentQuestion.id,
                             e.target.value,
                             false,
-                          )
-                        }
+                          );
+                          if (currentQuestion.text?.includes("age")) {
+                            setAge(Number(e.target.value));
+                          }
+                        }}
                       />
                     )}
                   </div>
@@ -241,7 +249,7 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
             </div>
           ) : (
             <div>
-              <FaceDetection setStep={setStep} reportId={reportId} />
+              <FaceDetection setStep={setStep} reportId={reportId} age={age} />
             </div>
           )}
         </div>

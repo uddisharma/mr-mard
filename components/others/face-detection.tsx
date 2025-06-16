@@ -12,9 +12,11 @@ import { toast } from "sonner";
 export default function FaceDetection({
   setStep,
   reportId,
+  age,
 }: {
   setStep: (step: number) => void;
   reportId: number;
+  age: number;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -209,6 +211,7 @@ export default function FaceDetection({
       const formData = new FormData();
       formData.append("image", file, "captured-image.png");
       formData.append("file", file);
+      formData.append("age", age.toString());
 
       setIsAnalyzing(true);
       const response = await fetch("https://api.milele.health/validate-image", {
