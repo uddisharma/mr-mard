@@ -136,13 +136,21 @@ export default function Report({
             </div>
             <div className="col-span-2 rounded-2xl bg-white  text-btnblue overflow-hidden">
               <div className="flex items-center justify-center gap-6 p-6">
-                <Image
-                  src={`/hair-types/density/${enhancedData?.density_class.toLowerCase()}.png`}
-                  alt={`${enhancedData?.density_class} hair density`}
-                  width={100}
-                  height={50}
-                  className="h-full object-contain rounded-xl"
-                />
+                <div>
+                  <Image
+                    src={`/hair-types/density/${enhancedData?.density_class?.toLowerCase()}.png`}
+                    alt={`${enhancedData?.density_class} hair density`}
+                    width={100}
+                    height={50}
+                    className="h-full object-contain rounded-xl"
+                  />
+                  <p className="text-[10px] text-center">
+                    Density{" "}
+                    <span className="text-[15px]">
+                      {enhancedData?.density_class}
+                    </span>
+                  </p>
+                </div>
                 <p
                   className="text-left max-w-2xl"
                   dangerouslySetInnerHTML={{

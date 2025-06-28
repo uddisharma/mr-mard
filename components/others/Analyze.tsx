@@ -235,6 +235,7 @@ const MobileVerion = ({
                 height={50}
                 className="h-full object-contain rounded-xl pt-5"
               />
+              <p>Density class : {enhancedData?.density_class}</p>
               <p
                 className="text-center max-w-2xl"
                 dangerouslySetInnerHTML={{

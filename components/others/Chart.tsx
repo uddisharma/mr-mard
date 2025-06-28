@@ -1,7 +1,10 @@
 import React from "react";
 
 const HairBellCurve = ({ data }: { data: any }) => {
-  const { estimated_hair_count, expected_range } = data;
+  let { estimated_hair_count, expected_range } = data;
+  if (expected_range == null) {
+    expected_range = { min: 30000, max: 140000 };
+  }
   const { min, max } = expected_range;
   const range = max - min;
 

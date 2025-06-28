@@ -39,21 +39,28 @@ export async function addQuestion(questionData: QuestionFormValues) {
   }
 
   // Get the last question to determine the next ID
-  const lastQuestion = await db.question.findFirst({
-    orderBy: { id: "desc" },
-  });
+  // const lastQuestion = await db.question.findFirst({
+  //   orderBy: { id: "desc" },
+  // });
 
-  const nextId = lastQuestion ? lastQuestion.id + 1 : 1;
+  // const nextId = lastQuestion ? lastQuestion.id + 1 : 1;
+
+  console.log({
+    ...questionFields,
+    options: {
+      create: options,
+    },
+  });
 
   const question = await db.question.create({
     data: {
-      id: nextId,
       ...questionFields,
       options: {
         create: options,
       },
     },
   });
+  console.log("question", question);
 
   revalidatePath("/admin/questions");
   return question;

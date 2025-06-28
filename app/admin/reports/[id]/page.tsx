@@ -76,7 +76,6 @@ export default async function ViewReportPage({ params }: PageProps) {
   //@ts-ignore
   const analysisData = data?.analysis?.analysis;
 
-  // Calculate duration safely
   const startTime = new Date(report.startTime);
   const endTime = new Date(report.endTime);
   const durationInMinutes = Math.max(
@@ -86,16 +85,13 @@ export default async function ViewReportPage({ params }: PageProps) {
   const time = durationInMinutes.toString();
 
   const enhancedData = {
-    ...data,
-    overall_score: analysisData.overall_score?.toFixed(0) || 75,
-    estimated_hair_count: analysisData.estimated_hair_count || 95675,
+    ...analysisData,
+    overall_score: analysisData?.overall_score?.toFixed(0) || 75,
+    estimated_hair_count: analysisData?.estimated_hair_count || 95675,
     metrics: {
-      "Hair Thickness": 80,
-      Oiliness: 65,
-      "Hair Density": 78,
-      "Scalp Coverage": 85,
-      Dryness: 70,
-      "Hair Type Adjustment": 75,
+      "Hair Thickness": (analysisData?.scaled_density).toFixed(0) || 80,
+      Oiliness: (analysisData?.condition_confidence * 100).toFixed(0) || 65,
+      "Hair Density": (analysisData?.density).toFixed(0) || 78,
     },
     hairCount: {
       current: 91000,
@@ -111,6 +107,27 @@ export default async function ViewReportPage({ params }: PageProps) {
       "Hair density improved; more growth",
       "No dandruff.",
     ],
+  };
+  type DensityClass = "low" | "medium" | "high";
+
+  const summary: Record<DensityClass, string> = {
+    low: `<p>
+        Your results show the beginning stages of hair loss. The good news is that at this stage, it's highly manageable with the right care.
+        <br />
+        With guidance from our expert doctors, we can create personalized plan just for you.
+      </p>`,
+
+    medium: `<p>
+        Your results indicate a moderate level of hair loss, which means now is the perfect time to take action.
+        <br />
+        At this stage, a proactive approach can make a significant difference.
+      </p>`,
+
+    high: `<p>
+        Thank you for trusting us with your assessment. Your results indicate an advanced stage of hair loss, which requires specialized care for the most effective treatment.
+        <br />
+        In the spirit of full transparency, the best next step is an in-clinic consultation with a hair restoration specialist.
+      </p>`,
   };
 
   return (
@@ -301,7 +318,11 @@ export default async function ViewReportPage({ params }: PageProps) {
             </CardContent>
           </Card>
           <div className="hidden md:block">
-            <Report enhancedData={enhancedData} className="px-0" />
+            <Report
+              enhancedData={enhancedData}
+              className="px-0"
+              summary={summary}
+            />
           </div>
         </>
       )}

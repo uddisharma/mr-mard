@@ -41,7 +41,7 @@ const navItems = [
     href: "/admin/contact-submissions",
   },
   { icon: Newspaper, label: "NewsLetter", href: "/admin/newsletter" },
-  { icon: Newspaper, label: "Face Detection", href: "/face" },
+  // { icon: Newspaper, label: "Face Detection", href: "/face" },
 ];
 
 export default function Sidebar({ role }: { role: string | undefined }) {

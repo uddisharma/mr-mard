@@ -66,7 +66,7 @@ export default function ReportsList({ analysis }: { analysis: Analysis[] }) {
                       {analysisData?.overall_score?.toFixed(0) || 50}
                     </TableCell>
                     <TableCell className="font-medium text-center">
-                      {analysisData?.estimated_hair_count || 50000}
+                      {analysisData?.estimated_hair_count || 95675}
                     </TableCell>
                     <TableCell className="font-medium text-center">
                       {analysisData?.hair_type || "Unknown"}

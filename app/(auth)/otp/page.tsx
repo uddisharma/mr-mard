@@ -102,7 +102,7 @@ export default function VerificationPage() {
     if (status?.signupSuccess && status?.verifySuccess) {
       setTimeout(() => {
         router.push(
-          `${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")}` : "/appointment-booking"}`,
+          `${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")}` : "/"}`,
         );
       }, 2000);
     }
@@ -203,7 +203,7 @@ export default function VerificationPage() {
             <p className="text-gray-500 mb-6">Logged in you account</p>
             <Link
               className="w-full bg-btnblue text-white  rounded-lg hover:bg-btnblue transition-colors"
-              href={`${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")}` : "/profile"}`}
+              href={`${searchParams?.get("redirect") ? `&redirect=${searchParams.get("redirect")}` : "/"}`}
             >
               <button className="w-full bg-btnblue text-white py-3.5 rounded-lg hover:bg-btnblue transition-colors">
                 Continue
