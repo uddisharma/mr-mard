@@ -78,7 +78,7 @@ export default function Report({
                   <div className="text-5xl font-bold text-[#1e3a5f]">
                     <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-9 h-9 flex items-center justify-center">
                       <Image
-                        src={`/hair-types/type/${getValidHairType(enhancedData?.hair_type?.toLowerCase())}.png`}
+                        src={`/hair-types/types/${getValidHairType(enhancedData?.hair_type?.toLowerCase())}.png`}
                         alt={`${enhancedData?.hair_type} hair density`}
                         width={32}
                         height={32}
@@ -89,7 +89,7 @@ export default function Report({
                   <div className="text-5xl font-bold text-[#1e3a5f]">
                     <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-9 h-9 flex items-center justify-center">
                       <Image
-                        src={`/hair-types/condition/${enhancedData?.hair_condition?.toLowerCase()}.png`}
+                        src={`/hair-types/conditions/${enhancedData?.hair_condition?.toLowerCase()}.png`}
                         alt={`${enhancedData?.hair_condition} hair density`}
                         width={32}
                         height={32}
@@ -100,7 +100,7 @@ export default function Report({
                   <div className="text-5xl font-bold text-[#1e3a5f]">
                     <div className="text-5xl font-bold bg-white border-[2px] border-black text-white rounded-full w-9 h-9 flex items-center justify-center">
                       <Image
-                        src={`/hair-types/density/${enhancedData?.density_class?.toLowerCase()}.png`}
+                        src={`/hair-types/densities/${enhancedData?.density_class?.toLowerCase()}.png`}
                         alt={`${enhancedData?.density_class} hair density`}
                         width={32}
                         height={32}
@@ -138,7 +138,7 @@ export default function Report({
               <div className="flex items-center justify-center gap-6 p-6">
                 <div>
                   <Image
-                    src={`/hair-types/density/${enhancedData?.density_class?.toLowerCase()}.png`}
+                    src={`/hair-types/densities/${enhancedData?.density_class?.toLowerCase()}.png`}
                     alt={`${enhancedData?.density_class} hair density`}
                     width={100}
                     height={50}

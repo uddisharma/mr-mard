@@ -146,7 +146,7 @@ const MobileVerion = ({
               <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gray-200 bg-white">
                 <Image
                   className="h-10 w-10"
-                  src={`/hair-types/type/${getValidHairType(enhancedData?.hair_type?.toLowerCase())}.png`}
+                  src={`/hair-types/types/${getValidHairType(enhancedData?.hair_type?.toLowerCase())}.png`}
                   alt={`${enhancedData?.hair_type} hair density`}
                   height={10}
                   width={10}
@@ -158,7 +158,7 @@ const MobileVerion = ({
               <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gray-200 bg-white">
                 <Image
                   className="h-10 w-10"
-                  src={`/hair-types/condition/${enhancedData?.hair_condition?.toLowerCase()}.png`}
+                  src={`/hair-types/conditions/${enhancedData?.hair_condition?.toLowerCase()}.png`}
                   alt={`${enhancedData?.hair_condition} hair density`}
                   height={10}
                   width={10}
@@ -170,7 +170,7 @@ const MobileVerion = ({
               <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gray-200 bg-white">
                 <Image
                   className="h-10 w-10"
-                  src={`/hair-types/density/${enhancedData?.density_class?.toLowerCase()}.png`}
+                  src={`/hair-types/densities/${enhancedData?.density_class?.toLowerCase()}.png`}
                   alt={`${enhancedData?.density_class} hair density`}
                   height={10}
                   width={10}
@@ -229,7 +229,7 @@ const MobileVerion = ({
           <CardContent className="flex flex-col items-center gap-6 ">
             <div className="flex items-center flex-col justify-center gap-6 ">
               <Image
-                src={`/hair-types/density/${enhancedData?.density_class.toLowerCase()}.png`}
+                src={`/hair-types/densities/${enhancedData?.density_class.toLowerCase()}.png`}
                 alt={`${enhancedData?.density_class} hair density`}
                 width={100}
                 height={50}
