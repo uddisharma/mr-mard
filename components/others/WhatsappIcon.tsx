@@ -8,14 +8,16 @@ const WhatsappIcon = () => {
   const [isPhone, setIsPhone] = React.useState(false);
 
   React.useEffect(() => {
-    const userAgent = navigator.userAgent || navigator.vendor;
-    if (/android|iphone|ipad|ipod/i.test(userAgent)) {
-      setIsPhone(true);
-    }
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent,
+      );
+    setIsPhone(isMobile);
   }, []);
+
   return (
     <>
-      {!pathname.startsWith("/admin") && (
+      {!pathname.startsWith("/admin") && !pathname?.startsWith("/analyze") && (
         <a
           href="https://wa.me/+918861452659?text=Hello%20Milele%20Health"
           target="_blank"

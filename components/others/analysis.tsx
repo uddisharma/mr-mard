@@ -116,7 +116,7 @@ const MultiStepForm = ({ data }: { data: Question[] }) => {
     <div className="flex flex-col px-5 md:px-10 my-2 mb-20 md:mb-0 md:py-10">
       <main className="flex-1 md:px-4 md:py-12 w-full">
         <div className="grid md:grid-cols-2 justify-center gap-20 items-center">
-          <div>
+          <div className="hidden md:block">
             <AnalyticsIllustration />
           </div>
           {step == 0 ? (
