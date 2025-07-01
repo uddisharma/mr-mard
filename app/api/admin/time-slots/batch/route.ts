@@ -29,58 +29,48 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const result = await db.$transaction(async (tx: any) => {
-      const createdSlots = [];
-
-      for (const slot of timeSlots) {
-        try {
-          const existingSlot = await tx.timeSlot.findFirst({
-            where: {
+    const createdSlots = [];
+    for (const slot of timeSlots) {
+      try {
+        // Use upsert: try to find by unique combination, else create
+        // You may need a unique constraint on (date, startTime, endTime) in your schema for this to work perfectly
+        const upsertedSlot = await db.timeSlot.upsert({
+          where: {
+            // This assumes you have a unique constraint on these three fields
+            date_startTime_endTime: {
               date: new Date(slot.date),
               startTime: new Date(slot.startTime),
               endTime: new Date(slot.endTime),
             },
-          });
-
-          if (existingSlot) {
-            const updatedSlot = await tx.timeSlot.update({
-              where: { id: existingSlot.id },
-              data: {
-                totalSeats: slot.totalSeats,
-                price: slot.price || 500,
-                originalPrice: slot.originalPrice || 600,
-                label: slot.label || "",
-                isActive: slot.isActive !== undefined ? slot.isActive : true,
-              },
-            });
-            createdSlots.push(updatedSlot);
-          } else {
-            const newSlot = await tx.timeSlot.create({
-              data: {
-                date: new Date(slot.date),
-                startTime: new Date(slot.startTime),
-                endTime: new Date(slot.endTime),
-                totalSeats: slot.totalSeats,
-                price: slot.price || 500,
-                originalPrice: slot.originalPrice || 600,
-                label: slot.label || "",
-                isActive: slot.isActive !== undefined ? slot.isActive : true,
-              },
-            });
-            createdSlots.push(newSlot);
-          }
-        } catch (error) {
-          console.error("Error processing time slot:", error);
-        }
+          },
+          update: {
+            totalSeats: slot.totalSeats,
+            price: slot.price || 500,
+            originalPrice: slot.originalPrice || 600,
+            label: slot.label || "",
+            isActive: slot.isActive !== undefined ? slot.isActive : true,
+          },
+          create: {
+            date: new Date(slot.date),
+            startTime: new Date(slot.startTime),
+            endTime: new Date(slot.endTime),
+            totalSeats: slot.totalSeats,
+            price: slot.price || 500,
+            originalPrice: slot.originalPrice || 600,
+            label: slot.label || "",
+            isActive: slot.isActive !== undefined ? slot.isActive : true,
+          },
+        });
+        createdSlots.push(upsertedSlot);
+      } catch (error) {
+        console.error("Error processing time slot:", error);
       }
-
-      return createdSlots;
-    });
+    }
 
     return NextResponse.json({
       success: true,
-      count: result.length,
-      timeSlots: result,
+      count: createdSlots.length,
+      timeSlots: createdSlots,
     });
   } catch (error) {
     console.error("Error processing batch of time slots:", error);
